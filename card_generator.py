@@ -1,5 +1,5 @@
 class CardGenerator: 
-    def __init__(self):
+    def __init__(self) -> None:
         self.miscellaneous = Miscellaneous()
         self.models = Models() 
         self.branch = Branch() 
@@ -17,7 +17,7 @@ class CardGenerator:
 
 
 class Miscellaneous:
-    def __init__(self):
+    def __init__(self) -> None:
 
         self.comment_line = "C  dT  >< Tmax >< Xopt >< Copt ><Epsiln>"
 
@@ -321,7 +321,229 @@ class Models:
 
 class Branch:
     def __init__(self) -> None:
+        self.comment_line_type_0 = "C < n1 >< n2 ><ref1><ref2>< R  >< L  >< C  >"
+        self.comment_line_distrib_params = "C < n1 >< n2 ><ref1><ref2>< R  >< A  >< B  ><Leng><><>0"
+
+        self.branches = []
+
         pass
+
+
+class RlcElement:
+    def __init__(self) -> None:
+        itype_str_len = 2
+        self._itype = " " * itype_str_len
+
+        node_str_len = 6
+        self._node_1 = " " * node_str_len
+        self._node_2 = " " * node_str_len
+        self._node_ref_1  = " " * node_str_len
+        self._node_ref_2  = " " * node_str_len
+
+        resistance_str_len = 6
+
+        self._resistance = " " * resistance_str_len
+
+    def write(self):
+
+        pass
+
+
+class RlcElementBasic(RlcElement):
+    def __init__(self) -> None:
+        super().__init__()
+
+        line_len = 80
+        self._line = " " * line_len
+
+        inductance_capacitance_str_len = 6
+
+        self._inductance = " " * inductance_capacitance_str_len
+        self._capacitance = " " * inductance_capacitance_str_len
+        self._iout = " "
+
+        blank_len = 35
+        self._blank = " " * blank_len
+
+    def write(self):
+        return f"{self.line}\n"
+    
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line[0:2] = new_itype
+
+        self._itype = new_itype
+
+    @property
+    def node_1(self):
+        return self._node_1
+    
+    @node_1.setter
+    def node_1(self, new_node_1):
+        if len(new_node_1) != 6:
+            raise ValueError("Node 1 must be 6 characters long")
+        
+        self._line[2:8] = new_node_1
+
+        self._node_1 = new_node_1
+    
+    @property
+    def node_2(self):
+        return self._node_2
+    
+    @node_2.setter
+    def node_2(self, new_node_2):
+        if len(new_node_2) != 6:
+            raise ValueError("Node 2 must be 6 characters long")
+        
+        self._line[8:14] = new_node_2
+
+        self._node_2 = new_node_2
+    
+    @property
+    def node_ref_1(self):
+        return self._node_ref_1
+    
+    @node_ref_1.setter
+    def node_ref_1(self, new_node_ref_1):
+        if len(new_node_ref_1) != 6:
+            raise ValueError("Node ref 1 must be 6 characters long")
+        
+        self._line[14:20] = new_node_ref_1
+
+        self._node_ref_1 = new_node_ref_1
+
+    @property
+    def node_ref_2(self):
+        return self._node_ref_2
+    
+    @node_ref_2.setter
+    def node_ref_2(self, new_node_ref_2):
+        if len(new_node_ref_2) != 6:
+            raise ValueError("Node ref 2 must be 6 characters long")
+        
+        self._line[20:26] = new_node_ref_2
+
+        self._node_ref_2 = new_node_ref_2
+    
+    @property
+    def resistance(self):
+        return self._resistance
+    
+    @resistance.setter
+    def resistance(self, new_resistance):
+        if len(new_resistance) != 6:
+            raise ValueError("Resistance must be 6 characters long")
+        
+        self._line[26:32] = new_resistance
+
+        self._resistance = new_resistance
+    
+    @property
+    def inductance(self):
+        return self._inductance
+    
+    @inductance.setter
+    def inductance(self, new_inductance):
+        if len(new_inductance) != 6:
+            raise ValueError("Inductance must be 6 characters long")
+        
+        self._line[32:38] = new_inductance
+
+        self._inductance = new_inductance
+    
+    @property
+    def capacitance(self):
+        return self._capacitance
+    
+    @capacitance.setter
+    def capacitance(self, new_capacitance):
+        if len(new_capacitance) != 6:
+            raise ValueError("Capacitance must be 6 characters long")
+        
+        self._line[38:44] = new_capacitance
+
+        self._capacitance = new_capacitance
+    
+    @property
+    def iout(self):
+        return self._iout
+    
+    @iout.setter
+    def iout(self, new_iout):
+        if len(new_iout) != 1:
+            raise ValueError("Iout must be 1 characters long")
+        
+        self._line[79] = new_iout
+
+        self._iout = new_iout
+
+    @property
+    def line(self):
+        return self._line
+    
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) != 80:
+            raise ValueError("Line must be 80 characters long")
+        
+        self._line = new_line
+
+        self._itype = new_line[0:2]
+        self._node_1 = new_line[2:8]
+        self._node_2 = new_line[8:14]
+        self._node_ref_1 = new_line[14:20]
+        self._node_ref_2 = new_line[20:26]
+        self._resistance = new_line[26:32]
+        self._inductance = new_line[32:38]
+        self._capacitance = new_line[38:44]
+        self._iout = new_line[79]
+
+    
+class RlcElementDistParams(RlcElement):
+    def __init__(self) -> None:
+        super().__init__()
+
+        line_len = 80
+        self._line = " " * line_len
+
+        type_len = 2
+        self._distribution_type = " " * type_len
+
+        iline_len = 2
+        self._iline = " " * iline_len
+
+        ipunch_len = 2
+        self._ipunch = " " * ipunch_len
+
+        ipose_len = 2
+        self._ipose = " " * ipose_len
+
+        param_len = 6
+        self._distribution_param_a = " " * param_len
+        self._distribution_param_b = " " * param_len
+
+        length_len = 6
+        self._length = " " * length_len
+
+        blank_len = 23
+        self._blank = " " * blank_len
+
+        self._iout = " "
+
+
+        
+    
+
+    def write(self):
+        return f"{self.line}\n"
 
 class Switch:
     def __init__(self) -> None:
