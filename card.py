@@ -30,7 +30,7 @@ class ATPCard:
         # card_str += self.models.write()
         card_str += self.branch.write()
         card_str += self.switch.write()
-        # card_str += self.source.write()
+        card_str += self.source.write()
         card_str += self.output.write()
         # card_str += self.plot.write()
 
@@ -921,8 +921,716 @@ class SwitchElement:
 
 
 class Source:
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        self.init_line = "/SOURCE\n"
+        self.comment_line = "C < n 1><>< Ampl.  >< Freq.  ><Phase/T0><   A1   ><   T1   >< TSTART >< TSTOP  >\n"
+        
+        self.sources = []
+
+    def write(self):
+        return self.init_line + self.comment_line+"".join([source.write() for source in self.sources])
+
+    def add_source(self, source):
+        if not isinstance(source, SourceElement):
+            raise TypeError("sources must be of type SourceElement")
+        self.sources.append(source)
+
+class SourceElement:
+    def __init__(self):
+        type_str_len = 2
+        name_str_len = 6
+        param_str_len = 10
+        blank_len = 40
+
+        self._itype = " " * type_str_len
+        self._name = " " * name_str_len
+        self._st = " " * type_str_len
+        self._amplitude = " " * param_str_len
+
+        self._blank = " " * blank_len
+
+        self._tstart = " " * param_str_len
+        self._tstop = " " * param_str_len
+
+
+    
+class DCSource(SourceElement):
+    def __init__(self):
+        super().__init__()
+
+        line_len = 80
+        self._line = " " * line_len
+        
+        # def __str__(self):
+        #     return f"Itype: {self._itype}, Name: {self._name}, St: {self._st}, Amplitude: {self._amplitude}, Tstart: {self._tstart}, Tstop: {self._tstop}"
+    def write(self):
+        return f"{self.line}\n"
+        
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line = new_itype + self._line[2:]
+
+        self._itype = new_itype
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, new_name):
+        if len(new_name) != 6:
+            raise ValueError("Name must be 6 characters long")
+        
+        self._line = self._line[0:2] + new_name + self._line[8:]
+        self._name = new_name
+
+    @property
+    def st(self):
+        return self._st
+    
+    @st.setter
+    def st(self, new_st):
+        if len(new_st) != 2:
+            raise ValueError("St must be 2 characters long")
+        
+        self._line = self._line[0:8] + new_st + self._line[10:]
+
+        self._st = new_st
+
+    @property
+    def amplitude(self):
+        return self._amplitude
+    
+    @amplitude.setter
+    def amplitude(self, new_amplitude):
+        if len(new_amplitude) != 10:
+            raise ValueError("Amplitude must be 10 characters long")
+        
+        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+
+        self._amplitude = new_amplitude
+
+    @property
+    def tstart(self):
+        return self._tstart
+    
+    @tstart.setter
+    def tstart(self, new_tstart):
+        if len(new_tstart) != 10:
+            raise ValueError("Tstart must be 10 characters long")
+        
+        self._line = self._line[0:60] + new_tstart + self._line[70:]
+
+        self._tstart = new_tstart
+
+    @property
+    def tstop(self):
+        return self._tstop
+    
+    @tstop.setter
+    def tstop(self, new_tstop):
+        if len(new_tstop) != 10:
+            raise ValueError("Tstop must be 10 characters long")
+        
+        self._line = self._line[0:70] + new_tstop + self._line[80:]
+
+        self._tstop = new_tstop
+
+    @property
+    def line(self):
+        return self._line
+    
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) != 80:
+            raise ValueError("Line must be 80 characters long")
+        
+        self._line = new_line
+
+        self._itype = new_line[0:2]
+        self._name = new_line[2:8]
+        self._st = new_line[8:10]
+        self._amplitude = new_line[10:20]
+        self._tstart = new_line[60:70]
+        self._tstop = new_line[70:80]
+
+class RampSource(SourceElement):
+    def __init__(self):
+        super().__init__()     
+        line_len = 80
+        self._line = " " * line_len
+
+        self._time0 = " " * 10
+
+    def write(self):
+        return f"{self.line}\n"
+    
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line = new_itype + self._line[2:]
+
+        self._itype = new_itype
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, new_name):
+        if len(new_name) != 6:
+            raise ValueError("Name must be 6 characters long")
+        
+        self._line = self._line[0:2] + new_name + self._line[8:]
+
+        self._name = new_name
+
+    @property
+    def st(self):
+        return self._st
+    
+    @st.setter
+    def st(self, new_st):
+        if len(new_st) != 2:
+            raise ValueError("St must be 2 characters long")
+        
+        self._line = self._line[0:8] + new_st + self._line[10:]
+
+        self._st = new_st
+
+    @property
+    def amplitude(self):
+        return self._amplitude
+    
+    @amplitude.setter
+    def amplitude(self, new_amplitude):
+        if len(new_amplitude) != 10:
+            raise ValueError("Amplitude must be 10 characters long")
+        
+        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+
+        self._amplitude = new_amplitude
+
+    @property
+    def time0(self):
+        return self._time0
+    
+    @time0.setter
+    def time0(self, new_time0):
+        if len(new_time0) != 10:
+            raise ValueError("Time0 must be 10 characters long")
+        
+        self._line = self._line[0:30] + new_time0 + self._line[40:]
+
+        self._time0 = new_time0
+
+    @property
+    def tstart(self):
+        return self._tstart
+    
+    @tstart.setter
+    def tstart(self, new_tstart):
+        if len(new_tstart) != 10:
+            raise ValueError("Tstart must be 10 characters long")
+        
+        self._line = self._line[0:60] + new_tstart + self._line[70:]
+
+        self._tstart = new_tstart
+
+    @property
+    def tstop(self):
+        return self._tstop
+    
+    @tstop.setter
+    def tstop(self, new_tstop):
+        if len(new_tstop) != 10:
+            raise ValueError("Tstop must be 10 characters long")
+        
+        self._line = self._line[0:70] + new_tstop + self._line[80:]
+
+        self._tstop = new_tstop
+
+    @property
+    def line(self):
+        return self._line
+    
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) != 80:
+            raise ValueError("Line must be 80 characters long")
+        
+        self._line = new_line
+
+        self._itype = new_line[0:2]
+        self._name = new_line[2:8]
+        self._st = new_line[8:10]
+        self._amplitude = new_line[10:20]
+        self._time0 = new_line[30:40]
+        self._tstart = new_line[60:70]
+        self._tstop = new_line[70:80]
+
+class SlopeRampSource(SourceElement):
+    def __init__ (self):
+        super().__init__()
+        line_len = 80
+        self._line = " " * line_len
+
+        self._time0 = " " * 10
+        self._A1 = " " * 10
+        self._time1 = " " * 10
+    def write(self):
+        return f"{self.line}\n"
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line = new_itype + self._line[2:]
+
+        self._itype = new_itype
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, new_name):
+        if len(new_name) != 6:
+            raise ValueError("Name must be 6 characters long")
+        
+        self._line = self._line[0:2] + new_name + self._line[8:]
+
+        self._name = new_name
+
+    @property
+    def st(self):
+        return self._st
+    
+    @st.setter
+    def st(self, new_st):
+        if len(new_st) != 2:
+            raise ValueError("St must be 2 characters long")
+        
+        self._line = self._line[0:8] + new_st + self._line[10:]
+
+        self._st = new_st
+
+    @property
+    def amplitude(self):
+        return self._amplitude
+    
+    @amplitude.setter
+    def amplitude(self, new_amplitude):
+        if len(new_amplitude) != 10:
+            raise ValueError("Amplitude must be 10 characters long")
+        
+        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+
+        self._amplitude = new_amplitude
+
+    @property
+    def time0(self):
+        return self._time0
+    
+    @time0.setter
+    def time0(self, new_time0):
+        if len(new_time0) != 10:
+            raise ValueError("Time0 must be 10 characters long")
+        
+        self._line = self._line[0:30] + new_time0 + self._line[40:]
+
+        self._time0 = new_time0
+
+    @property
+    def A1(self):
+        return self._A1
+    
+    @A1.setter
+    def A1(self, new_A1):
+        if len(new_A1) != 10:
+            raise ValueError("A1 must be 10 characters long")
+        
+        self._line = self._line[0:40] + new_A1 + self._line[50:]
+
+        self._A1 = new_A1
+    
+    @property
+    def time1(self):
+        return self._time1
+    
+    @time1.setter
+    def time1(self, new_time1):
+        if len(new_time1) != 10:
+            raise ValueError("Time1 must be 10 characters long")
+        
+        self._line = self._line[0:50] + new_time1 + self._line[60:]
+
+        self._time1 = new_time1
+
+    @property
+    def tstart(self):
+        return self._tstart
+    
+    @tstart.setter
+    def tstart(self, new_tstart):
+        if len(new_tstart) != 10:
+            raise ValueError("Tstart must be 10 characters long")
+        
+        self._line = self._line[0:60] + new_tstart + self._line[70:]
+
+        self._tstart = new_tstart
+
+    @property
+    def tstop(self):
+        return self._tstop
+    
+    @tstop.setter
+    def tstop(self, new_tstop):
+        if len(new_tstop) != 10:
+            raise ValueError("Tstop must be 10 characters long")
+        
+        self._line = self._line[0:70] + new_tstop + self._line[80:]
+
+        self._tstop = new_tstop
+
+    @property
+    def line(self):
+        return self._line
+    
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) != 80:
+            raise ValueError("Line must be 80 characters long")
+        
+        self._line = new_line
+
+        self._itype = new_line[0:2]
+        self._name = new_line[2:8]
+        self._st = new_line[8:10]
+        self._amplitude = new_line[10:20]
+        self._time0 = new_line[30:40]
+        self._A1 = new_line[40:50]
+        self._time1 = new_line[50:60]
+        self._tstart = new_line[60:70]
+        self._tstop = new_line[70:80]
+
+class CosineSource(SourceElement):
+    def __init__(self):
+        super().__init__()
+        line_len = 80
+        self._line = " " * line_len
+
+        self._frequency = " " * 10
+        self._phase = " " * 10
+        self._A1 = " " * 10
+
+    def write(self):
+        return f"{self.line}\n"
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line = new_itype + self._line[2:]
+
+        self._itype = new_itype
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, new_name):
+        if len(new_name) != 6:
+            raise ValueError("Name must be 6 characters long")
+        
+        self._line = self._line[0:2] + new_name + self._line[8:]
+
+        self._name = new_name
+
+    @property
+    def st(self):
+        return self._st
+    
+    @st.setter
+    def st(self, new_st):
+        if len(new_st) != 2:
+            raise ValueError("St must be 2 characters long")
+        
+        self._line = self._line[0:8] + new_st + self._line[10:]
+
+        self._st = new_st
+
+    @property
+    def amplitude(self):
+        return self._amplitude
+    
+    @amplitude.setter
+    def amplitude(self, new_amplitude):
+        if len(new_amplitude) != 10:
+            raise ValueError("Amplitude must be 10 characters long")
+        
+        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+
+        self._amplitude = new_amplitude
+
+    @property
+    def frequency(self):
+        return self._frequency
+    
+    @frequency.setter
+    def frequency(self, new_frequency):
+        if len(new_frequency) != 10:
+            raise ValueError("Frequency must be 10 characters long")
+        
+        self._line = self._line[0:20] + new_frequency + self._line[30:]
+
+        self._frequency = new_frequency
+
+    @property
+    def phase(self):
+        return self._phase
+    
+    @phase.setter
+    def phase(self, new_phase):
+        if len(new_phase) != 10:
+            raise ValueError("Phase must be 10 characters long")
+        
+        self._line = self._line[0:30] + new_phase + self._line[40:]
+
+        self._phase = new_phase
+
+    @property
+    def A1(self):
+        return self._A1
+    
+    @A1.setter
+    def A1(self, new_A1):
+        if len(new_A1) != 10:
+            raise ValueError("A1 must be 10 characters long")
+        
+        self._line = self._line[0:40] + new_A1 + self._line[50:]
+
+        self._A1 = new_A1
+
+    @property
+    def tstart(self):
+        return self._tstart
+    
+    @tstart.setter
+    def tstart(self, new_tstart):
+        if len(new_tstart) != 10:
+            raise ValueError("Tstart must be 10 characters long")
+        
+        self._line = self._line[0:60] + new_tstart + self._line[70:]
+
+        self._tstart = new_tstart
+
+    @property
+    def tstop(self):
+        return self._tstop
+    
+    @tstop.setter
+    def tstop(self, new_tstop):
+        if len(new_tstop) != 10:
+            raise ValueError("Tstop must be 10 characters long")
+        
+        self._line = self._line[0:70] + new_tstop + self._line[80:]
+
+        self._tstop = new_tstop
+
+    @property
+    def line(self):
+        return self._line
+    
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) != 80:
+            raise ValueError("Line must be 80 characters long")
+        
+        self._line = new_line
+
+        self._itype = new_line[0:2]
+        self._name = new_line[2:8]
+        self._st = new_line[8:10]
+        self._amplitude = new_line[10:20]
+        self._frequency = new_line[20:30]
+        self._phase = new_line[30:40]
+        self._A1 = new_line[40:50]
+        self._tstart = new_line[60:70]
+        self._tstop = new_line[70:80]
+
+class HeidlerSource(SourceElement):
+    def __init__(self):
+        super().__init__()
+        line_len = 80
+        self._line = " " * line_len
+
+        self._frequency = " " * 10
+        self._phase = " " * 10
+        self._A1 = " " * 10
+
+    def write(self):
+        return f"{self.line}\n"
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line = new_itype + self._line[2:]
+
+        self._itype = new_itype
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, new_name):
+        if len(new_name) != 6:
+            raise ValueError("Name must be 6 characters long")
+        
+        self._line = self._line[0:2] + new_name + self._line[8:]
+
+        self._name = new_name
+
+    @property
+    def st(self):
+        return self._st
+    
+    @st.setter
+    def st(self, new_st):
+        if len(new_st) != 2:
+            raise ValueError("St must be 2 characters long")
+        
+        self._line = self._line[0:8] + new_st + self._line[10:]
+
+        self._st = new_st
+
+    @property
+    def amplitude(self):
+        return self._amplitude
+    
+    @amplitude.setter
+    def amplitude(self, new_amplitude):
+        if len(new_amplitude) != 10:
+            raise ValueError("Amplitude must be 10 characters long")
+        
+        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+
+        self._amplitude = new_amplitude
+
+    @property
+    def frequency(self):
+        return self._frequency
+    
+    @frequency.setter
+    def frequency(self, new_frequency):
+        if len(new_frequency) != 10:
+            raise ValueError("Frequency must be 10 characters long")
+        
+        self._line = self._line[0:20] + new_frequency + self._line[30:]
+
+        self._frequency = new_frequency
+
+    @property
+    def phase(self):
+        return self._phase
+    
+    @phase.setter
+    def phase(self, new_phase):
+        if len(new_phase) != 10:
+            raise ValueError("Phase must be 10 characters long")
+        
+        self._line = self._line[0:30] + new_phase + self._line[40:]
+
+        self._phase = new_phase
+
+    @property
+    def A1(self):
+        return self._A1
+    
+    @A1.setter
+    def A1(self, new_A1):
+        if len(new_A1) != 10:
+            raise ValueError("A1 must be 10 characters long")
+        
+        self._line = self._line[0:40] + new_A1 + self._line[50:]
+
+        self._A1 = new_A1
+
+    @property
+    def tstart(self):
+        return self._tstart
+    
+    @tstart.setter
+    def tstart(self, new_tstart):
+        if len(new_tstart) != 10:
+            raise ValueError("Tstart must be 10 characters long")
+        
+        self._line = self._line[0:60] + new_tstart + self._line[70:]
+
+        self._tstart = new_tstart
+
+    @property
+    def tstop(self):
+        return self._tstop
+    
+    @tstop.setter
+    def tstop(self, new_tstop):
+        if len(new_tstop) != 10:
+            raise ValueError("Tstop must be 10 characters long")
+        
+        self._line = self._line[0:70] + new_tstop + self._line[80:]
+
+        self._tstop = new_tstop
+
+    @property
+    def line(self):
+        return self._line
+    
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) != 80:
+            raise ValueError("Line must be 80 characters long")
+        
+        self._line = new_line
+
+        self._itype = new_line[0:2]
+        self._name = new_line[2:8]
+        self._st = new_line[8:10]
+        self._amplitude = new_line[10:20]
+        self._frequency = new_line[20:30]
+        self._phase = new_line[30:40]
+        self._A1 = new_line[40:50]
+        self._tstart = new_line[60:70]
+        self._tstop = new_line[70:80]
+
 
 class Output:
     def __init__(self) -> None:
