@@ -12,7 +12,26 @@ class ATPCard:
         self.fixed_format = True 
 
     def write(self):
-        pass 
+        card_str = ""
+
+        init_line = "BEGIN NEW DATA CASE\n"
+        end_line = "BLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK"
+
+        card_str += init_line
+        card_str += self.miscellaneous.write()
+        # card_str += self.models.write()
+        card_str += self.branch.write()
+        # card_str += self.switch.write()
+        # card_str += self.source.write()
+        # card_str += self.output.write()
+        # card_str += self.plot.write()
+
+        card_str += end_line
+
+        return card_str
+
+
+
 
 
 
@@ -57,7 +76,9 @@ class Miscellaneous:
         if len(new_delta_t) != 8:
             raise ValueError("Delta t must be 8 characters long")
         
-        self.first_line[0:8] = new_delta_t
+
+        self.first_line = new_delta_t + self.first_line[8:]
+        
 
         self._delta_t = new_delta_t
 
@@ -70,7 +91,7 @@ class Miscellaneous:
         if len(new_t_max) != 8:
             raise ValueError("T max must be 8 characters long")
         
-        self.first_line[8:16] = new_t_max
+        self.first_line = self.first_line[0:8] + new_t_max + self.first_line[16:]
 
         self._t_max = new_t_max
 
@@ -83,7 +104,7 @@ class Miscellaneous:
         if len(new_x_opt) != 8:
             raise ValueError("X opt must be 8 characters long")
         
-        self.first_line[16:24] = new_x_opt
+        self.first_line = self.first_line[0:16] + new_x_opt + self.first_line[24:]
 
         self._x_opt = new_x_opt
     
@@ -96,7 +117,7 @@ class Miscellaneous:
         if len(new_c_opt) != 8:
             raise ValueError("C opt must be 8 characters long")
         
-        self.first_line[24:32] = new_c_opt
+        self.first_line = self.first_line[0:24] + new_c_opt + self.first_line[32:]
 
         self._c_opt = new_c_opt
 
@@ -109,7 +130,7 @@ class Miscellaneous:
         if len(new_epslin) != 8:
             raise ValueError("Epslin must be 8 characters long")
         
-        self.first_line[32:40] = new_epslin
+        self.first_line = self.first_line[0:32] + new_epslin + self.first_line[40:]
 
         self._epslin = new_epslin
     
@@ -122,7 +143,7 @@ class Miscellaneous:
         if len(new_tolmat) != 8:
             raise ValueError("Tolmat must be 8 characters long")
         
-        self.first_line[40:48] = new_tolmat
+        self.first_line = self.first_line[0:40] + new_tolmat + self.first_line[48:]
 
         self._tolmat = new_tolmat
     
@@ -135,7 +156,7 @@ class Miscellaneous:
         if len(new_tstart) != 8:
             raise ValueError("Tstart must be 8 characters long")
         
-        self.first_line[48:56] = new_tstart
+        self.first_line = self.first_line[0:48] + new_tstart
 
         self._tstart = new_tstart
 
@@ -148,8 +169,8 @@ class Miscellaneous:
         if len(new_iout) != 8:
             raise ValueError("Iout must be 8 characters long")
         
-        self.second_line[0:8] = new_iout
-
+        self.second_line = new_iout + self.second_line[8:]
+        
         self._iout = new_iout
 
     @property
@@ -161,7 +182,7 @@ class Miscellaneous:
         if len(new_iplot) != 8:
             raise ValueError("Iplot must be 8 characters long")
         
-        self.second_line[8:16] = new_iplot
+        self.second_line = self.second_line[0:8] + new_iplot + self.second_line[16:]
 
         self._iplot = new_iplot
 
@@ -174,7 +195,7 @@ class Miscellaneous:
         if len(new_idoubl) != 8:
             raise ValueError("Idoubl must be 8 characters long")
         
-        self.second_line[16:24] = new_idoubl
+        self.second_line = self.second_line[0:16] + new_idoubl + self.second_line[24:]
 
         self._idoubl = new_idoubl
 
@@ -187,7 +208,7 @@ class Miscellaneous:
         if len(new_kout) != 8:
             raise ValueError("Kout must be 8 characters long")
         
-        self.second_line[24:32] = new_kout
+        self.second_line = self.second_line[0:24] + new_kout + self.second_line[32:]
 
         self._kout = new_kout
 
@@ -200,7 +221,8 @@ class Miscellaneous:
         if len(new_maxout) != 8:
             raise ValueError("Maxout must be 8 characters long")
         
-        self.second_line[32:40] = new_maxout
+        self.second_line = self.second_line[0:32] + new_maxout + self.second_line[40:]
+
 
         self._maxout = new_maxout
     
@@ -213,7 +235,7 @@ class Miscellaneous:
         if len(new_ipun) != 8:
             raise ValueError("Ipun must be 8 characters long")
         
-        self.second_line[40:48] = new_ipun
+        self.second_line = self.second_line[0:40] + new_ipun + self.second_line[48:]
 
         self._ipun = new_ipun
 
@@ -226,7 +248,7 @@ class Miscellaneous:
         if len(new_memsav) != 8:
             raise ValueError("Memsav must be 8 characters long")
         
-        self.second_line[48:56] = new_memsav
+        self.second_line = self.second_line[0:48] + new_memsav + self.second_line[56:]
 
         self._memsav = new_memsav
 
@@ -239,7 +261,7 @@ class Miscellaneous:
         if len(new_icat) != 8:
             raise ValueError("Icat must be 8 characters long")
         
-        self.second_line[56:64] = new_icat
+        self.second_line = self.second_line[0:56] + new_icat + self.second_line[64:]
 
         self._icat = new_icat
 
@@ -252,7 +274,7 @@ class Miscellaneous:
         if len(new_nenerg) != 8:
             raise ValueError("Nenerg must be 8 characters long")
         
-        self.second_line[64:72] = new_nenerg
+        self.second_line = self.second_line[0:64] + new_nenerg + self.second_line[72:]
 
         self._nenerg = new_nenerg
 
@@ -265,7 +287,7 @@ class Miscellaneous:
         if len(new_iprsup) != 8:
             raise ValueError("Iprsup must be 8 characters long")
         
-        self.second_line[72:80] = new_iprsup
+        self.second_line = self.second_line[0:72] + new_iprsup
 
         self._iprsup = new_iprsup
 
@@ -323,17 +345,24 @@ class Models:
         pass
 
 class Branch:
-    def __init__(self) -> None:
-        self.comment_line_type_0 = "C < n1 >< n2 ><ref1><ref2>< R  >< L  >< C  >"
-        self.comment_line_distrib_params = "C < n1 >< n2 ><ref1><ref2>< R  >< A  >< B  ><Leng><><>0"
+    def __init__(self):
+        self.init_line = "/BRANCH\n"
+        self.comment_line_type_0 = "C < n1 >< n2 ><ref1><ref2>< R  >< L  >< C  >\n"
+        self.comment_line_distrib_params = "C < n1 >< n2 ><ref1><ref2>< R  >< A  >< B  ><Leng><><>0\n"
 
         self.branches = []
 
-        pass
+    def write(self):
+        return self.init_line + self.comment_line_type_0 + self.comment_line_distrib_params + "".join([branch.write() for branch in self.branches])
+    
+    def add_branch(self, branch):
+        if not isinstance(branch, RlcElement):
+            raise TypeError("Branch must be of type RlcElement")
+        self.branches.append(branch)
 
 
 class RlcElement:
-    def __init__(self) -> None:
+    def __init__(self):
         itype_str_len = 2
         self._itype = " " * itype_str_len
 
@@ -347,13 +376,10 @@ class RlcElement:
 
         self._resistance = " " * resistance_str_len
 
-    def write(self):
-
-        pass
 
 
 class RlcElementBasic(RlcElement):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
 
         line_len = 80
@@ -380,8 +406,7 @@ class RlcElementBasic(RlcElement):
         if len(new_itype) != 2:
             raise ValueError("Itype must be 2 characters long")
         
-        self._line[0:2] = new_itype
-
+        self._line = new_itype + self._line[2:]
         self._itype = new_itype
 
     @property
@@ -393,7 +418,7 @@ class RlcElementBasic(RlcElement):
         if len(new_node_1) != 6:
             raise ValueError("Node 1 must be 6 characters long")
         
-        self._line[2:8] = new_node_1
+        self._line = self._line[0:2] + new_node_1 + self._line[8:]
 
         self._node_1 = new_node_1
     
@@ -406,7 +431,7 @@ class RlcElementBasic(RlcElement):
         if len(new_node_2) != 6:
             raise ValueError("Node 2 must be 6 characters long")
         
-        self._line[8:14] = new_node_2
+        self._line = self._line[0:8] + new_node_2 + self._line[14:]
 
         self._node_2 = new_node_2
     
@@ -419,7 +444,7 @@ class RlcElementBasic(RlcElement):
         if len(new_node_ref_1) != 6:
             raise ValueError("Node ref 1 must be 6 characters long")
         
-        self._line[14:20] = new_node_ref_1
+        self._line = self._line[0:14] + new_node_ref_1 + self._line[20:]
 
         self._node_ref_1 = new_node_ref_1
 
@@ -432,7 +457,7 @@ class RlcElementBasic(RlcElement):
         if len(new_node_ref_2) != 6:
             raise ValueError("Node ref 2 must be 6 characters long")
         
-        self._line[20:26] = new_node_ref_2
+        self._line = self._line[0:20] + new_node_ref_2 + self._line[26:]
 
         self._node_ref_2 = new_node_ref_2
     
@@ -445,7 +470,7 @@ class RlcElementBasic(RlcElement):
         if len(new_resistance) != 6:
             raise ValueError("Resistance must be 6 characters long")
         
-        self._line[26:32] = new_resistance
+        self._line = self._line[0:26] + new_resistance + self._line[32:]
 
         self._resistance = new_resistance
     
@@ -458,7 +483,7 @@ class RlcElementBasic(RlcElement):
         if len(new_inductance) != 6:
             raise ValueError("Inductance must be 6 characters long")
         
-        self._line[32:38] = new_inductance
+        self._line = self._line[0:32] + new_inductance + self._line[38:]
 
         self._inductance = new_inductance
     
@@ -471,8 +496,8 @@ class RlcElementBasic(RlcElement):
         if len(new_capacitance) != 6:
             raise ValueError("Capacitance must be 6 characters long")
         
-        self._line[38:44] = new_capacitance
-
+        self._line = self._line[0:38] + new_capacitance + self._line[44:]
+        
         self._capacitance = new_capacitance
     
     @property
@@ -484,7 +509,7 @@ class RlcElementBasic(RlcElement):
         if len(new_iout) != 1:
             raise ValueError("Iout must be 1 characters long")
         
-        self._line[79] = new_iout
+        self._line = self._line[0:79] + new_iout
 
         self._iout = new_iout
 
@@ -511,14 +536,14 @@ class RlcElementBasic(RlcElement):
 
     
 class RlcElementDistParams(RlcElement):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
 
         line_len = 80
         self._line = " " * line_len
 
         type_len = 2
-        self._distribution_type = " " * type_len
+        self._itype = " " * type_len
 
         iline_len = 2
         self._iline = " " * iline_len
@@ -547,6 +572,172 @@ class RlcElementDistParams(RlcElement):
 
     def write(self):
         return f"{self.line}\n"
+    
+    @property
+    def itype(self):
+        return self._itype
+    
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) != 2:
+            raise ValueError("Itype must be 2 characters long")
+        
+        self._line = new_itype + self._line[2:]
+
+        self._itype = new_itype
+
+    @property
+    def node_1(self):
+        return self._node_1
+    
+    @node_1.setter
+    def node_1(self, new_node_1):
+        if len(new_node_1) != 6:
+            raise ValueError("Node 1 must be 6 characters long")
+        
+        self._line = self._line[0:2] + new_node_1 + self._line[8:]
+
+        self._node_1 = new_node_1
+    
+    @property
+    def node_2(self):
+        return self._node_2
+    
+    @node_2.setter
+    def node_2(self, new_node_2):
+        if len(new_node_2) != 6:
+            raise ValueError("Node 2 must be 6 characters long")
+        
+        self._line = self._line[0:8] + new_node_2 + self._line[14:]
+
+        self._node_2 = new_node_2
+
+    @property
+    def node_ref_1(self):
+        return self._node_ref_1
+    
+    @node_ref_1.setter
+    def node_ref_1(self, new_node_ref_1):
+        if len(new_node_ref_1) != 6:
+            raise ValueError("Node ref 1 must be 6 characters long")
+        
+        self._line = self._line[0:14] + new_node_ref_1 + self._line[20:]
+
+        self._node_ref_1 = new_node_ref_1
+
+    @property
+    def node_ref_2(self):
+        return self._node_ref_2
+    
+    @node_ref_2.setter
+    def node_ref_2(self, new_node_ref_2):
+        if len(new_node_ref_2) != 6:
+            raise ValueError("Node ref 2 must be 6 characters long")
+        
+        self._line = self._line[0:20] + new_node_ref_2 + self._line[26:]
+
+        self._node_ref_2 = new_node_ref_2
+    
+    @property
+    def resistance(self):
+        return self._resistance
+    
+    @resistance.setter
+    def resistance(self, new_resistance):
+        if len(new_resistance) != 6:
+            raise ValueError("Resistance must be 6 characters long")
+        
+        self._line = self._line[0:26] + new_resistance + self._line[32:]
+
+        self._resistance = new_resistance
+    
+    @property
+    def distribution_param_a(self):
+        return self._distribution_param_a
+    
+    @distribution_param_a.setter
+    def distribution_param_a(self, new_distribution_param_a):
+        if len(new_distribution_param_a) != 6:
+            raise ValueError("Distribution param a must be 6 characters long")
+        
+        self._line = self._line[0:32] + new_distribution_param_a + self._line[38:]
+        self._distribution_param_a = new_distribution_param_a
+    
+    @property
+    def distribution_param_b(self):
+        return self._distribution_param_b
+    
+    @distribution_param_b.setter
+    def distribution_param_b(self, new_distribution_param_b):
+        if len(new_distribution_param_b) != 6:
+            raise ValueError("Distribution param b must be 6 characters long")
+        
+        self._line = self._line[0:38] + new_distribution_param_b + self._line[44:]
+
+        self._distribution_param_b = new_distribution_param_b
+    
+    @property
+    def length(self):
+        return self._length
+    
+    @length.setter
+    def length(self, new_length):
+        if len(new_length) != 6:
+            raise ValueError("Length must be 6 characters long")
+        
+        self._line = self._line[0:44] + new_length + self._line[50:]
+
+        self._length = new_length
+
+    @property
+    def iline(self):
+        return self._iline
+
+    @iline.setter
+    def iline(self, new_iline):
+        if len(new_iline) != 2:
+            raise ValueError("Iline must be 2 characters long")
+        
+        self._line = self._line[0:50] + new_iline + self._line[52:]
+        self._iline = new_iline
+
+    @property
+    def ipunch(self):
+        return self._ipunch
+    
+    @ipunch.setter
+    def ipunch(self, new_ipunch):
+        if len(new_ipunch) != 2:
+            raise ValueError("Ipunch must be 2 characters long")
+        
+        self._line = self._line[0:52] + new_ipunch + self._line[54:]
+        self._ipunch = new_ipunch
+    
+    @property
+    def ipose(self):
+        return self._ipose
+    
+    @ipose.setter
+    def ipose(self, new_ipose):
+        if len(new_ipose) != 2:
+            raise ValueError("Ipose must be 2 characters long")
+        
+        self._line = self._line[0:54] + new_ipose + self._line[56:]
+        self._ipose = new_ipose
+    
+    @property
+    def iout(self):
+        return self._iout
+    
+    @iout.setter
+    def iout(self, new_iout):
+        if len(new_iout) != 1:
+            raise ValueError("Iout must be 1 characters long")
+        
+        self._line = self._line[0:79] + new_iout
+        self._iout = new_iout
+    
+
 
 class Switch:
     def __init__(self) -> None:
