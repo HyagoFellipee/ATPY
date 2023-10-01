@@ -1,4 +1,6 @@
-from card_generator import CardGenerator
+import card as crd 
 
-if __name__ == "__main__":
-    card_generator = CardGenerator()
+
+card = crd.ATPCard() 
+
+card.write_to_file("test.txt")
