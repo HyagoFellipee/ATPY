@@ -10,6 +10,8 @@ class ATPCard:
 
         self.high_precison = False 
         self.fixed_format = True 
+        self.exact_phasor = False
+
 
     def write(self):
         card_str = ""
@@ -18,6 +20,8 @@ class ATPCard:
         end_line = "BLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK"
 
         card_str += init_line
+        if self.exact_phasor:
+            card_str += "EXACT PHASOR EQUIVALENT\n"
         card_str += self.miscellaneous.write()
         # card_str += self.models.write()
         card_str += self.branch.write()
