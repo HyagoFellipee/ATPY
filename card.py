@@ -17,12 +17,16 @@ class ATPCard:
         card_str = ""
 
         init_line = "BEGIN NEW DATA CASE\n"
+        numbering_line = "C        1         2         3         4         5         6         7         8\nC 345678901234567890123456789012345678901234567890123456789012345678901234567890\n"
+
         end_line = "BLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK"
 
         card_str += init_line
         if self.exact_phasor:
             card_str += "EXACT PHASOR EQUIVALENT\n"
+
         card_str += self.miscellaneous.write()
+        card_str += numbering_line
         # card_str += self.models.write()
         card_str += self.branch.write()
         card_str += self.switch.write()
@@ -916,10 +920,6 @@ class SwitchElement:
         self._iout = new_iout
 
 
-
-         
-
-
 class Source:
     def __init__(self) -> None:
         pass
@@ -938,7 +938,7 @@ class Output:
 
 
     def write(self):
-        return self._init_line + self._line if self._line != " " * 80 else self._init_line
+        return self._init_line + self._line + '\n' if self._line != " " * 80 else self._init_line 
         
     def set_vars(self, vars):
         # The user can put less than 13 vars
