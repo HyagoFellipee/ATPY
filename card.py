@@ -21,18 +21,18 @@ class ATPCard:
         card_str += self.miscellaneous.write()
         # card_str += self.models.write()
         card_str += self.branch.write()
-        # card_str += self.switch.write()
+        card_str += self.switch.write()
         # card_str += self.source.write()
-        # card_str += self.output.write()
+        card_str += self.output.write()
         # card_str += self.plot.write()
 
         card_str += end_line
 
         return card_str
 
-
-
-
+    def write_to_file(self, file_name):
+        with open(file_name, "w") as f:
+            f.write(self.write())
 
 
 class Miscellaneous:
@@ -922,7 +922,64 @@ class Source:
 
 class Output:
     def __init__(self) -> None:
-        pass 
+        self._init_line = "/OUTPUT\n"
+        line_str_len = 80
+        self._line = " " * line_str_len
+        
+        blank_str_len = 2
+        self._blank = " " * blank_str_len
+
+        vars_str_len = 6
+        self._vars = [" " * vars_str_len for i in range(13)]
+
+
+    def write(self):
+        return self._init_line + self._line if self._line != " " * 80 else self._init_line
+        
+    def set_vars(self, vars):
+        # The user can put less than 13 vars
+        # if he puts less, the rest will be filled with blanks
+
+        if len(vars) > 13:
+            raise ValueError("There can be at most 13 vars")
+        
+        # I have to make sure that the vars are 6 characters long, adding blanks if necessary
+
+        for i in range(len(vars)):
+            if len(vars[i]) != 6:
+                vars[i] = vars[i] + " " * (6 - len(vars[i]))
+        
+        self.vars = vars
+
+    @property
+    def line(self):
+        return self._line
+
+    @line.setter
+    def line(self, new_line):
+        
+        self._line = new_line
+
+        self._blank = new_line[0:2]
+
+        # split by vars_str_len
+        self.vars = [new_line[i:i+6] for i in range(2, len(new_line), 6)]
+
+        # add blanks if necessary
+        self.vars = [var + " " * (6 - len(var)) for var in self.vars]
+
+    @property
+    def vars(self):
+        return self._vars
+    
+    @vars.setter
+    def vars(self, new_vars):
+        
+        self._line = self._blank + "".join(new_vars)
+
+        self._vars = new_vars
+
+    
 
 class Plot:
     def __init__(self) -> None:
