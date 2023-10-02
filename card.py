@@ -81,8 +81,10 @@ class Miscellaneous:
     
     @delta_t.setter
     def delta_t(self, new_delta_t):
-        if len(new_delta_t) != 8:
-            raise ValueError("Delta t must be 8 characters long")
+        if len(new_delta_t) > 8:
+            raise ValueError("Delta t cant be longer than 8 characters long")
+        
+        new_delta_t = " " * (8 - len(new_delta_t)) + new_delta_t
         
 
         self.first_line = new_delta_t + self.first_line[8:]
@@ -96,8 +98,10 @@ class Miscellaneous:
     
     @t_max.setter
     def t_max(self, new_t_max):
-        if len(new_t_max) != 8:
-            raise ValueError("T max must be 8 characters long")
+        if len(new_t_max) > 8:
+            raise ValueError("T max cant be longer than 8 characters long")
+        
+        new_t_max = " " * (8 - len(new_t_max)) + new_t_max
         
         self.first_line = self.first_line[0:8] + new_t_max + self.first_line[16:]
 
@@ -109,8 +113,10 @@ class Miscellaneous:
     
     @x_opt.setter
     def x_opt(self, new_x_opt):
-        if len(new_x_opt) != 8:
-            raise ValueError("X opt must be 8 characters long")
+        if len(new_x_opt) > 8:
+            raise ValueError("X opt cant be longer than 8 characters long")
+        
+        new_x_opt = " " * (8 - len(new_x_opt)) + new_x_opt
         
         self.first_line = self.first_line[0:16] + new_x_opt + self.first_line[24:]
 
@@ -122,8 +128,10 @@ class Miscellaneous:
     
     @c_opt.setter
     def c_opt(self, new_c_opt):
-        if len(new_c_opt) != 8:
-            raise ValueError("C opt must be 8 characters long")
+        if len(new_c_opt) > 8:
+            raise ValueError("C opt cant be longer than 8 characters long")
+        
+        new_c_opt = " " * (8 - len(new_c_opt)) + new_c_opt
         
         self.first_line = self.first_line[0:24] + new_c_opt + self.first_line[32:]
 
@@ -135,8 +143,10 @@ class Miscellaneous:
     
     @epslin.setter
     def epslin(self, new_epslin):
-        if len(new_epslin) != 8:
-            raise ValueError("Epslin must be 8 characters long")
+        if len(new_epslin) > 8:
+            raise ValueError("Epslin cant be longer than 8 characters long")
+        
+        new_epslin = " " * (8 - len(new_epslin)) + new_epslin
         
         self.first_line = self.first_line[0:32] + new_epslin + self.first_line[40:]
 
@@ -148,8 +158,10 @@ class Miscellaneous:
     
     @tolmat.setter
     def tolmat(self, new_tolmat):
-        if len(new_tolmat) != 8:
-            raise ValueError("Tolmat must be 8 characters long")
+        if len(new_tolmat) > 8:
+            raise ValueError("Tolmat cant be longer than 8 characters long")
+        
+        new_tolmat = " " * (8 - len(new_tolmat)) + new_tolmat
         
         self.first_line = self.first_line[0:40] + new_tolmat + self.first_line[48:]
 
@@ -161,8 +173,10 @@ class Miscellaneous:
     
     @tstart.setter
     def tstart(self, new_tstart):
-        if len(new_tstart) != 8:
-            raise ValueError("Tstart must be 8 characters long")
+        if len(new_tstart) > 8:
+            raise ValueError("Tstart cant be longer than 8 characters long")
+        
+        new_tstart = " " * (8 - len(new_tstart)) + new_tstart
         
         self.first_line = self.first_line[0:48] + new_tstart
 
@@ -174,8 +188,10 @@ class Miscellaneous:
     
     @iout.setter
     def iout(self, new_iout):
-        if len(new_iout) != 8:
-            raise ValueError("Iout must be 8 characters long")
+        if len(new_iout) > 8:
+            raise ValueError("Iout cant be longer than 8 characters long")
+        
+        new_iout = " " * (8 - len(new_iout)) + new_iout
         
         self.second_line = new_iout + self.second_line[8:]
         
@@ -187,8 +203,10 @@ class Miscellaneous:
     
     @iplot.setter
     def iplot(self, new_iplot):
-        if len(new_iplot) != 8:
-            raise ValueError("Iplot must be 8 characters long")
+        if len(new_iplot) > 8:
+            raise ValueError("Iplot cant be longer than 8 characters long")
+        
+        new_iplot = " " * (8 - len(new_iplot)) + new_iplot
         
         self.second_line = self.second_line[0:8] + new_iplot + self.second_line[16:]
 
@@ -200,8 +218,10 @@ class Miscellaneous:
     
     @idoubl.setter
     def idoubl(self, new_idoubl):
-        if len(new_idoubl) != 8:
-            raise ValueError("Idoubl must be 8 characters long")
+        if len(new_idoubl) > 8:
+            raise ValueError("Idoubl cant be longer than 8 characters long")
+        
+        new_idoubl = " " * (8 - len(new_idoubl)) + new_idoubl
         
         self.second_line = self.second_line[0:16] + new_idoubl + self.second_line[24:]
 
@@ -213,8 +233,10 @@ class Miscellaneous:
     
     @kout.setter
     def kout(self, new_kout):
-        if len(new_kout) != 8:
-            raise ValueError("Kout must be 8 characters long")
+        if len(new_kout) > 8:
+            raise ValueError("Kout cant be longer than 8 characters long")
+        
+        new_kout = " " * (8 - len(new_kout)) + new_kout
         
         self.second_line = self.second_line[0:24] + new_kout + self.second_line[32:]
 
@@ -226,8 +248,10 @@ class Miscellaneous:
     
     @maxout.setter
     def maxout(self, new_maxout):
-        if len(new_maxout) != 8:
-            raise ValueError("Maxout must be 8 characters long")
+        if len(new_maxout) > 8:
+            raise ValueError("Maxout cant be longer than 8 characters long")
+        
+        new_maxout = " " * (8 - len(new_maxout)) + new_maxout
         
         self.second_line = self.second_line[0:32] + new_maxout + self.second_line[40:]
 
@@ -240,8 +264,10 @@ class Miscellaneous:
     
     @ipun.setter
     def ipun(self, new_ipun):
-        if len(new_ipun) != 8:
-            raise ValueError("Ipun must be 8 characters long")
+        if len(new_ipun) > 8:
+            raise ValueError("Ipun cant be longer than 8 characters long")
+        
+        new_ipun = " " * (8 - len(new_ipun)) + new_ipun
         
         self.second_line = self.second_line[0:40] + new_ipun + self.second_line[48:]
 
@@ -253,8 +279,10 @@ class Miscellaneous:
     
     @memsav.setter
     def memsav(self, new_memsav):
-        if len(new_memsav) != 8:
-            raise ValueError("Memsav must be 8 characters long")
+        if len(new_memsav) > 8:
+            raise ValueError("Memsav cant be longer than 8 characters long")
+        
+        new_memsav = " " * (8 - len(new_memsav)) + new_memsav
         
         self.second_line = self.second_line[0:48] + new_memsav + self.second_line[56:]
 
@@ -266,8 +294,10 @@ class Miscellaneous:
     
     @icat.setter
     def icat(self, new_icat):
-        if len(new_icat) != 8:
-            raise ValueError("Icat must be 8 characters long")
+        if len(new_icat) > 8:
+            raise ValueError("Icat cant be longer than 8 characters long")
+        
+        new_icat = " " * (8 - len(new_icat)) + new_icat
         
         self.second_line = self.second_line[0:56] + new_icat + self.second_line[64:]
 
@@ -279,8 +309,10 @@ class Miscellaneous:
     
     @nenerg.setter
     def nenerg(self, new_nenerg):
-        if len(new_nenerg) != 8:
-            raise ValueError("Nenerg must be 8 characters long")
+        if len(new_nenerg) > 8:
+            raise ValueError("Nenerg cant be longer than 8 characters long")
+        
+        new_nenerg = " " * (8 - len(new_nenerg)) + new_nenerg
         
         self.second_line = self.second_line[0:64] + new_nenerg + self.second_line[72:]
 
@@ -292,8 +324,10 @@ class Miscellaneous:
     
     @iprsup.setter
     def iprsup(self, new_iprsup):
-        if len(new_iprsup) != 8:
-            raise ValueError("Iprsup must be 8 characters long")
+        if len(new_iprsup) > 8:
+            raise ValueError("Iprsup cant be longer than 8 characters long")
+        
+        new_iprsup = " " * (8 - len(new_iprsup)) + new_iprsup
         
         self.second_line = self.second_line[0:72] + new_iprsup
 
