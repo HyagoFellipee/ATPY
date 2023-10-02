@@ -411,7 +411,6 @@ class Models:
 
     def write_model_boxes(self):    
         model_boxes_str = ""
-        print("oi")
         for model_box in self.model_boxes:
             model_boxes_str += model_box.write()+"\n"
         
@@ -631,7 +630,6 @@ class ModelBox:
 
     def add_data(self, data_key, data_value):
         if data_key not in self.datas.keys():
-            print(data_key)
             raise ValueError("Data key must be in the model code")
         
         if len(str(data_value)) > 8:
