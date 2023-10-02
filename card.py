@@ -19,15 +19,15 @@ class ATPCard:
         init_line = "BEGIN NEW DATA CASE\n"
         numbering_line = "C        1         2         3         4         5         6         7         8\nC 345678901234567890123456789012345678901234567890123456789012345678901234567890\n"
 
-        end_line = "BLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK"
+        end_line = "BLANK MODELS\nBLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK"
 
         card_str += init_line
         if self.exact_phasor:
             card_str += "EXACT PHASOR EQUIVALENT\n"
 
         card_str += self.miscellaneous.write()
-        card_str += numbering_line
         card_str += self.models.write()
+        card_str += numbering_line
         card_str += self.branch.write()
         card_str += self.switch.write()
         card_str += self.source.write()
@@ -84,7 +84,7 @@ class Miscellaneous:
         if len(new_delta_t) > 8:
             raise ValueError("Delta t cant be longer than 8 characters long")
         
-        new_delta_t = " " * (8 - len(new_delta_t)) + new_delta_t
+        new_delta_t = " " * (8 - len(new_delta_t)) + new_delta_t 
         
 
         self.first_line = new_delta_t + self.first_line[8:]
@@ -101,7 +101,7 @@ class Miscellaneous:
         if len(new_t_max) > 8:
             raise ValueError("T max cant be longer than 8 characters long")
         
-        new_t_max = " " * (8 - len(new_t_max)) + new_t_max
+        new_t_max = " " * (8 - len(new_t_max)) + new_t_max 
         
         self.first_line = self.first_line[0:8] + new_t_max + self.first_line[16:]
 
@@ -116,7 +116,7 @@ class Miscellaneous:
         if len(new_x_opt) > 8:
             raise ValueError("X opt cant be longer than 8 characters long")
         
-        new_x_opt = " " * (8 - len(new_x_opt)) + new_x_opt
+        new_x_opt = " " * (8 - len(new_x_opt)) + new_x_opt 
         
         self.first_line = self.first_line[0:16] + new_x_opt + self.first_line[24:]
 
@@ -131,7 +131,7 @@ class Miscellaneous:
         if len(new_c_opt) > 8:
             raise ValueError("C opt cant be longer than 8 characters long")
         
-        new_c_opt = " " * (8 - len(new_c_opt)) + new_c_opt
+        new_c_opt = " " * (8 - len(new_c_opt)) + new_c_opt 
         
         self.first_line = self.first_line[0:24] + new_c_opt + self.first_line[32:]
 
@@ -146,7 +146,7 @@ class Miscellaneous:
         if len(new_epslin) > 8:
             raise ValueError("Epslin cant be longer than 8 characters long")
         
-        new_epslin = " " * (8 - len(new_epslin)) + new_epslin
+        new_epslin = " " * (8 - len(new_epslin)) + new_epslin 
         
         self.first_line = self.first_line[0:32] + new_epslin + self.first_line[40:]
 
@@ -161,7 +161,7 @@ class Miscellaneous:
         if len(new_tolmat) > 8:
             raise ValueError("Tolmat cant be longer than 8 characters long")
         
-        new_tolmat = " " * (8 - len(new_tolmat)) + new_tolmat
+        new_tolmat = " " * (8 - len(new_tolmat)) + new_tolmat 
         
         self.first_line = self.first_line[0:40] + new_tolmat + self.first_line[48:]
 
@@ -176,7 +176,7 @@ class Miscellaneous:
         if len(new_tstart) > 8:
             raise ValueError("Tstart cant be longer than 8 characters long")
         
-        new_tstart = " " * (8 - len(new_tstart)) + new_tstart
+        new_tstart = " " * (8 - len(new_tstart)) + new_tstart 
         
         self.first_line = self.first_line[0:48] + new_tstart
 
@@ -191,7 +191,7 @@ class Miscellaneous:
         if len(new_iout) > 8:
             raise ValueError("Iout cant be longer than 8 characters long")
         
-        new_iout = " " * (8 - len(new_iout)) + new_iout
+        new_iout = " " * (8 - len(new_iout)) + new_iout 
         
         self.second_line = new_iout + self.second_line[8:]
         
@@ -206,7 +206,7 @@ class Miscellaneous:
         if len(new_iplot) > 8:
             raise ValueError("Iplot cant be longer than 8 characters long")
         
-        new_iplot = " " * (8 - len(new_iplot)) + new_iplot
+        new_iplot = " " * (8 - len(new_iplot)) + new_iplot 
         
         self.second_line = self.second_line[0:8] + new_iplot + self.second_line[16:]
 
@@ -221,7 +221,7 @@ class Miscellaneous:
         if len(new_idoubl) > 8:
             raise ValueError("Idoubl cant be longer than 8 characters long")
         
-        new_idoubl = " " * (8 - len(new_idoubl)) + new_idoubl
+        new_idoubl = " " * (8 - len(new_idoubl)) + new_idoubl 
         
         self.second_line = self.second_line[0:16] + new_idoubl + self.second_line[24:]
 
@@ -236,7 +236,7 @@ class Miscellaneous:
         if len(new_kout) > 8:
             raise ValueError("Kout cant be longer than 8 characters long")
         
-        new_kout = " " * (8 - len(new_kout)) + new_kout
+        new_kout = " " * (8 - len(new_kout)) + new_kout 
         
         self.second_line = self.second_line[0:24] + new_kout + self.second_line[32:]
 
@@ -251,7 +251,7 @@ class Miscellaneous:
         if len(new_maxout) > 8:
             raise ValueError("Maxout cant be longer than 8 characters long")
         
-        new_maxout = " " * (8 - len(new_maxout)) + new_maxout
+        new_maxout = " " * (8 - len(new_maxout)) + new_maxout 
         
         self.second_line = self.second_line[0:32] + new_maxout + self.second_line[40:]
 
@@ -267,7 +267,7 @@ class Miscellaneous:
         if len(new_ipun) > 8:
             raise ValueError("Ipun cant be longer than 8 characters long")
         
-        new_ipun = " " * (8 - len(new_ipun)) + new_ipun
+        new_ipun = " " * (8 - len(new_ipun)) + new_ipun 
         
         self.second_line = self.second_line[0:40] + new_ipun + self.second_line[48:]
 
@@ -282,7 +282,7 @@ class Miscellaneous:
         if len(new_memsav) > 8:
             raise ValueError("Memsav cant be longer than 8 characters long")
         
-        new_memsav = " " * (8 - len(new_memsav)) + new_memsav
+        new_memsav = " " * (8 - len(new_memsav)) + new_memsav 
         
         self.second_line = self.second_line[0:48] + new_memsav + self.second_line[56:]
 
@@ -297,7 +297,7 @@ class Miscellaneous:
         if len(new_icat) > 8:
             raise ValueError("Icat cant be longer than 8 characters long")
         
-        new_icat = " " * (8 - len(new_icat)) + new_icat
+        new_icat = " " * (8 - len(new_icat)) + new_icat 
         
         self.second_line = self.second_line[0:56] + new_icat + self.second_line[64:]
 
@@ -312,7 +312,7 @@ class Miscellaneous:
         if len(new_nenerg) > 8:
             raise ValueError("Nenerg cant be longer than 8 characters long")
         
-        new_nenerg = " " * (8 - len(new_nenerg)) + new_nenerg
+        new_nenerg = " " * (8 - len(new_nenerg)) + new_nenerg 
         
         self.second_line = self.second_line[0:64] + new_nenerg + self.second_line[72:]
 
@@ -327,7 +327,7 @@ class Miscellaneous:
         if len(new_iprsup) > 8:
             raise ValueError("Iprsup cant be longer than 8 characters long")
         
-        new_iprsup = " " * (8 - len(new_iprsup)) + new_iprsup
+        new_iprsup = " " * (8 - len(new_iprsup)) + new_iprsup 
         
         self.second_line = self.second_line[0:72] + new_iprsup
 
@@ -405,9 +405,12 @@ class Models:
 
         models_str += self.write_inputs()
         models_str += self.write_outputs()
-        models_str += self.write_records()
         models_str += self.write_models_codes()
         models_str += self.write_model_boxes()
+        models_str += self.write_records()
+
+        end_line = "ENDMODELS\n"
+        models_str += end_line
 
         return models_str
 
@@ -1980,7 +1983,7 @@ class Output:
     def write(self):
         return self._init_line + self._line + '\n' if self._line != " " * 80 else self._init_line 
         
-    def set_vars(self, vars):
+    def add_vars(self, vars):
         # The user can put less than 13 vars
         # if he puts less, the rest will be filled with blanks
 
@@ -1993,7 +1996,9 @@ class Output:
             if len(vars[i]) != 6:
                 vars[i] = vars[i] + " " * (6 - len(vars[i]))
         
-        self.vars = vars
+        self._line = self._blank + "".join(vars)	 
+
+        self._vars = vars
 
     @property
     def line(self):
@@ -2019,9 +2024,7 @@ class Output:
     @vars.setter
     def vars(self, new_vars):
         
-        self._line = self._blank + "".join(new_vars)
-
-        self._vars = new_vars
+        self._vars = self.add_vars(new_vars)
 
     
 
