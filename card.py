@@ -1,3 +1,4 @@
+import copy 
 class ATPCard: 
     def __init__(self) -> None:
         self.miscellaneous = Miscellaneous()
@@ -42,8 +43,9 @@ class ATPCard:
         with open(file_name, "w") as f:
             f.write(self.write())
 
-
-
+    def copy(self):
+        return copy.deepcopy(self)
+    
 class Miscellaneous:
     def __init__(self) -> None:
 
@@ -393,7 +395,8 @@ class Models:
         self.models_codes = []
         self.model_boxes = []
 
-
+    def copy(self):
+        return copy.deepcopy(self)
 
     def write(self):
 
@@ -521,6 +524,9 @@ class ModelCode:
         self.inputs = []
         self.outputs = []
         
+    def copy(self):
+        return copy.deepcopy(self)
+    
     @property
     def code(self):
         return self._code
@@ -708,6 +714,8 @@ class Branch:
             raise TypeError("Branch must be of type RlcElement")
         self.branches.append(branch)
 
+    def copy(self):
+        return copy.deepcopy(self)
 
 class RlcElement:
     def __init__(self):
@@ -724,6 +732,8 @@ class RlcElement:
 
         self._resistance = " " * resistance_str_len
 
+    def copy(self):
+        return copy.deepcopy(self)
 
 
 class RlcElementBasic(RlcElement):
@@ -1102,7 +1112,8 @@ class Switch:
             raise TypeError("Switch must be of type SwitchElement")
         self.switches.append(switch)
 
-
+    def copy(self):
+        return copy.deepcopy(self)
 class SwitchElement:
     def __init__(self) -> None:
 
@@ -1139,6 +1150,9 @@ class SwitchElement:
 
         self._iout = " "
 
+    def copy(self):
+        return copy.deepcopy(self)
+    
     def write(self):
         return f"{self.line}\n"
 
@@ -1275,6 +1289,9 @@ class Source:
             raise TypeError("sources must be of type SourceElement")
         self.sources.append(source)
 
+    def copy(self):
+        return copy.deepcopy(self)
+
 class SourceElement:
     def __init__(self):
         type_str_len = 2
@@ -1292,6 +1309,8 @@ class SourceElement:
         self._tstart = " " * param_str_len
         self._tstop = " " * param_str_len
 
+    def copy(self):
+        return copy.deepcopy(self)
 
     
 class DCSource(SourceElement):
@@ -1987,6 +2006,9 @@ class Output:
 
     def write(self):
         return self._init_line + self._line + '\n' if self._line != " " * 80 else self._init_line 
+    
+    def copy(self):
+        return copy.deepcopy(self)
         
     def add_vars(self, vars):
         # The user can put less than 13 vars
