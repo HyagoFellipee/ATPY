@@ -155,8 +155,12 @@ sources = crd.Source()
 source_heidler1 = crd.HeidlerSource()
 source_heidler1.line = "15XX0005 0        2.     2.E-8      100.        2.              6.5E-8      1.E3"
 
-source_heidler2 = crd.HeidlerSource()
-source_heidler2.line = "15XX0007 0        2.     2.E-8      100.        2.              6.5E-8      1.E3"
+
+source_heidler2 = source_heidler1.copy()
+source_heidler2.name = "XX0007"
+
+# source_heidler2 = crd.HeidlerSource()
+# source_heidler2.line = "15XX0007 0        2.     2.E-8      100.        2.              6.5E-8      1.E3"
 
 
 sources.sources = [source_heidler1, source_heidler2]
@@ -169,6 +173,5 @@ outputs = crd.Output()
 outputs.add_vars(["VR", "VL", "VR2", "VL2"])
 card.output = outputs
 
-print(outputs.vars)
 
 card.write_to_file("CasoBase_Cabo5m_PSCC_gerado.atp")
