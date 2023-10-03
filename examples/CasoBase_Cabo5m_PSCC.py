@@ -23,19 +23,19 @@ model_code.name = "PBMOD"
 model_code.add_code("code.txt")
 
 model_box_bpfl1 = crd.ModelBox(model_code)
-model_box_bpfl1.name = "BPFIL1"
+model_box_bpfl1.name = "BLPFIL1"
 
 model_box_bpfl1.inputs["X"] = "MM0003"
 model_box_bpfl1.outputs["XF"] = "ILF"
 model_box_bpfl1.datas = { 
-    "Gain": "0.7425",
+    "Gain": "0.782813",
     "FilterFreq": "1.37E7",
     "FilterOrder": "2.",
     "ScaleFreq": "1.37E7"
 }
 
 model_box_bpfl2 = crd.ModelBox(model_code)
-model_box_bpfl2.name = "BPFIL2"
+model_box_bpfl2.name = "BLPFIL2"
 
 model_box_bpfl2.inputs["X"] = "MM0001"
 model_box_bpfl2.outputs["XF"] = "VLF"
@@ -47,7 +47,7 @@ model_box_bpfl2.datas = {
 }
 
 model_box_bpfl3 = crd.ModelBox(model_code)
-model_box_bpfl3.name = "BPFIL3"
+model_box_bpfl3.name = "BLPFIL3"
 
 model_box_bpfl3.inputs["X"] = "MM0002"
 model_box_bpfl3.outputs["XF"] = "VRF"
@@ -59,7 +59,7 @@ model_box_bpfl3.datas = {
 }
 
 model_box_bpfl4 = crd.ModelBox(model_code)
-model_box_bpfl4.name = "BPFIL4"
+model_box_bpfl4.name = "BLPFIL4"
 
 model_box_bpfl4.inputs["X"] = "MM0006"
 model_box_bpfl4.outputs["XF"] = "ILF2"
@@ -71,7 +71,7 @@ model_box_bpfl4.datas = {
 }
 
 model_box_bpfl5 = crd.ModelBox(model_code)
-model_box_bpfl5.name = "BPFIL5"
+model_box_bpfl5.name = "BLPFIL5"
 
 model_box_bpfl5.inputs["X"] = "MM0004"
 model_box_bpfl5.outputs["XF"] = "VLF2"
@@ -83,7 +83,7 @@ model_box_bpfl5.datas = {
 }
 
 model_box_bpfl6 = crd.ModelBox(model_code)
-model_box_bpfl6.name = "BPFIL6"
+model_box_bpfl6.name = "BLPFIL6"
 
 model_box_bpfl6.inputs["X"] = "MM0005"
 model_box_bpfl6.outputs["XF"] = "VRF2"
@@ -155,8 +155,8 @@ sources = crd.Source()
 source_heidler1 = crd.HeidlerSource()
 source_heidler1.line = "15XX0005 0        2.     2.E-8      100.        2.              6.5E-8      1.E3"
 
-source_heidler2 = source_heidler1
-source_heidler1.name = "XX0007"
+source_heidler2 = crd.HeidlerSource()
+source_heidler2.line = "15XX0007 0        2.     2.E-8      100.        2.              6.5E-8      1.E3"
 
 
 sources.sources = [source_heidler1, source_heidler2]

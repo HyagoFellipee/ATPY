@@ -43,6 +43,7 @@ class ATPCard:
             f.write(self.write())
 
 
+
 class Miscellaneous:
     def __init__(self) -> None:
 
@@ -395,6 +396,10 @@ class Models:
 
 
     def write(self):
+
+        if(len(self.inputs) == 0):
+            return ""
+        
         models_str = ""
         
         init_line = "/MODELS\nMODELS\n"
