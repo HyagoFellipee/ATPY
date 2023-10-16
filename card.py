@@ -46,6 +46,15 @@ class ATPCard:
     def copy(self):
         return copy.deepcopy(self)
     
+    def from_file(self, file_name):
+        self.miscellaneous = self.miscellaneous.from_file(file_name)
+        # self.models = self.models.from_file(file_name)
+        # self.branch = self.branch.from_file(file_name)
+        # self.switch = self.switch.from_file(file_name)
+        # self.source = self.source.from_file(file_name)
+        # self.output = self.output.from_file(file_name)
+        # self.plot = self.plot.from_file(file_name)
+        pass
 class Miscellaneous:
     def __init__(self) -> None:
 
@@ -346,8 +355,11 @@ class Miscellaneous:
     
     @first_line.setter
     def first_line(self, new_first_line):
-        if len(new_first_line) != 56:
-            raise ValueError("First line must be 56 characters long")
+        if len(new_first_line) > 56:
+            raise ValueError("First line cant be longer than 56 characters long")
+        
+        #Adding blanks if necessary
+        new_first_line = new_first_line + " " * (56 - len(new_first_line))
         
         self._delta_t = new_first_line[0:8]
         self._t_max = new_first_line[8:16]
@@ -366,8 +378,11 @@ class Miscellaneous:
     
     @second_line.setter
     def second_line(self, new_second_line):
-        if len(new_second_line) != 80:
-            raise ValueError("Second line must be 80 characters long")
+        if len(new_second_line) > 80:
+            raise ValueError("Second line cant be longer than 80 characters long")
+
+        #Adding blanks if necessary
+        new_second_line = new_second_line + " " * (80 - len(new_second_line))
         
         self._iout = new_second_line[0:8]
         self._iplot = new_second_line[8:16]
@@ -384,6 +399,42 @@ class Miscellaneous:
 
     def write(self): 
         return f"{self.comment_line}\n{self.first_line}\n{self.second_line}\n"
+    
+    def copy(self):
+        return copy.deepcopy(self)
+
+    def from_file(self, file_name):
+        with open(file_name, "r") as f:
+            lines = f.readlines()
+
+        # The lines start after the comment "C  dT  >< Tmax >< Xopt >< Copt ><Epsiln>""
+        # And ends before the '/' character
+
+        # Get the index of the first line
+        first_line_index = -1
+        last_line_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("C  dT  >< Tmax >< Xopt >< Copt ><Epsiln>"):
+                first_line_index = index + 1
+                break
+        
+        # Get the index of the last line
+        for index, line in enumerate(lines):
+            if line.startswith("/"):
+                last_line_index = index
+                break
+
+        # Remove every line that its first character is a 'C'
+        lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
+        # Remove the '\n' character from the end of each line
+        lines = [line[:-1] for line in lines]
+
+
+        self.first_line = lines[0]
+        self.second_line = lines[1]
+
+        return self
 
 class Models:
     def __init__(self) -> None:
