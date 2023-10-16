@@ -47,6 +47,16 @@ class ATPCard:
         return copy.deepcopy(self)
     
     def from_file(self, file_name):
+
+        # Get Lines 
+        with open(file_name, "r") as f:
+            lines = f.readlines()
+
+        # If EXACT PHASOR EQUIVALENT\n is in the file, then exact phasor is true
+        if "EXACT PHASOR EQUIVALENT\n" in lines:
+            self.exact_phasor = True
+            lines.remove("EXACT PHASOR EQUIVALENT\n")
+            
         self.miscellaneous = self.miscellaneous.from_file(file_name)
         # self.models = self.models.from_file(file_name)
         # self.branch = self.branch.from_file(file_name)
