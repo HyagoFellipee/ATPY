@@ -60,8 +60,8 @@ class ATPCard:
         self.miscellaneous = self.miscellaneous.from_file(file_name)
         # self.models = self.models.from_file(file_name)
         self.branch = self.branch.from_file(file_name)
-        # self.switch = self.switch.from_file(file_name)
-        # self.source = self.source.from_file(file_name)
+        self.switch = self.switch.from_file(file_name)
+        self.source = self.source.from_file(file_name)
         # self.output = self.output.from_file(file_name)
         # self.plot = self.plot.from_file(file_name)
         pass
@@ -798,7 +798,6 @@ class Branch:
                 break
 
 
-        print(first_line_index, last_line_index)
 
         lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
 
@@ -1215,6 +1214,34 @@ class Switch:
 
     def copy(self):
         return copy.deepcopy(self)
+    
+
+    def from_file(self, filename):
+        with open(filename, "r") as f:
+            lines = f.readlines()
+
+        first_line_index = -1
+        last_line_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("/SWITCH"):
+                first_line_index = index + 1
+                break
+
+        for index, line in enumerate(lines[first_line_index:]):
+            if line.startswith("/"):
+                last_line_index = index + first_line_index
+                break
+
+        lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
+        lines = [line[:-1] for line in lines]
+
+        for line in lines:
+            switch = SwitchElement()
+            switch.line = line
+            self.add_switch(switch)
+
+        return self
 class SwitchElement:
     def __init__(self) -> None:
 
@@ -1392,6 +1419,37 @@ class Source:
 
     def copy(self):
         return copy.deepcopy(self)
+    
+    def from_file(self, filename):
+        with open(filename, "r") as f:
+            lines = f.readlines()
+        
+        first_line_index = -1
+        last_line_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("/SOURCE"):
+                first_line_index = index + 1
+                break
+        
+        for index, line in enumerate(lines[first_line_index:]):
+            if line.startswith("/"):
+                last_line_index = index + first_line_index
+                break
+
+        lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
+
+        lines = [line[:-1] for line in lines]
+
+        for line in lines:
+            dc_source = DCSource()
+            dc_source.line = line
+            self.add_source(dc_source)
+        
+        return self
+    
+
+        
 
 class SourceElement:
     def __init__(self):
@@ -1421,8 +1479,6 @@ class DCSource(SourceElement):
         line_len = 80
         self._line = " " * line_len
         
-        # def __str__(self):
-        #     return f"Itype: {self._itype}, Name: {self._name}, St: {self._st}, Amplitude: {self._amplitude}, Tstart: {self._tstart}, Tstop: {self._tstop}"
     def write(self):
         return f"{self.line}\n"
         
