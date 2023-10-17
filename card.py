@@ -827,7 +827,6 @@ class Models:
                 # output value is after the ":= " 
                 output_key = line[line.index(":=") + 2:]
 
-                print(output_key, output_value)
                 model_box.outputs[output_key] = output_value
 
             self.model_boxes.append(model_box)
