@@ -56,10 +56,10 @@ class ATPCard:
         if "EXACT PHASOR EQUIVALENT\n" in lines:
             self.exact_phasor = True
             lines.remove("EXACT PHASOR EQUIVALENT\n")
-            
+
         self.miscellaneous = self.miscellaneous.from_file(file_name)
         # self.models = self.models.from_file(file_name)
-        # self.branch = self.branch.from_file(file_name)
+        self.branch = self.branch.from_file(file_name)
         # self.switch = self.switch.from_file(file_name)
         # self.source = self.source.from_file(file_name)
         # self.output = self.output.from_file(file_name)
@@ -777,6 +777,46 @@ class Branch:
 
     def copy(self):
         return copy.deepcopy(self)
+    
+    def from_file(self, filename): 
+        with open(filename, "r") as f:
+            lines = f.readlines()
+
+        first_line_index = -1
+        last_line_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("/BRANCH"):
+                first_line_index = index + 1
+                break
+
+        
+        # Start looking for the last line after the first line
+        for index, line in enumerate(lines[first_line_index:]):
+            if line.startswith("/"):
+                last_line_index = index + first_line_index
+                break
+
+
+        print(first_line_index, last_line_index)
+
+        lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
+
+        lines = [line[:-1] for line in lines]
+
+
+        for line in lines:
+            if line.startswith(" "): 
+                rlc_basic = RlcElementBasic()
+                rlc_basic.line = line
+                self.add_branch(rlc_basic)
+            else:
+                rlc_distrib = RlcElementDistParams()
+                rlc_distrib.line = line
+                self.add_branch(rlc_distrib)
+
+        return self
+
 
 class RlcElement:
     def __init__(self):
