@@ -62,7 +62,7 @@ class ATPCard:
         self.branch = self.branch.from_file(file_name)
         self.switch = self.switch.from_file(file_name)
         self.source = self.source.from_file(file_name)
-        # self.output = self.output.from_file(file_name)
+        self.output = self.output.from_file(file_name)
         # self.plot = self.plot.from_file(file_name)
         pass
 class Miscellaneous:
@@ -1448,9 +1448,6 @@ class Source:
         
         return self
     
-
-        
-
 class SourceElement:
     def __init__(self):
         type_str_len = 2
@@ -2210,7 +2207,32 @@ class Output:
         
         self._vars = self.add_vars(new_vars)
 
-    
+    def from_file(self, filename):
+        with open(filename, "r") as f:
+            lines = f.readlines()
+        
+        first_line_index = -1
+        last_line_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("/OUTPUT"):
+                first_line_index = index + 1
+                break
+        
+        for index, line in enumerate(lines[first_line_index:]):
+            if line.startswith("BLANK"):
+                last_line_index = index + first_line_index
+                break
+
+        lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
+        line = lines[0][:-1]
+        
+        
+        if len(lines) > 0: 
+            self._line = line
+        else :
+            self._line = " " * 80
+        return self
 
 class Plot:
     def __init__(self) -> None:
