@@ -58,13 +58,12 @@ class ATPCard:
             lines.remove("EXACT PHASOR EQUIVALENT\n")
 
         self.miscellaneous = self.miscellaneous.from_file(file_name)
-        # self.models = self.models.from_file(file_name)
+        self.models = self.models.from_file(file_name)
         self.branch = self.branch.from_file(file_name)
         self.switch = self.switch.from_file(file_name)
         self.source = self.source.from_file(file_name)
         self.output = self.output.from_file(file_name)
         # self.plot = self.plot.from_file(file_name)
-        pass
 class Miscellaneous:
     def __init__(self) -> None:
 
@@ -576,6 +575,265 @@ class Models:
 
     def add_model_box(self, model_box):
         self.model_boxes.append(model_box)
+
+    def from_file(self, file_name):
+        with open(file_name, "r") as f:
+            lines = f.readlines()
+        
+        first_line_index = -1
+        last_line_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("/MODELS"):
+                first_line_index = index + 1
+                break
+        
+        for index, line in enumerate(lines[first_line_index:]):
+            if line.startswith("ENDMODELS"):
+                last_line_index = index + first_line_index + 1
+                break
+        
+        lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
+        lines = [line[:-1] for line in lines]
+
+        # Getting inputs from lines
+        inputs = []
+
+        first_input_index = -1
+        last_input_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("INPUT"):
+                first_input_index = index + 1
+                break
+
+        
+        # INPUT ends when the line doesn't start with 2 spaces
+        for index, line in enumerate(lines[first_input_index:]):
+            if not line.startswith("  "):
+                last_input_index = index + first_input_index
+                break
+        
+        inputs_lines = lines[first_input_index:last_input_index]
+
+        for line in inputs_lines:
+            line = line[2:]
+            
+            # input is stored between { and }
+            input = line[line.index("{") + 1: line.index("}")]
+            inputs.append(input)
+        
+        if first_input_index != -1:
+            self.add_inputs(inputs)
+
+        # Getting outputs from lines
+        outputs = []
+
+        first_output_index = -1
+        last_output_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("OUTPUT"):
+                first_output_index = index + 1
+                break
+        
+        # OUTPUT ends when the line doesn't start with 2 spaces
+
+        for index, line in enumerate(lines[first_output_index:]):
+            if not line.startswith("  "):
+                last_output_index = index + first_output_index
+                break
+        
+        outputs_lines = lines[first_output_index:last_output_index]
+
+        for line in outputs_lines:
+            line = line[2:]
+            outputs.append(line)
+        
+        if first_output_index != -1:
+            self.add_outputs(outputs)
+
+        # Getting records from lines    
+        records = []
+
+        first_record_index = -1
+        last_record_index = -1
+
+        for index, line in enumerate(lines):
+            if line.startswith("RECORD"):
+                first_record_index = index + 1
+                break
+        
+        # RECORD ends when the line doesn't start with 2 spaces
+
+        for index, line in enumerate(lines[first_record_index:]):
+            if not line.startswith("  "):
+                last_record_index = index + first_record_index
+                break
+
+        records_lines = lines[first_record_index:last_record_index]
+        
+
+        for line in records_lines:
+            line = line[2:]
+
+            # record is stored until the first space
+            record = line[:line.index(" ")]
+            records.append(record)
+
+        if first_record_index != -1:
+            self.add_records(records)
+
+        # Getting models codes from lines
+
+        first_model_code_indices = []
+        last_model_code_indices = []
+
+        for index, line in enumerate(lines):
+            # The model code starts with "MODEL " 
+            if line.startswith("MODEL "):
+                first_model_code_indices.append(index)
+
+        for index, line in enumerate(lines):
+            if line.startswith("ENDMODEL"):
+                last_model_code_indices.append(index+1)
+
+        for first_model_code_index, last_model_code_index in zip(first_model_code_indices, last_model_code_indices):
+            model_code_lines = lines[first_model_code_index:last_model_code_index]
+            model_code = ModelCode()
+            
+            model_code_str = ""
+            # Create the string of the model code
+            for line in model_code_lines:
+                model_code_str += line + "\n"
+
+            model_code.code = model_code_str
+            self.models_codes.append(model_code)
+
+        # Getting model boxes from lines
+
+        first_model_box_indices = []
+        last_model_box_indices = []
+
+        for index, line in enumerate(lines):
+            if line.startswith("USE"):
+                first_model_box_indices.append(index)
+        
+        for index, line in enumerate(lines):
+            if line.startswith("ENDUSE"):
+                last_model_box_indices.append(index)
+
+        for first_model_box_index, last_model_box_index in zip(first_model_box_indices, last_model_box_indices):
+            
+
+            model_box_lines = lines[first_model_box_index:last_model_box_index+1]
+            
+            #Get the name of the model code, that is after the USE keyword
+            model_code_name = model_box_lines[0].split(" ")[1]
+
+            #Get the model code with the same name
+            model_code = [model_code for model_code in self.models_codes if model_code.name == model_code_name][0]
+            
+            model_box = ModelBox(model_code)
+            
+            #Get the name of the model box, that is after the AS keyword
+            model_box.name = model_box_lines[0].split(" ")[3]
+
+
+            # Get the inputs of the model box
+
+            first_input_index = -1
+            last_input_index = -1
+
+            for index, line in enumerate(model_box_lines):
+                if line.startswith("INPUT"):
+                    first_input_index = index + 1
+                    break
+            
+            # INPUT ends when the line doesn't start with 2 spaces
+            for index, line in enumerate(model_box_lines[first_input_index:]):
+                if not line.startswith("  "):
+                    last_input_index = index + first_input_index
+                    break
+            
+            inputs_lines = model_box_lines[first_input_index:last_input_index]
+
+            for line in inputs_lines:
+                line = line[2:]
+                
+                # input key is after the two first spaces, and before the =:
+                input_key = line[:line.index(":=")]
+
+                # input value is after the ":= " 
+                input_value = line[line.index(":=") + 3:]
+
+                model_box.inputs[input_key] = input_value
+            
+            # Get the datas of the model box
+
+            first_input_index = -1
+            last_input_index = -1
+
+            for index, line in enumerate(model_box_lines):
+                if line.startswith("DATA"):
+                    first_input_index = index + 1
+                    break
+            
+            # DATA ends when the line doesn't start with 2 spaces
+            for index, line in enumerate(model_box_lines[first_input_index:]):
+                if not line.startswith("  "):
+                    last_input_index = index + first_input_index
+                    break
+            
+            datas_lines = model_box_lines[first_input_index:last_input_index]
+
+            for line in datas_lines:
+                line = line[2:]
+                
+                # data key is after the two first spaces, and before the =:
+                data_key = line[:line.index(":=")]
+
+                # data value is after the ":= " 
+                data_value = line[line.index(":=") + 3:]
+
+
+                model_box.add_data(data_key, data_value)
+
+            # Get the outputs of the model box
+
+            first_output_index = -1
+            last_output_index = -1
+
+            for index, line in enumerate(model_box_lines):
+                if line.startswith("OUTPUT"):
+                    first_output_index = index + 1
+                    break
+            
+            # OUTPUT ends when the line doesn't start with 2 spaces
+            for index, line in enumerate(model_box_lines[first_output_index:]):
+                if not line.startswith("  "):
+                    last_output_index = index + first_output_index
+                    break
+
+            
+            outputs_lines = model_box_lines[first_output_index:last_output_index]
+
+            for line in outputs_lines:
+                line = line[2:]
+                
+                # output key is after the two first spaces, and before the =:
+                output_value = line[:line.index(":=")]
+
+                # output value is after the ":= " 
+                output_key = line[line.index(":=") + 2:]
+
+                print(output_key, output_value)
+                model_box.outputs[output_key] = output_value
+
+            self.model_boxes.append(model_box)
+
+        return self
+
 
 class ModelCode:
     def __init__(self) -> None:
@@ -2225,11 +2483,10 @@ class Output:
                 break
 
         lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
-        line = lines[0][:-1]
         
         
         if len(lines) > 0: 
-            self._line = line
+            self._line = lines[0][:-1]
         else :
             self._line = " " * 80
         return self
