@@ -74,7 +74,8 @@ class ATPCard:
         self, 
         atp_path, 
         atp_input_path,
-        output_path=None):
+        output_path=None,
+        no_temp_file=True):
         
         # valid_alternatives = ["PY", "file_name", "DISK", "HELP", "GO", "KEY", "STOP", "BOTH", "DIR"]
         # if alternative not in valid_alternatives:
@@ -128,11 +129,17 @@ class ATPCard:
             files = [f for f in os.listdir(atp_path_folder) if os.path.isfile(os.path.join(atp_path_folder, f))]
             files = [f for f in files if os.path.getmtime(os.path.join(atp_path_folder, f)) > time.time() - 10]
 
+            if no_temp_file:
+                files = [f for f in files if not f.endswith("tmp")]
+                
+
             for file in files:
                 # if file exists in the output folder, delete it and put the new one
                 if os.path.exists(os.path.join(output_path, file)):
                     os.remove(os.path.join(output_path, file))
-                    
+
+                
+
                 os.rename(os.path.join(atp_path_folder, file), os.path.join(output_path, file))
 
         
