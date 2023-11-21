@@ -1,4 +1,9 @@
 import copy 
+import subprocess
+import concurrent.futures
+import pyautogui
+import os
+import time
 class ATPCard: 
     def __init__(self) -> None:
         self.miscellaneous = Miscellaneous()
@@ -20,7 +25,7 @@ class ATPCard:
         init_line = "BEGIN NEW DATA CASE\n"
         numbering_line = "C        1         2         3         4         5         6         7         8\nC 345678901234567890123456789012345678901234567890123456789012345678901234567890\n"
 
-        end_line = "BLANK MODELS\nBLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK"
+        end_line = "BLANK MODELS\nBLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK\n"
 
         card_str += init_line
         if self.exact_phasor:
@@ -64,6 +69,72 @@ class ATPCard:
         self.source = self.source.from_file(file_name)
         self.output = self.output.from_file(file_name)
         # self.plot = self.plot.from_file(file_name)
+
+    def run_atp(
+        self, 
+        atp_path, 
+        atp_input_path,
+        output_path=None):
+        
+        # valid_alternatives = ["PY", "file_name", "DISK", "HELP", "GO", "KEY", "STOP", "BOTH", "DIR"]
+        # if alternative not in valid_alternatives:
+        #     raise ValueError(f"Alternative must be one of {valid_alternatives}")
+        
+        # put atp input file in the same folder as the atp executable
+        atp_path_folder = os.path.dirname(atp_path)
+        os.chdir(atp_path_folder)
+
+        
+
+        def run_atp_process(atp_path):
+            # Run ATP 
+            subprocess.run([atp_path])
+
+        def send_input_process(atp_input_path):
+            # Send the alternative to ATP
+            pyautogui.write("BOTH")
+            pyautogui.press("enter")
+
+
+
+
+            # Send the input to ATP
+            pyautogui.write(atp_input_path)
+            pyautogui.press("enter")
+
+            # Send the output to ATP
+            pyautogui.write("-r")
+            pyautogui.press("enter")
+
+            #Finish atp 
+            pyautogui.write("STOP")
+            pyautogui.press("enter")
+
+
+
+
+        
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            executor.submit(run_atp_process, atp_path)
+            executor.submit(send_input_process, atp_input_path)
+
+            # concurrent.futures.wait([send_input_process, run_atp_process], return_when=concurrent.futures.ALL_COMPLETED)
+         
+
+        # put the output file in the output folder
+
+        if output_path is not None:
+            # see which files were modified in the last 10 seconds
+            files = [f for f in os.listdir(atp_path_folder) if os.path.isfile(os.path.join(atp_path_folder, f))]
+            files = [f for f in files if os.path.getmtime(os.path.join(atp_path_folder, f)) > time.time() - 10]
+
+            for file in files:
+                os.rename(os.path.join(atp_path_folder, file), os.path.join(output_path, file))
+
+        
+
+    
+
 class Miscellaneous:
     def __init__(self) -> None:
 
