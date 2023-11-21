@@ -129,6 +129,10 @@ class ATPCard:
             files = [f for f in files if os.path.getmtime(os.path.join(atp_path_folder, f)) > time.time() - 10]
 
             for file in files:
+                # if file exists in the output folder, delete it and put the new one
+                if os.path.exists(os.path.join(output_path, file)):
+                    os.remove(os.path.join(output_path, file))
+                    
                 os.rename(os.path.join(atp_path_folder, file), os.path.join(output_path, file))
 
         
