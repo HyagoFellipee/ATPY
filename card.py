@@ -1063,20 +1063,20 @@ class ModelBox:
 
         model_box_str += first_line
 
-        inputs_str = "INPUT\n"
+        inputs_str = "INPUT\n" if len(self.inputs) > 0 else ""
         model_box_str += inputs_str
 
         for input_key, input_value in self.inputs.items():
             model_box_str += f"  {input_key}:= {input_value}\n"
 
-        datas_str = "DATA\n"
+        datas_str = "DATA\n" if len(self.datas) > 0 else ""
 
         model_box_str += datas_str
 
         for data_key, data_value in self.datas.items():
             model_box_str += f"  {data_key}:= {data_value}\n"
 
-        outputs_str = "OUTPUT\n"
+        outputs_str = "OUTPUT\n" if len(self.outputs) > 0 else ""
 
         model_box_str += outputs_str
         
