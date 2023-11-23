@@ -76,7 +76,7 @@ class ATPCard:
 
     def run_atp(
         self, 
-        atp_path, 
+        atp_path="C:/ATP/atpmingw/tpbig.exe", 
         output_path=None,
         atp_file_name="atp_input.atp",
         no_temp_file=True):
@@ -821,9 +821,13 @@ class Models:
             #Get the name of the model code, that is after the USE keyword
             model_code_name = model_box_lines[0].split(" ")[1]
 
+            print(model_code_name)
+
             #Get the model code with the same name
+            
             model_code = [model_code for model_code in self.models_codes if model_code.name == model_code_name][0]
             
+
             model_box = ModelBox(model_code)
             
             #Get the name of the model box, that is after the AS keyword
@@ -955,7 +959,8 @@ class ModelCode:
 
     def get_name_from_code(self, code):
         # The name is in the first line of the code
-        line = code.split("\n")[0]
+        line = code.split("\n")[0].upper()
+
 
         # The name is the second word of the line
         return line.split(" ")[1]
