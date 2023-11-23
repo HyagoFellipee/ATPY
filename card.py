@@ -77,7 +77,7 @@ class ATPCard:
     def run_atp(
         self, 
         atp_path="C:/ATP/atpmingw/tpbig.exe", 
-        output_path=None,
+        output_path=os.getcwd(),
         atp_file_name="atp_input.atp",
         no_temp_file=True):
         
@@ -131,23 +131,23 @@ class ATPCard:
 
         # put the output file in the output folder
 
-        if output_path is not None:
-            # see which files were modified in the last 10 seconds
-            files = [f for f in os.listdir(atp_path_folder) if os.path.isfile(os.path.join(atp_path_folder, f))]
-            files = [f for f in files if os.path.getmtime(os.path.join(atp_path_folder, f)) > time.time() - 10]
+        
+        # see which files were modified in the last 10 seconds
+        files = [f for f in os.listdir(atp_path_folder) if os.path.isfile(os.path.join(atp_path_folder, f))]
+        files = [f for f in files if os.path.getmtime(os.path.join(atp_path_folder, f)) > time.time() - 10]
 
-            if no_temp_file:
-                files = [f for f in files if not f.endswith("tmp")]
-                
+        if no_temp_file:
+            files = [f for f in files if not f.endswith("tmp")]
+            
 
-            for file in files:
-                # if file exists in the output folder, delete it and put the new one
-                if os.path.exists(os.path.join(output_path, file)):
-                    os.remove(os.path.join(output_path, file))
+        for file in files:
+            # if file exists in the output folder, delete it and put the new one
+            if os.path.exists(os.path.join(output_path, file)):
+                os.remove(os.path.join(output_path, file))
 
-                
+            
 
-                os.rename(os.path.join(atp_path_folder, file), os.path.join(output_path, file))
+            os.rename(os.path.join(atp_path_folder, file), os.path.join(output_path, file))
 
         
 
