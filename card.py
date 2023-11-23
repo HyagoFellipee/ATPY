@@ -599,7 +599,7 @@ class Models:
         models_codes_str = ""
 
         for model_code in self.models_codes:
-            models_codes_str += model_code.write()+"\n"
+            models_codes_str += model_code.write()
         
         return models_codes_str
 
