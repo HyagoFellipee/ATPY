@@ -25,7 +25,11 @@ class ATPCard:
         init_line = "BEGIN NEW DATA CASE\n"
         numbering_line = "C        1         2         3         4         5         6         7         8\nC 345678901234567890123456789012345678901234567890123456789012345678901234567890\n"
 
-        end_line = "BLANK MODELS\nBLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK\n"
+        end_line = "BLANK BRANCH\nBLANK SWITCH\nBLANK SOURCE\nBLANK OUTPUT\nBLANK PLOT\nBEGIN NEW DATA CASE\nBLANK\n"
+
+        if len(self.models.models_codes) > 0:
+            end_line = "BLANK MODELS\n" + end_line
+
 
         card_str += init_line
         if self.exact_phasor:
@@ -73,19 +77,23 @@ class ATPCard:
     def run_atp(
         self, 
         atp_path, 
-        atp_input_path,
         output_path=None,
+        atp_file_name="atp_input.atp",
         no_temp_file=True):
         
         # valid_alternatives = ["PY", "file_name", "DISK", "HELP", "GO", "KEY", "STOP", "BOTH", "DIR"]
         # if alternative not in valid_alternatives:
         #     raise ValueError(f"Alternative must be one of {valid_alternatives}")
         
-        # put atp input file in the same folder as the atp executable
         atp_path_folder = os.path.dirname(atp_path)
         os.chdir(atp_path_folder)
 
         
+
+        self.write_to_file(atp_file_name)
+
+        atp_input_path = os.path.join(os.getcwd(), atp_file_name)
+        print(atp_input_path)
 
         def run_atp_process(atp_path):
             # Run ATP 
