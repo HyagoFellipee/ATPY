@@ -93,7 +93,6 @@ class ATPCard:
         self.write_to_file(atp_file_name)
 
         atp_input_path = os.path.join(os.getcwd(), atp_file_name)
-        print(atp_input_path)
 
         def run_atp_process(atp_path):
             # Run ATP 
@@ -821,7 +820,6 @@ class Models:
             #Get the name of the model code, that is after the USE keyword
             model_code_name = model_box_lines[0].split(" ")[1]
 
-            print(model_code_name)
 
             #Get the model code with the same name
             
