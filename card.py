@@ -81,9 +81,6 @@ class ATPCard:
         atp_file_name="atp_input.atp",
         no_temp_file=True):
         
-        # valid_alternatives = ["PY", "file_name", "DISK", "HELP", "GO", "KEY", "STOP", "BOTH", "DIR"]
-        # if alternative not in valid_alternatives:
-        #     raise ValueError(f"Alternative must be one of {valid_alternatives}")
         
         atp_path_folder = os.path.dirname(atp_path)
         os.chdir(atp_path_folder)
@@ -131,6 +128,8 @@ class ATPCard:
 
         # put the output file in the output folder
 
+        if not os.path.exists(output_path):
+            os.mkdir(output_path)
         
         # see which files were modified in the last 10 seconds
         files = [f for f in os.listdir(atp_path_folder) if os.path.isfile(os.path.join(atp_path_folder, f))]
@@ -1491,7 +1490,8 @@ class RlcElementDistParams(RlcElement):
     @length.setter
     def length(self, new_length):
         if len(new_length) != 6:
-            raise ValueError("Length must be 6 characters long")
+            # add blanks if necessary
+            new_length = " " * (6 - len(new_length)) + new_length
         
         self._line = self._line[0:44] + new_length + self._line[50:]
 
