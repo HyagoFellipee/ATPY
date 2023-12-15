@@ -4,6 +4,7 @@ import concurrent.futures
 import pyautogui
 import os
 import time
+
 class ATPCard: 
     def __init__(self) -> None:
         self.miscellaneous = Miscellaneous()
@@ -42,7 +43,6 @@ class ATPCard:
         card_str += self.switch.write()
         card_str += self.source.write()
         card_str += self.output.write()
-        # card_str += self.plot.write()
 
         card_str += end_line
 
@@ -81,6 +81,9 @@ class ATPCard:
         atp_file_name="atp_input.atp",
         no_temp_file=True):
         
+        # valid_alternatives = ["PY", "file_name", "DISK", "HELP", "GO", "KEY", "STOP", "BOTH", "DIR"]
+        # if alternative not in valid_alternatives:
+        #     raise ValueError(f"Alternative must be one of {valid_alternatives}")
         
         atp_path_folder = os.path.dirname(atp_path)
         os.chdir(atp_path_folder)
@@ -128,8 +131,6 @@ class ATPCard:
 
         # put the output file in the output folder
 
-        if not os.path.exists(output_path):
-            os.mkdir(output_path)
         
         # see which files were modified in the last 10 seconds
         files = [f for f in os.listdir(atp_path_folder) if os.path.isfile(os.path.join(atp_path_folder, f))]
@@ -147,10 +148,6 @@ class ATPCard:
             
 
             os.rename(os.path.join(atp_path_folder, file), os.path.join(output_path, file))
-
-        
-
-    
 
 class Miscellaneous:
     def __init__(self) -> None:
@@ -193,258 +190,218 @@ class Miscellaneous:
         if len(new_delta_t) > 8:
             raise ValueError("Delta t cant be longer than 8 characters long")
         
-        new_delta_t = " " * (8 - len(new_delta_t)) + new_delta_t 
+        self.first_line = new_delta_t.ljust(8) + self.first_line[8:]
         
 
-        self.first_line = new_delta_t + self.first_line[8:]
-        
-
-        self._delta_t = new_delta_t
+        self._delta_t = new_delta_t.ljust(8)
 
     @property
     def t_max(self):
         return self._t_max
-    
+
     @t_max.setter
     def t_max(self, new_t_max):
         if len(new_t_max) > 8:
             raise ValueError("T max cant be longer than 8 characters long")
-        
-        new_t_max = " " * (8 - len(new_t_max)) + new_t_max 
-        
-        self.first_line = self.first_line[0:8] + new_t_max + self.first_line[16:]
 
-        self._t_max = new_t_max
+        self.first_line = self.first_line[0:8] + new_t_max.ljust(8) + self.first_line[16:]
+
+        self._t_max = new_t_max.ljust(8)
 
     @property
     def x_opt(self):
         return self._x_opt
-    
+
     @x_opt.setter
     def x_opt(self, new_x_opt):
         if len(new_x_opt) > 8:
             raise ValueError("X opt cant be longer than 8 characters long")
-        
-        new_x_opt = " " * (8 - len(new_x_opt)) + new_x_opt 
-        
-        self.first_line = self.first_line[0:16] + new_x_opt + self.first_line[24:]
 
-        self._x_opt = new_x_opt
-    
+        self.first_line = self.first_line[0:16] + new_x_opt.ljust(8) + self.first_line[24:]
+
+        self._x_opt = new_x_opt.ljust(8)
+
     @property
     def c_opt(self):
         return self._c_opt
-    
+
     @c_opt.setter
     def c_opt(self, new_c_opt):
         if len(new_c_opt) > 8:
             raise ValueError("C opt cant be longer than 8 characters long")
-        
-        new_c_opt = " " * (8 - len(new_c_opt)) + new_c_opt 
-        
-        self.first_line = self.first_line[0:24] + new_c_opt + self.first_line[32:]
 
-        self._c_opt = new_c_opt
+        self.first_line = self.first_line[0:24] + new_c_opt.ljust(8) + self.first_line[32:]
+
+        self._c_opt = new_c_opt.ljust(8)
 
     @property
     def epslin(self):
         return self._epslin
-    
+
     @epslin.setter
     def epslin(self, new_epslin):
         if len(new_epslin) > 8:
             raise ValueError("Epslin cant be longer than 8 characters long")
-        
-        new_epslin = " " * (8 - len(new_epslin)) + new_epslin 
-        
-        self.first_line = self.first_line[0:32] + new_epslin + self.first_line[40:]
 
-        self._epslin = new_epslin
-    
+        self.first_line = self.first_line[0:32] + new_epslin.ljust(8) + self.first_line[40:]
+
+        self._epslin = new_epslin.ljust(8)
+
     @property
     def tolmat(self):
         return self._tolmat
-    
+
     @tolmat.setter
     def tolmat(self, new_tolmat):
         if len(new_tolmat) > 8:
             raise ValueError("Tolmat cant be longer than 8 characters long")
-        
-        new_tolmat = " " * (8 - len(new_tolmat)) + new_tolmat 
-        
-        self.first_line = self.first_line[0:40] + new_tolmat + self.first_line[48:]
 
-        self._tolmat = new_tolmat
-    
+        self.first_line = self.first_line[0:40] + new_tolmat.ljust(8) + self.first_line[48:]
+
+        self._tolmat = new_tolmat.ljust(8)
+
     @property
     def tstart(self):
         return self._tstart
-    
+
     @tstart.setter
     def tstart(self, new_tstart):
         if len(new_tstart) > 8:
             raise ValueError("Tstart cant be longer than 8 characters long")
-        
-        new_tstart = " " * (8 - len(new_tstart)) + new_tstart 
-        
-        self.first_line = self.first_line[0:48] + new_tstart
 
-        self._tstart = new_tstart
+        self.first_line = self.first_line[0:48] + new_tstart.ljust(8)
+
+        self._tstart = new_tstart.ljust(8)
 
     @property
     def iout(self):
         return self._iout
-    
+
     @iout.setter
     def iout(self, new_iout):
         if len(new_iout) > 8:
             raise ValueError("Iout cant be longer than 8 characters long")
-        
-        new_iout = " " * (8 - len(new_iout)) + new_iout 
-        
-        self.second_line = new_iout + self.second_line[8:]
-        
-        self._iout = new_iout
+
+        self.second_line = new_iout.ljust(8) + self.second_line[8:]
+
+        self._iout = new_iout.ljust(8)
 
     @property
     def iplot(self):
         return self._iplot
-    
+
     @iplot.setter
     def iplot(self, new_iplot):
         if len(new_iplot) > 8:
             raise ValueError("Iplot cant be longer than 8 characters long")
-        
-        new_iplot = " " * (8 - len(new_iplot)) + new_iplot 
-        
-        self.second_line = self.second_line[0:8] + new_iplot + self.second_line[16:]
 
-        self._iplot = new_iplot
+        self.second_line = self.second_line[0:8] + new_iplot.ljust(8) + self.second_line[16:]
+
+        self._iplot = new_iplot.ljust(8)
 
     @property
     def idoubl(self):
         return self._idoubl
-    
+
     @idoubl.setter
     def idoubl(self, new_idoubl):
         if len(new_idoubl) > 8:
             raise ValueError("Idoubl cant be longer than 8 characters long")
-        
-        new_idoubl = " " * (8 - len(new_idoubl)) + new_idoubl 
-        
-        self.second_line = self.second_line[0:16] + new_idoubl + self.second_line[24:]
 
-        self._idoubl = new_idoubl
+        self.second_line = self.second_line[0:16] + new_idoubl.ljust(8) + self.second_line[24:]
+
+        self._idoubl = new_idoubl.ljust(8)
 
     @property
     def kout(self):
         return self._kout
-    
+
     @kout.setter
     def kout(self, new_kout):
         if len(new_kout) > 8:
             raise ValueError("Kout cant be longer than 8 characters long")
-        
-        new_kout = " " * (8 - len(new_kout)) + new_kout 
-        
-        self.second_line = self.second_line[0:24] + new_kout + self.second_line[32:]
 
-        self._kout = new_kout
+        self.second_line = self.second_line[0:24] + new_kout.ljust(8) + self.second_line[32:]
+
+        self._kout = new_kout.ljust(8)
 
     @property
     def maxout(self):
         return self._maxout
-    
+
     @maxout.setter
     def maxout(self, new_maxout):
         if len(new_maxout) > 8:
             raise ValueError("Maxout cant be longer than 8 characters long")
-        
-        new_maxout = " " * (8 - len(new_maxout)) + new_maxout 
-        
-        self.second_line = self.second_line[0:32] + new_maxout + self.second_line[40:]
 
+        self.second_line = self.second_line[0:32] + new_maxout.ljust(8) + self.second_line[40:]
 
-        self._maxout = new_maxout
-    
+        self._maxout = new_maxout.ljust(8)
+
     @property
     def ipun(self):
         return self._ipun
-    
+
     @ipun.setter
     def ipun(self, new_ipun):
         if len(new_ipun) > 8:
             raise ValueError("Ipun cant be longer than 8 characters long")
-        
-        new_ipun = " " * (8 - len(new_ipun)) + new_ipun 
-        
-        self.second_line = self.second_line[0:40] + new_ipun + self.second_line[48:]
 
-        self._ipun = new_ipun
+        self.second_line = self.second_line[0:40] + new_ipun.ljust(8) + self.second_line[48:]
+
+        self._ipun = new_ipun.ljust(8)
 
     @property
     def memsav(self):
         return self._memsav
-    
+
     @memsav.setter
     def memsav(self, new_memsav):
         if len(new_memsav) > 8:
             raise ValueError("Memsav cant be longer than 8 characters long")
-        
-        new_memsav = " " * (8 - len(new_memsav)) + new_memsav 
-        
-        self.second_line = self.second_line[0:48] + new_memsav + self.second_line[56:]
 
-        self._memsav = new_memsav
+        self.second_line = self.second_line[0:48] + new_memsav.ljust(8) + self.second_line[56:]
+
+        self._memsav = new_memsav.ljust(8)
 
     @property
     def icat(self):
         return self._icat
-    
+
     @icat.setter
     def icat(self, new_icat):
         if len(new_icat) > 8:
             raise ValueError("Icat cant be longer than 8 characters long")
-        
-        new_icat = " " * (8 - len(new_icat)) + new_icat 
-        
-        self.second_line = self.second_line[0:56] + new_icat + self.second_line[64:]
 
-        self._icat = new_icat
+        self.second_line = self.second_line[0:56] + new_icat.ljust(8) + self.second_line[64:]
+
+        self._icat = new_icat.ljust(8)
 
     @property
     def nenerg(self):
         return self._nenerg
-    
+
     @nenerg.setter
     def nenerg(self, new_nenerg):
         if len(new_nenerg) > 8:
             raise ValueError("Nenerg cant be longer than 8 characters long")
-        
-        new_nenerg = " " * (8 - len(new_nenerg)) + new_nenerg 
-        
-        self.second_line = self.second_line[0:64] + new_nenerg + self.second_line[72:]
 
-        self._nenerg = new_nenerg
+        self.second_line = self.second_line[0:64] + new_nenerg.ljust(8) + self.second_line[72:]
+
+        self._nenerg = new_nenerg.ljust(8)
 
     @property
     def iprsup(self):
         return self._iprsup
-    
+
     @iprsup.setter
     def iprsup(self, new_iprsup):
         if len(new_iprsup) > 8:
             raise ValueError("Iprsup cant be longer than 8 characters long")
-        
-        new_iprsup = " " * (8 - len(new_iprsup)) + new_iprsup 
-        
-        self.second_line = self.second_line[0:72] + new_iprsup
 
-        self._iprsup = new_iprsup
+        self.second_line = self.second_line[0:72] + new_iprsup.ljust(8)
 
-    
-
-    
+        self._iprsup = new_iprsup.ljust(8)
     
     @property
     def first_line(self):
@@ -456,7 +413,7 @@ class Miscellaneous:
             raise ValueError("First line cant be longer than 56 characters long")
         
         #Adding blanks if necessary
-        new_first_line = new_first_line + " " * (56 - len(new_first_line))
+        new_first_line = new_first_line.ljust(56)
         
         self._delta_t = new_first_line[0:8]
         self._t_max = new_first_line[8:16]
@@ -479,7 +436,7 @@ class Miscellaneous:
             raise ValueError("Second line cant be longer than 80 characters long")
 
         #Adding blanks if necessary
-        new_second_line = new_second_line + " " * (80 - len(new_second_line))
+        new_second_line = new_second_line.ljust(80)
         
         self._iout = new_second_line[0:8]
         self._iplot = new_second_line[8:16]
@@ -924,7 +881,6 @@ class Models:
 
         return self
 
-
 class ModelCode:
     def __init__(self) -> None:
         self._code = ""
@@ -1011,7 +967,6 @@ class ModelCode:
     def write(self):
         return self.code
 
-
 class ModelBox:
     def __init__(self, model_code) -> None:
         
@@ -1094,10 +1049,9 @@ class ModelBox:
             raise ValueError("Data value cant be more than 8 characters long")
         
         # adding blanks if necessary
+        data_value = str(data_value).ljust(8)
 
-        data_value = " " * (8 - len(str(data_value))) + str(data_value) 
-
-        self.datas[data_key] = str(data_value)
+        self.datas[data_key] = data_value
 
     @property 
     def datas(self):
@@ -1165,7 +1119,6 @@ class Branch:
 
         return self
 
-
 class RlcElement:
     def __init__(self):
         itype_str_len = 2
@@ -1183,7 +1136,6 @@ class RlcElement:
 
     def copy(self):
         return copy.deepcopy(self)
-
 
 class RlcElementBasic(RlcElement):
     def __init__(self):
@@ -1210,11 +1162,11 @@ class RlcElementBasic(RlcElement):
     
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype cannot be longer than 2 characters")
         
-        self._line = new_itype + self._line[2:]
-        self._itype = new_itype
+        self._line = new_itype.ljust(2) + self._line[2:]
+        self._itype = new_itype.ljust(2)
 
     @property
     def node_1(self):
@@ -1222,12 +1174,12 @@ class RlcElementBasic(RlcElement):
     
     @node_1.setter
     def node_1(self, new_node_1):
-        if len(new_node_1) != 6:
-            raise ValueError("Node 1 must be 6 characters long")
+        if len(new_node_1) > 6:
+            raise ValueError("Node 1 cannot be longer than 6 characters")
         
-        self._line = self._line[0:2] + new_node_1 + self._line[8:]
+        self._line = new_node_1.ljust(6) + self._line[6:]
 
-        self._node_1 = new_node_1
+        self._node_1 = new_node_1.ljust(6)
     
     @property
     def node_2(self):
@@ -1235,12 +1187,12 @@ class RlcElementBasic(RlcElement):
     
     @node_2.setter
     def node_2(self, new_node_2):
-        if len(new_node_2) != 6:
-            raise ValueError("Node 2 must be 6 characters long")
+        if len(new_node_2) > 6:
+            raise ValueError("Node 2 cannot be longer than 6 characters")
         
-        self._line = self._line[0:8] + new_node_2 + self._line[14:]
+        self._line = self._line[0:8] + new_node_2.ljust(6) + self._line[14:]
 
-        self._node_2 = new_node_2
+        self._node_2 = new_node_2.ljust(6)
     
     @property
     def node_ref_1(self):
@@ -1248,12 +1200,12 @@ class RlcElementBasic(RlcElement):
     
     @node_ref_1.setter
     def node_ref_1(self, new_node_ref_1):
-        if len(new_node_ref_1) != 6:
-            raise ValueError("Node ref 1 must be 6 characters long")
+        if len(new_node_ref_1) > 6:
+            raise ValueError("Node ref 1 cannot be longer than 6 characters")
         
-        self._line = self._line[0:14] + new_node_ref_1 + self._line[20:]
+        self._line = self._line[0:14] + new_node_ref_1.ljust(6) + self._line[20:]
 
-        self._node_ref_1 = new_node_ref_1
+        self._node_ref_1 = new_node_ref_1.ljust(6)
 
     @property
     def node_ref_2(self):
@@ -1261,12 +1213,12 @@ class RlcElementBasic(RlcElement):
     
     @node_ref_2.setter
     def node_ref_2(self, new_node_ref_2):
-        if len(new_node_ref_2) != 6:
-            raise ValueError("Node ref 2 must be 6 characters long")
+        if len(new_node_ref_2) > 6:
+            raise ValueError("Node ref 2 cannot be longer than 6 characters")
         
-        self._line = self._line[0:20] + new_node_ref_2 + self._line[26:]
+        self._line = self._line[0:20] + new_node_ref_2.ljust(6) + self._line[26:]
 
-        self._node_ref_2 = new_node_ref_2
+        self._node_ref_2 = new_node_ref_2.ljust(6)
     
     @property
     def resistance(self):
@@ -1274,12 +1226,12 @@ class RlcElementBasic(RlcElement):
     
     @resistance.setter
     def resistance(self, new_resistance):
-        if len(new_resistance) != 6:
-            raise ValueError("Resistance must be 6 characters long")
+        if len(new_resistance) > 6:
+            raise ValueError("Resistance cannot be longer than 6 characters")
         
-        self._line = self._line[0:26] + new_resistance + self._line[32:]
+        self._line = self._line[0:26] + new_resistance.ljust(6) + self._line[32:]
 
-        self._resistance = new_resistance
+        self._resistance = new_resistance.ljust(6)
     
     @property
     def inductance(self):
@@ -1287,12 +1239,12 @@ class RlcElementBasic(RlcElement):
     
     @inductance.setter
     def inductance(self, new_inductance):
-        if len(new_inductance) != 6:
-            raise ValueError("Inductance must be 6 characters long")
+        if len(new_inductance) > 6:
+            raise ValueError("Inductance cannot be longer than 6 characters")
         
-        self._line = self._line[0:32] + new_inductance + self._line[38:]
+        self._line = self._line[0:32] + new_inductance.ljust(6) + self._line[38:]
 
-        self._inductance = new_inductance
+        self._inductance = new_inductance.ljust(6)
     
     @property
     def capacitance(self):
@@ -1300,12 +1252,12 @@ class RlcElementBasic(RlcElement):
     
     @capacitance.setter
     def capacitance(self, new_capacitance):
-        if len(new_capacitance) != 6:
-            raise ValueError("Capacitance must be 6 characters long")
+        if len(new_capacitance) > 6:
+            raise ValueError("Capacitance cannot be longer than 6 characters")
         
-        self._line = self._line[0:38] + new_capacitance + self._line[44:]
+        self._line = self._line[0:38] + new_capacitance.ljust(6) + self._line[44:]
         
-        self._capacitance = new_capacitance
+        self._capacitance = new_capacitance.ljust(6)
     
     @property
     def iout(self):
@@ -1313,12 +1265,12 @@ class RlcElementBasic(RlcElement):
     
     @iout.setter
     def iout(self, new_iout):
-        if len(new_iout) != 1:
-            raise ValueError("Iout must be 1 characters long")
+        if len(new_iout) > 1:
+            raise ValueError("Iout cannot be longer than 1 character")
         
         self._line = self._line[0:79] + new_iout
 
-        self._iout = new_iout
+        self._iout = new_iout.ljust(1)
 
     @property
     def line(self):
@@ -1326,10 +1278,10 @@ class RlcElementBasic(RlcElement):
     
     @line.setter
     def line(self, new_line):
-        if len(new_line) != 80:
-            raise ValueError("Line must be 80 characters long")
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than be 80 characters long")
         
-        self._line = new_line
+        self._line = new_line.ljust(80)
 
         self._itype = new_line[0:2]
         self._node_1 = new_line[2:8]
@@ -1341,7 +1293,6 @@ class RlcElementBasic(RlcElement):
         self._capacitance = new_line[38:44]
         self._iout = new_line[79]
 
-    
 class RlcElementDistParams(RlcElement):
     def __init__(self):
         super().__init__()
@@ -1386,12 +1337,12 @@ class RlcElementDistParams(RlcElement):
     
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype cannot be longer than 2 characters long")
         
-        self._line = new_itype + self._line[2:]
+        self._line = new_itype.ljust(2) + self._line[2:]
 
-        self._itype = new_itype
+        self._itype = new_itype.ljust(2)
 
     @property
     def node_1(self):
@@ -1399,12 +1350,12 @@ class RlcElementDistParams(RlcElement):
     
     @node_1.setter
     def node_1(self, new_node_1):
-        if len(new_node_1) != 6:
-            raise ValueError("Node 1 must be 6 characters long")
+        if len(new_node_1) > 6:
+            raise ValueError("Node cannot be longer than be 6 characters long")
         
-        self._line = self._line[0:2] + new_node_1 + self._line[8:]
+        self._line = self._line[0:2] + new_node_1.ljust(6) + self._line[8:]
 
-        self._node_1 = new_node_1
+        self._node_1 = new_node_1.ljust(6)
     
     @property
     def node_2(self):
@@ -1412,12 +1363,12 @@ class RlcElementDistParams(RlcElement):
     
     @node_2.setter
     def node_2(self, new_node_2):
-        if len(new_node_2) != 6:
-            raise ValueError("Node 2 must be 6 characters long")
+        if len(new_node_2) > 6:
+            raise ValueError("Node cannot be longer than be 6 characters long")
         
-        self._line = self._line[0:8] + new_node_2 + self._line[14:]
+        self._line = self._line[0:8] + new_node_2.ljust(6) + self._line[14:]
 
-        self._node_2 = new_node_2
+        self._node_2 = new_node_2.ljust(6)
 
     @property
     def node_ref_1(self):
@@ -1425,12 +1376,12 @@ class RlcElementDistParams(RlcElement):
     
     @node_ref_1.setter
     def node_ref_1(self, new_node_ref_1):
-        if len(new_node_ref_1) != 6:
-            raise ValueError("Node ref 1 must be 6 characters long")
+        if len(new_node_ref_1) > 6:
+            raise ValueError("Node cannot be longer than be 6 characters long")
         
-        self._line = self._line[0:14] + new_node_ref_1 + self._line[20:]
+        self._line = self._line[0:14] + new_node_ref_1.ljust(6) + self._line[20:]
 
-        self._node_ref_1 = new_node_ref_1
+        self._node_ref_1 = new_node_ref_1.ljust(6)
 
     @property
     def node_ref_2(self):
@@ -1438,12 +1389,12 @@ class RlcElementDistParams(RlcElement):
     
     @node_ref_2.setter
     def node_ref_2(self, new_node_ref_2):
-        if len(new_node_ref_2) != 6:
-            raise ValueError("Node ref 2 must be 6 characters long")
+        if len(new_node_ref_2) > 6:
+            raise ValueError("Node cannot be longer than be 6 characters long")
         
-        self._line = self._line[0:20] + new_node_ref_2 + self._line[26:]
+        self._line = self._line[0:20] + new_node_ref_2.ljust(6) + self._line[26:]
 
-        self._node_ref_2 = new_node_ref_2
+        self._node_ref_2 = new_node_ref_2.ljust(6)
     
     @property
     def resistance(self):
@@ -1451,12 +1402,12 @@ class RlcElementDistParams(RlcElement):
     
     @resistance.setter
     def resistance(self, new_resistance):
-        if len(new_resistance) != 6:
-            raise ValueError("Resistance must be 6 characters long")
+        if len(new_resistance) > 6:
+            raise ValueError("Resistance cannot be longer than 6 characters long")
         
-        self._line = self._line[0:26] + new_resistance + self._line[32:]
+        self._line = self._line[0:26] + new_resistance.ljust(6) + self._line[32:]
 
-        self._resistance = new_resistance
+        self._resistance = new_resistance.ljust(6)
     
     @property
     def distribution_param_a(self):
@@ -1464,11 +1415,11 @@ class RlcElementDistParams(RlcElement):
     
     @distribution_param_a.setter
     def distribution_param_a(self, new_distribution_param_a):
-        if len(new_distribution_param_a) != 6:
-            raise ValueError("Distribution param a must be 6 characters long")
+        if len(new_distribution_param_a) > 6:
+            raise ValueError("Distribution cannot be longer than be 6 characters long")
         
-        self._line = self._line[0:32] + new_distribution_param_a + self._line[38:]
-        self._distribution_param_a = new_distribution_param_a
+        self._line = self._line[0:32] + new_distribution_param_a.ljust(6) + self._line[38:]
+        self._distribution_param_a = new_distribution_param_a.ljust(6)
     
     @property
     def distribution_param_b(self):
@@ -1476,12 +1427,12 @@ class RlcElementDistParams(RlcElement):
     
     @distribution_param_b.setter
     def distribution_param_b(self, new_distribution_param_b):
-        if len(new_distribution_param_b) != 6:
-            raise ValueError("Distribution param b must be 6 characters long")
+        if len(new_distribution_param_b) > 6:
+            raise ValueError("Distribution cannot be longer than be 6 characters long")
         
-        self._line = self._line[0:38] + new_distribution_param_b + self._line[44:]
+        self._line = self._line[0:38] + new_distribution_param_b.ljust(6) + self._line[44:]
 
-        self._distribution_param_b = new_distribution_param_b
+        self._distribution_param_b = new_distribution_param_b.ljust(6)
     
     @property
     def length(self):
@@ -1489,13 +1440,12 @@ class RlcElementDistParams(RlcElement):
     
     @length.setter
     def length(self, new_length):
-        if len(new_length) != 6:
-            # add blanks if necessary
-            new_length = " " * (6 - len(new_length)) + new_length
+        if len(new_length) > 6:
+            raise ValueError("Length cannot be longer than 6 characters long")
         
-        self._line = self._line[0:44] + new_length + self._line[50:]
+        self._line = self._line[0:44] + new_length.ljust(6) + self._line[50:]
 
-        self._length = new_length
+        self._length = new_length.ljust(6)
 
     @property
     def iline(self):
@@ -1503,11 +1453,11 @@ class RlcElementDistParams(RlcElement):
 
     @iline.setter
     def iline(self, new_iline):
-        if len(new_iline) != 2:
-            raise ValueError("Iline must be 2 characters long")
+        if len(new_iline) > 2:
+            raise ValueError("Iline cannot be longer than 2 characters long")
         
-        self._line = self._line[0:50] + new_iline + self._line[52:]
-        self._iline = new_iline
+        self._line = self._line[0:50] + new_iline.ljust(2) + self._line[52:]
+        self._iline = new_iline.ljust(2)
 
     @property
     def ipunch(self):
@@ -1515,11 +1465,11 @@ class RlcElementDistParams(RlcElement):
     
     @ipunch.setter
     def ipunch(self, new_ipunch):
-        if len(new_ipunch) != 2:
-            raise ValueError("Ipunch must be 2 characters long")
+        if len(new_ipunch) > 2:
+            raise ValueError("Ipunch cannot be longer than 2 characters long")
         
-        self._line = self._line[0:52] + new_ipunch + self._line[54:]
-        self._ipunch = new_ipunch
+        self._line = self._line[0:52] + new_ipunch.ljust(2) + self._line[54:]
+        self._ipunch = new_ipunch.ljust(2)
     
     @property
     def ipose(self):
@@ -1527,11 +1477,11 @@ class RlcElementDistParams(RlcElement):
     
     @ipose.setter
     def ipose(self, new_ipose):
-        if len(new_ipose) != 2:
-            raise ValueError("Ipose must be 2 characters long")
+        if len(new_ipose) > 2:
+            raise ValueError("Ipose cannot be longer than 2 characters long")
         
-        self._line = self._line[0:54] + new_ipose + self._line[56:]
-        self._ipose = new_ipose
+        self._line = self._line[0:54] + new_ipose.ljust(2) + self._line[56:]
+        self._ipose = new_ipose.ljust(2)
     
     @property
     def iout(self):
@@ -1539,14 +1489,12 @@ class RlcElementDistParams(RlcElement):
     
     @iout.setter
     def iout(self, new_iout):
-        if len(new_iout) != 1:
-            raise ValueError("Iout must be 1 characters long")
+        if len(new_iout) > 1:
+            raise ValueError("Iout cannot be longer than 1 characters long")
         
         self._line = self._line[0:79] + new_iout
-        self._iout = new_iout
+        self._iout = new_iout.ljust(1)
     
-
-
 class Switch:
     def __init__(self) -> None:
         self.init_line = "/SWITCH\n"
@@ -1640,12 +1588,12 @@ class SwitchElement:
 
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be longer than 2 characters")
         
-        self._line = new_itype + self._line[2:]
+        self._line = new_itype.ljust(2) + self._line[2:]
 
-        self._itype = new_itype
+        self._itype = new_itype.ljust(2)
 
     @property
     def node_1(self):
@@ -1653,12 +1601,12 @@ class SwitchElement:
 
     @node_1.setter
     def node_1(self, new_node_1):
-        if len(new_node_1) != 6:
-            raise ValueError("Node 1 must be 6 characters long")
+        if len(new_node_1) > 6:
+            raise ValueError("Node 1 can't be longer than 6 characters long")
         
-        self._line = self._line[0:2] + new_node_1 + self._line[8:]
+        self._line = new_node_1.ljust(6) + self._line[6:]
 
-        self._node_1 = new_node_1
+        self._node_1 = new_node_1.ljust(6)
 
     @property
     def node_2(self):
@@ -1666,12 +1614,12 @@ class SwitchElement:
 
     @node_2.setter
     def node_2(self, new_node_2):
-        if len(new_node_2) != 6:
-            raise ValueError("Node 2 must be 6 characters long")
+        if len(new_node_2) > 6:
+            raise ValueError("Node 2 can't be longer than 6 characters long")
         
-        self._line = self._line[0:8] + new_node_2 + self._line[14:]
+        self._line = self._line[0:8] + new_node_2.ljust(6) + self._line[14:]
 
-        self._node_2 = new_node_2
+        self._node_2 = new_node_2.ljust(6)
 
     @property
     def t_close(self):
@@ -1679,12 +1627,12 @@ class SwitchElement:
 
     @t_close.setter
     def t_close(self, new_t_close):
-        if len(new_t_close) != 10:
-            raise ValueError("T close must be 10 characters long")
+        if len(new_t_close) > 10:
+            raise ValueError("T close can't be longer than 10 characters long")
         
-        self._line = self._line[0:14] + new_t_close + self._line[24:]
+        self._line = self._line[0:14] + new_t_close.ljust(10) + self._line[24:]
 
-        self._t_close = new_t_close
+        self._t_close = new_t_close.ljust(10)
 
     @property
     def t_delay(self):
@@ -1692,12 +1640,12 @@ class SwitchElement:
     
     @t_delay.setter
     def t_delay(self, new_t_delay):
-        if len(new_t_delay) != 10:
-            raise ValueError("T delay must be 10 characters long")
+        if len(new_t_delay) > 10:
+            raise ValueError("T delay can't be longer than 10 characters long")
         
-        self._line = self._line[0:24] + new_t_delay + self._line[34:]
+        self._line = self._line[0:24] + new_t_delay.ljust(10) + self._line[34:]
 
-        self._t_delay = new_t_delay
+        self._t_delay = new_t_delay.ljust(10)
 
     @property
     def current(self):
@@ -1705,12 +1653,12 @@ class SwitchElement:
     
     @current.setter
     def current(self, new_current):
-        if len(new_current) != 10:
-            raise ValueError("Current must be 10 characters long")
+        if len(new_current) > 10:
+            raise ValueError("Current can't be longer than 10 characters long")
         
-        self._line = self._line[0:34] + new_current + self._line[44:]
+        self._line = self._line[0:34] + new_current.ljust(10) + self._line[44:]
 
-        self._current = new_current
+        self._current = new_current.ljust(10)
     
     @property
     def vflash_clop(self):
@@ -1718,12 +1666,12 @@ class SwitchElement:
     
     @vflash_clop.setter
     def vflash_clop(self, new_vflash_clop):
-        if len(new_vflash_clop) != 10:
-            raise ValueError("Vflash clop must be 10 characters long")
+        if len(new_vflash_clop) > 10:
+            raise ValueError("Vflash clop can't be longer than 10 characters long")
         
-        self._line = self._line[0:44] + new_vflash_clop + self._line[54:]
+        self._line = self._line[0:44] + new_vflash_clop.ljust(10) + self._line[54:]
 
-        self._vflash_clop = new_vflash_clop
+        self._vflash_clop = new_vflash_clop.ljust(10)
 
     @property
     def type(self):
@@ -1731,12 +1679,12 @@ class SwitchElement:
     
     @type.setter
     def type(self, new_type):
-        if len(new_type) != 2:
-            raise ValueError("Type must be 2 characters long")
+        if len(new_type) > 2:
+            raise ValueError("Type can't be longer than 2 characters long")
         
-        self._line = self._line[0:54] + new_type + self._line[56:]
+        self._line = self._line[0:54] + new_type.ljust(10) + self._line[56:]
 
-        self._type = new_type
+        self._type = new_type.ljust(10)
 
     @property
     def iout(self):
@@ -1744,13 +1692,12 @@ class SwitchElement:
     
     @iout.setter
     def iout(self, new_iout):
-        if len(new_iout) != 1:
-            raise ValueError("Iout must be 1 characters long")
+        if len(new_iout) > 1:
+            raise ValueError("Iout can't be longer than 1 characters long")
         
         self._line = self._line[0:79] + new_iout
 
         self._iout = new_iout
-
 
 class Source:
     def __init__(self):
@@ -1818,7 +1765,6 @@ class SourceElement:
     def copy(self):
         return copy.deepcopy(self)
 
-    
 class DCSource(SourceElement):
     def __init__(self):
         super().__init__()
@@ -1835,12 +1781,12 @@ class DCSource(SourceElement):
     
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be longer than 2 characters")
         
-        self._line = new_itype + self._line[2:]
+        self._line = new_itype.ljust(2) + self._line[2:]
 
-        self._itype = new_itype
+        self._itype = new_itype.ljust(2)
 
     @property
     def name(self):
@@ -1848,11 +1794,11 @@ class DCSource(SourceElement):
     
     @name.setter
     def name(self, new_name):
-        if len(new_name) != 6:
-            raise ValueError("Name must be 6 characters long")
+        if len(new_name) > 6:
+            raise ValueError("Name can't be 6 characters long")
         
-        self._line = self._line[0:2] + new_name + self._line[8:]
-        self._name = new_name
+        self._line = self._line[0:2] + new_name.ljust(6) + self._line[8:]
+        self._name = new_name.ljust(6)
 
     @property
     def st(self):
@@ -1860,12 +1806,12 @@ class DCSource(SourceElement):
     
     @st.setter
     def st(self, new_st):
-        if len(new_st) != 2:
-            raise ValueError("St must be 2 characters long")
+        if len(new_st) > 2:
+            raise ValueError("St can't be 2 characters long")
         
-        self._line = self._line[0:8] + new_st + self._line[10:]
+        self._line = self._line[0:8] + new_st.ljust(2) + self._line[10:]
 
-        self._st = new_st
+        self._st = new_st.ljust(2)
 
     @property
     def amplitude(self):
@@ -1873,12 +1819,12 @@ class DCSource(SourceElement):
     
     @amplitude.setter
     def amplitude(self, new_amplitude):
-        if len(new_amplitude) != 10:
-            raise ValueError("Amplitude must be 10 characters long")
+        if len(new_amplitude) > 10:
+            raise ValueError("Amplitude can't be 10 characters long")
         
-        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+        self._line = self._line[0:10] + new_amplitude.ljust(10) + self._line[20:]
 
-        self._amplitude = new_amplitude
+        self._amplitude = new_amplitude.ljust(10)
 
     @property
     def tstart(self):
@@ -1886,12 +1832,12 @@ class DCSource(SourceElement):
     
     @tstart.setter
     def tstart(self, new_tstart):
-        if len(new_tstart) != 10:
-            raise ValueError("Tstart must be 10 characters long")
+        if len(new_tstart) > 10:
+            raise ValueError("Tstart can't be 10 characters long")
         
-        self._line = self._line[0:60] + new_tstart + self._line[70:]
+        self._line = self._line[0:60] + new_tstart.ljust(10) + self._line[70:]
 
-        self._tstart = new_tstart
+        self._tstart = new_tstart.ljust(10)
 
     @property
     def tstop(self):
@@ -1899,12 +1845,12 @@ class DCSource(SourceElement):
     
     @tstop.setter
     def tstop(self, new_tstop):
-        if len(new_tstop) != 10:
-            raise ValueError("Tstop must be 10 characters long")
+        if len(new_tstop) > 10:
+            raise ValueError("Tstop can't be 10 characters long")
         
-        self._line = self._line[0:70] + new_tstop + self._line[80:]
+        self._line = self._line[0:70] + new_tstop.ljust(10) + self._line[80:]
 
-        self._tstop = new_tstop
+        self._tstop = new_tstop.ljust(10)
 
     @property
     def line(self):
@@ -1912,10 +1858,10 @@ class DCSource(SourceElement):
     
     @line.setter
     def line(self, new_line):
-        if len(new_line) != 80:
-            raise ValueError("Line must be 80 characters long")
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than 80 characters long")
         
-        self._line = new_line
+        self._line = new_line.ljust(80)
 
         self._itype = new_line[0:2]
         self._name = new_line[2:8]
@@ -1941,12 +1887,12 @@ class RampSource(SourceElement):
     
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be 2 characters long")
         
-        self._line = new_itype + self._line[2:]
+        self._line = new_itype.ljust(2) + self._line[2:]
 
-        self._itype = new_itype
+        self._itype = new_itype.ljust(2)
 
     @property
     def name(self):
@@ -1954,12 +1900,12 @@ class RampSource(SourceElement):
     
     @name.setter
     def name(self, new_name):
-        if len(new_name) != 6:
-            raise ValueError("Name must be 6 characters long")
+        if len(new_name) > 6:
+            raise ValueError("Name can't be 6 characters long")
         
-        self._line = self._line[0:2] + new_name + self._line[8:]
+        self._line = self._line[0:2] + new_name.ljust(6) + self._line[8:]
 
-        self._name = new_name
+        self._name = new_name.ljust(6)
 
     @property
     def st(self):
@@ -1967,12 +1913,12 @@ class RampSource(SourceElement):
     
     @st.setter
     def st(self, new_st):
-        if len(new_st) != 2:
-            raise ValueError("St must be 2 characters long")
+        if len(new_st) > 2:
+            raise ValueError("St can't be 2 characters long")
         
-        self._line = self._line[0:8] + new_st + self._line[10:]
+        self._line = self._line[0:8] + new_st.ljust(2) + self._line[10:]
 
-        self._st = new_st
+        self._st = new_st.ljust(2)
 
     @property
     def amplitude(self):
@@ -1980,12 +1926,12 @@ class RampSource(SourceElement):
     
     @amplitude.setter
     def amplitude(self, new_amplitude):
-        if len(new_amplitude) != 10:
-            raise ValueError("Amplitude must be 10 characters long")
+        if len(new_amplitude) > 10:
+            raise ValueError("Amplitude can't be 10 characters long")
         
-        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+        self._line = self._line[0:10] + new_amplitude.ljust(10) + self._line[20:]
 
-        self._amplitude = new_amplitude
+        self._amplitude = new_amplitude.ljust(10)
 
     @property
     def time0(self):
@@ -1993,12 +1939,12 @@ class RampSource(SourceElement):
     
     @time0.setter
     def time0(self, new_time0):
-        if len(new_time0) != 10:
-            raise ValueError("Time0 must be 10 characters long")
+        if len(new_time0) > 10:
+            raise ValueError("Time0 can't be 10 characters long")
         
-        self._line = self._line[0:30] + new_time0 + self._line[40:]
+        self._line = self._line[0:30] + new_time0.ljust(10) + self._line[40:]
 
-        self._time0 = new_time0
+        self._time0 = new_time0.ljust(10)
 
     @property
     def tstart(self):
@@ -2006,12 +1952,12 @@ class RampSource(SourceElement):
     
     @tstart.setter
     def tstart(self, new_tstart):
-        if len(new_tstart) != 10:
-            raise ValueError("Tstart must be 10 characters long")
+        if len(new_tstart) > 10:
+            raise ValueError("Tstart can't be 10 characters long")
         
-        self._line = self._line[0:60] + new_tstart + self._line[70:]
+        self._line = self._line[0:60] + new_tstart.ljust(10) + self._line[70:]
 
-        self._tstart = new_tstart
+        self._tstart = new_tstart.ljust(10)
 
     @property
     def tstop(self):
@@ -2019,12 +1965,12 @@ class RampSource(SourceElement):
     
     @tstop.setter
     def tstop(self, new_tstop):
-        if len(new_tstop) != 10:
-            raise ValueError("Tstop must be 10 characters long")
+        if len(new_tstop) > 10:
+            raise ValueError("Tstop can't be 10 characters long")
         
-        self._line = self._line[0:70] + new_tstop + self._line[80:]
+        self._line = self._line[0:70] + new_tstop.ljust(10) + self._line[80:]
 
-        self._tstop = new_tstop
+        self._tstop = new_tstop.ljust(10)
 
     @property
     def line(self):
@@ -2032,10 +1978,10 @@ class RampSource(SourceElement):
     
     @line.setter
     def line(self, new_line):
-        if len(new_line) != 80:
-            raise ValueError("Line must be 80 characters long")
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than 80 characters long")
         
-        self._line = new_line
+        self._line = new_line.ljust(80)
 
         self._itype = new_line[0:2]
         self._name = new_line[2:8]
@@ -2062,12 +2008,12 @@ class SlopeRampSource(SourceElement):
     
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be 2 characters long")
         
-        self._line = new_itype + self._line[2:]
+        self._line = new_itype.ljust(2) + self._line[2:]
 
-        self._itype = new_itype
+        self._itype = new_itype.ljust(2)
 
     @property
     def name(self):
@@ -2075,12 +2021,12 @@ class SlopeRampSource(SourceElement):
     
     @name.setter
     def name(self, new_name):
-        if len(new_name) != 6:
-            raise ValueError("Name must be 6 characters long")
+        if len(new_name) > 6:
+            raise ValueError("Name can't be 6 characters long")
         
-        self._line = self._line[0:2] + new_name + self._line[8:]
+        self._line = self._line[0:2] + new_name.ljust(6) + self._line[8:]
 
-        self._name = new_name
+        self._name = new_name.ljust(6)
 
     @property
     def st(self):
@@ -2088,12 +2034,12 @@ class SlopeRampSource(SourceElement):
     
     @st.setter
     def st(self, new_st):
-        if len(new_st) != 2:
-            raise ValueError("St must be 2 characters long")
+        if len(new_st) > 2:
+            raise ValueError("St can't be 2 characters long")
         
-        self._line = self._line[0:8] + new_st + self._line[10:]
+        self._line = self._line[0:8] + new_st.ljust(2) + self._line[10:]
 
-        self._st = new_st
+        self._st = new_st.ljust(2)
 
     @property
     def amplitude(self):
@@ -2101,12 +2047,12 @@ class SlopeRampSource(SourceElement):
     
     @amplitude.setter
     def amplitude(self, new_amplitude):
-        if len(new_amplitude) != 10:
-            raise ValueError("Amplitude must be 10 characters long")
+        if len(new_amplitude) > 10:
+            raise ValueError("Amplitude can't be 10 characters long")
         
-        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+        self._line = self._line[0:10] + new_amplitude.ljust(10) + self._line[20:]
 
-        self._amplitude = new_amplitude
+        self._amplitude = new_amplitude.ljust(10)
 
     @property
     def time0(self):
@@ -2114,12 +2060,12 @@ class SlopeRampSource(SourceElement):
     
     @time0.setter
     def time0(self, new_time0):
-        if len(new_time0) != 10:
-            raise ValueError("Time0 must be 10 characters long")
+        if len(new_time0) > 10:
+            raise ValueError("Time0 can't be 10 characters long")
         
-        self._line = self._line[0:30] + new_time0 + self._line[40:]
+        self._line = self._line[0:30] + new_time0.ljust(10) + self._line[40:]
 
-        self._time0 = new_time0
+        self._time0 = new_time0.ljust(10)
 
     @property
     def A1(self):
@@ -2127,12 +2073,12 @@ class SlopeRampSource(SourceElement):
     
     @A1.setter
     def A1(self, new_A1):
-        if len(new_A1) != 10:
-            raise ValueError("A1 must be 10 characters long")
+        if len(new_A1) > 10:
+            raise ValueError("A1 can't be 10 characters long")
         
-        self._line = self._line[0:40] + new_A1 + self._line[50:]
+        self._line = self._line[0:40] + new_A1.ljust(10) + self._line[50:]
 
-        self._A1 = new_A1
+        self._A1 = new_A1.ljust(10)
     
     @property
     def time1(self):
@@ -2140,12 +2086,12 @@ class SlopeRampSource(SourceElement):
     
     @time1.setter
     def time1(self, new_time1):
-        if len(new_time1) != 10:
-            raise ValueError("Time1 must be 10 characters long")
+        if len(new_time1) > 10:
+            raise ValueError("Time1 can't be 10 characters long")
         
-        self._line = self._line[0:50] + new_time1 + self._line[60:]
+        self._line = self._line[0:50] + new_time1.ljust(10) + self._line[60:]
 
-        self._time1 = new_time1
+        self._time1 = new_time1.ljust(10)
 
     @property
     def tstart(self):
@@ -2153,12 +2099,12 @@ class SlopeRampSource(SourceElement):
     
     @tstart.setter
     def tstart(self, new_tstart):
-        if len(new_tstart) != 10:
-            raise ValueError("Tstart must be 10 characters long")
+        if len(new_tstart) > 10:
+            raise ValueError("Tstart can't be 10 characters long")
         
-        self._line = self._line[0:60] + new_tstart + self._line[70:]
+        self._line = self._line[0:60] + new_tstart.ljust(10) + self._line[70:]
 
-        self._tstart = new_tstart
+        self._tstart = new_tstart.ljust(10)
 
     @property
     def tstop(self):
@@ -2166,12 +2112,12 @@ class SlopeRampSource(SourceElement):
     
     @tstop.setter
     def tstop(self, new_tstop):
-        if len(new_tstop) != 10:
-            raise ValueError("Tstop must be 10 characters long")
+        if len(new_tstop) > 10:
+            raise ValueError("Tstop can't be longer than 10 characters")
         
-        self._line = self._line[0:70] + new_tstop + self._line[80:]
+        self._line = self._line[0:70] + new_tstop.ljust(10) + self._line[80:]
 
-        self._tstop = new_tstop
+        self._tstop = new_tstop.ljust(10)
 
     @property
     def line(self):
@@ -2179,10 +2125,10 @@ class SlopeRampSource(SourceElement):
     
     @line.setter
     def line(self, new_line):
-        if len(new_line) != 80:
-            raise ValueError("Line must be 80 characters long")
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than 80 characters")
         
-        self._line = new_line
+        self._line = new_line.ljust(80)
 
         self._itype = new_line[0:2]
         self._name = new_line[2:8]
@@ -2209,130 +2155,251 @@ class CosineSource(SourceElement):
     @property
     def itype(self):
         return self._itype
-    
+
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be longer than 2 characters")
         
-        self._line = new_itype + self._line[2:]
+        self._line = new_itype.ljust(2) + self._line[2:]
 
-        self._itype = new_itype
+        self._itype = new_itype.ljust(2)
 
     @property
     def name(self):
         return self._name
-    
+
     @name.setter
     def name(self, new_name):
-        if len(new_name) != 6:
-            raise ValueError("Name must be 6 characters long")
-        
-        self._line = self._line[0:2] + new_name + self._line[8:]
+        if len(new_name) > 6:
+            raise ValueError("Name can't be longer than 6 characters")
 
-        self._name = new_name
+        self._line = self._line[0:2] + new_name.ljust(6) + self._line[8:]
+        self._name = new_name.ljust(6)
 
     @property
     def st(self):
         return self._st
-    
+
     @st.setter
     def st(self, new_st):
-        if len(new_st) != 2:
-            raise ValueError("St must be 2 characters long")
-        
-        self._line = self._line[0:8] + new_st + self._line[10:]
+        if len(new_st) > 2:
+            raise ValueError("St can't be longer than 2 characters")
 
-        self._st = new_st
+        self._line = self._line[0:8] + new_st.ljust(2) + self._line[10:]
+        self._st = new_st.ljust(2)
 
     @property
     def amplitude(self):
         return self._amplitude
-    
+
     @amplitude.setter
     def amplitude(self, new_amplitude):
-        if len(new_amplitude) != 10:
-            raise ValueError("Amplitude must be 10 characters long")
-        
-        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+        if len(new_amplitude) > 10:
+            raise ValueError("Amplitude can't be longer than 10 characters")
 
-        self._amplitude = new_amplitude
+        self._line = self._line[0:10] + new_amplitude.ljust(10) + self._line[20:]
+        self._amplitude = new_amplitude.ljust(10)
 
     @property
     def frequency(self):
         return self._frequency
-    
+
     @frequency.setter
     def frequency(self, new_frequency):
-        if len(new_frequency) != 10:
-            raise ValueError("Frequency must be 10 characters long")
-        
-        self._line = self._line[0:20] + new_frequency + self._line[30:]
+        if len(new_frequency) > 10:
+            raise ValueError("Frequency can't be longer than 10 characters")
 
-        self._frequency = new_frequency
+        self._line = self._line[0:20] + new_frequency.ljust(10) + self._line[30:]
+        self._frequency = new_frequency.ljust(10)
 
     @property
     def phase(self):
         return self._phase
-    
+
     @phase.setter
     def phase(self, new_phase):
-        if len(new_phase) != 10:
-            raise ValueError("Phase must be 10 characters long")
-        
-        self._line = self._line[0:30] + new_phase + self._line[40:]
+        if len(new_phase) > 10:
+            raise ValueError("Phase can't be longer than 10 characters")
 
-        self._phase = new_phase
+        self._line = self._line[0:30] + new_phase.ljust(10) + self._line[40:]
+        self._phase = new_phase.ljust(10)
 
     @property
     def A1(self):
         return self._A1
-    
+
     @A1.setter
     def A1(self, new_A1):
-        if len(new_A1) != 10:
-            raise ValueError("A1 must be 10 characters long")
-        
-        self._line = self._line[0:40] + new_A1 + self._line[50:]
+        if len(new_A1) > 10:
+            raise ValueError("A1 can't be longer than 10 characters")
 
-        self._A1 = new_A1
+        self._line = self._line[0:40] + new_A1.ljust(10) + self._line[50:]
+        self._A1 = new_A1.ljust(10)
 
     @property
     def tstart(self):
         return self._tstart
-    
+
     @tstart.setter
     def tstart(self, new_tstart):
-        if len(new_tstart) != 10:
-            raise ValueError("Tstart must be 10 characters long")
-        
-        self._line = self._line[0:60] + new_tstart + self._line[70:]
+        if len(new_tstart) > 10:
+            raise ValueError("Tstart can't be longer than 10 characters")
 
-        self._tstart = new_tstart
+        self._line = self._line[0:60] + new_tstart.ljust(10) + self._line[70:]
+        self._tstart = new_tstart.ljust(10)
 
     @property
     def tstop(self):
         return self._tstop
-    
+
     @tstop.setter
     def tstop(self, new_tstop):
-        if len(new_tstop) != 10:
-            raise ValueError("Tstop must be 10 characters long")
-        
-        self._line = self._line[0:70] + new_tstop + self._line[80:]
+        if len(new_tstop) > 10:
+            raise ValueError("Tstop can't be longer than 10 characters")
 
-        self._tstop = new_tstop
+        self._line = self._line[0:70] + new_tstop.ljust(10) + self._line[80:]
+        self._tstop = new_tstop.ljust(10)
 
     @property
     def line(self):
         return self._line
-    
+
     @line.setter
     def line(self, new_line):
-        if len(new_line) != 80:
-            raise ValueError("Line must be 80 characters long")
-        
-        self._line = new_line
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than 80 characters")
+
+        self._line = new_line.ljust(80)
+
+        self._itype = new_line[0:2]
+        self._name = new_line[2:8]
+        self._st = new_line[8:10]
+        self._amplitude = new_line[10:20]
+        self._frequency = new_line[20:30]
+        self._phase = new_line[30:40]
+        self._A1 = new_line[40:50]
+        self._tstart = new_line[60:70]
+        self._tstop = new_line[70:80]
+
+    @property
+    def itype(self):
+        return self._itype
+
+    @itype.setter
+    def itype(self, new_itype):
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be longer than 2 characters")
+
+        self._line = new_itype.ljust(2) + self._line[2:]
+        self._itype = new_itype.ljust(2)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, new_name):
+        if len(new_name) > 6:
+            raise ValueError("Name can't be longer than 6 characters")
+
+        self._line = self._line[0:2] + new_name.ljust(6) + self._line[8:]
+        self._name = new_name.ljust(6)
+
+    @property
+    def st(self):
+        return self._st
+
+    @st.setter
+    def st(self, new_st):
+        if len(new_st) > 2:
+            raise ValueError("St can't be longer than 2 characters")
+
+        self._line = self._line[0:8] + new_st.ljust(2) + self._line[10:]
+        self._st = new_st.ljust(2)
+
+    @property
+    def amplitude(self):
+        return self._amplitude
+
+    @amplitude.setter
+    def amplitude(self, new_amplitude):
+        if len(new_amplitude) > 10:
+            raise ValueError("Amplitude can't be longer than 10 characters")
+
+        self._line = self._line[0:10] + new_amplitude.ljust(10) + self._line[20:]
+        self._amplitude = new_amplitude.ljust(10)
+
+    @property
+    def frequency(self):
+        return self._frequency
+
+    @frequency.setter
+    def frequency(self, new_frequency):
+        if len(new_frequency) > 10:
+            raise ValueError("Frequency can't be longer than 10 characters")
+
+        self._line = self._line[0:20] + new_frequency.ljust(10) + self._line[30:]
+        self._frequency = new_frequency.ljust(10)
+
+    @property
+    def phase(self):
+        return self._phase
+
+    @phase.setter
+    def phase(self, new_phase):
+        if len(new_phase) > 10:
+            raise ValueError("Phase can't be longer than 10 characters")
+
+        self._line = self._line[0:30] + new_phase.ljust(10) + self._line[40:]
+        self._phase = new_phase.ljust(10)
+
+    @property
+    def A1(self):
+        return self._A1
+
+    @A1.setter
+    def A1(self, new_A1):
+        if len(new_A1) > 10:
+            raise ValueError("A1 can't be longer than 10 characters")
+
+        self._line = self._line[0:40] + new_A1.ljust(10) + self._line[50:]
+        self._A1 = new_A1.ljust(10)
+
+    @property
+    def tstart(self):
+        return self._tstart
+
+    @tstart.setter
+    def tstart(self, new_tstart):
+        if len(new_tstart) > 10:
+            raise ValueError("Tstart can't be longer than 10 characters")
+
+        self._line = self._line[0:60] + new_tstart.ljust(10) + self._line[70:]
+        self._tstart = new_tstart.ljust(10)
+
+    @property
+    def tstop(self):
+        return self._tstop
+
+    @tstop.setter
+    def tstop(self, new_tstop):
+        if len(new_tstop) > 10:
+            raise ValueError("Tstop can't be longer than 10 characters")
+
+        self._line = self._line[0:70] + new_tstop.ljust(10) + self._line[80:]
+        self._tstop = new_tstop.ljust(10)
+
+    @property
+    def line(self):
+        return self._line
+
+    @line.setter
+    def line(self, new_line):
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than 80 characters")
+
+        self._line = new_line.ljust(80)
 
         self._itype = new_line[0:2]
         self._name = new_line[2:8]
@@ -2356,133 +2423,125 @@ class HeidlerSource(SourceElement):
 
     def write(self):
         return f"{self.line}\n"
+
     @property
     def itype(self):
         return self._itype
-    
+
     @itype.setter
     def itype(self, new_itype):
-        if len(new_itype) != 2:
-            raise ValueError("Itype must be 2 characters long")
-        
-        self._line = new_itype + self._line[2:]
+        if len(new_itype) > 2:
+            raise ValueError("Itype can't be longer than 2 characters")
 
-        self._itype = new_itype
+        self._line = new_itype.ljust(2) + self._line[2:]
+        self._itype = new_itype.ljust(2)
 
     @property
     def name(self):
         return self._name
-    
+
     @name.setter
     def name(self, new_name):
-        if len(new_name) != 6:
-            raise ValueError("Name must be 6 characters long")
-        
-        self._line = self._line[0:2] + new_name + self._line[8:]
+        if len(new_name) > 6:
+            raise ValueError("Name can't be longer than 6 characters")
 
-        self._name = new_name
+        self._line = self._line[0:2] + new_name.ljust(6) + self._line[8:]
+        self._name = new_name.ljust(6)
 
     @property
     def st(self):
         return self._st
-    
+
     @st.setter
     def st(self, new_st):
-        if len(new_st) != 2:
-            raise ValueError("St must be 2 characters long")
-        
-        self._line = self._line[0:8] + new_st + self._line[10:]
+        if len(new_st) > 2:
+            raise ValueError("St can't be longer than 2 characters")
 
-        self._st = new_st
+        self._line = self._line[0:8] + new_st.ljust(2) + self._line[10:]
+        self._st = new_st.ljust(2)
 
     @property
     def amplitude(self):
         return self._amplitude
-    
+
     @amplitude.setter
     def amplitude(self, new_amplitude):
-        if len(new_amplitude) != 10:
-            raise ValueError("Amplitude must be 10 characters long")
-        
-        self._line = self._line[0:10] + new_amplitude + self._line[20:]
+        if len(new_amplitude) > 10:
+            raise ValueError("Amplitude can't be longer than 10 characters")
 
-        self._amplitude = new_amplitude
+        self._line = self._line[0:10] + new_amplitude.ljust(10) + self._line[20:]
+        self._amplitude = new_amplitude.ljust(10)
 
     @property
     def frequency(self):
         return self._frequency
-    
+
     @frequency.setter
     def frequency(self, new_frequency):
-        if len(new_frequency) != 10:
-            raise ValueError("Frequency must be 10 characters long")
-        
-        self._line = self._line[0:20] + new_frequency + self._line[30:]
+        if len(new_frequency) > 10:
+            raise ValueError("Frequency can't be longer than 10 characters")
 
-        self._frequency = new_frequency
+        self._line = self._line[0:20] + new_frequency.ljust(10) + self._line[30:]
+        self._frequency = new_frequency.ljust(10)
 
     @property
     def phase(self):
         return self._phase
-    
+
     @phase.setter
     def phase(self, new_phase):
-        if len(new_phase) != 10:
-            raise ValueError("Phase must be 10 characters long")
-        
-        self._line = self._line[0:30] + new_phase + self._line[40:]
+        if len(new_phase) > 10:
+            raise ValueError("Phase can't be longer than 10 characters")
 
-        self._phase = new_phase
+        self._line = self._line[0:30] + new_phase.ljust(10) + self._line[40:]
+        self._phase = new_phase.ljust(10)
 
     @property
     def A1(self):
         return self._A1
-    
+
     @A1.setter
     def A1(self, new_A1):
-        if len(new_A1) != 10:
-            raise ValueError("A1 must be 10 characters long")
-        
-        self._line = self._line[0:40] + new_A1 + self._line[50:]
+        if len(new_A1) > 10:
+            raise ValueError("A1 can't be longer than 10 characters")
 
-        self._A1 = new_A1
+        self._line = self._line[0:40] + new_A1.ljust(10) + self._line[50:]
+        self._A1 = new_A1.ljust(10)
 
     @property
     def tstart(self):
         return self._tstart
-    
+
     @tstart.setter
     def tstart(self, new_tstart):
-        if len(new_tstart) != 10:
-            raise ValueError("Tstart must be 10 characters long")
-        
-        self._line = self._line[0:60] + new_tstart + self._line[70:]
+        if len(new_tstart) > 10:
+            raise ValueError("Tstart can't be longer than 10 characters")
 
-        self._tstart = new_tstart
+        self._line = self._line[0:60] + new_tstart.ljust(10) + self._line[70:]
+        self._tstart = new_tstart.ljust(10)
 
     @property
     def tstop(self):
         return self._tstop
-    
+
     @tstop.setter
     def tstop(self, new_tstop):
-        if len(new_tstop) != 10:
-            raise ValueError("Tstop must be 10 characters long")
-        
-        self._line = self._line[0:70] + new_tstop + self._line[80:]
+        if len(new_tstop) > 10:
+            raise ValueError("Tstop can't be longer than 10 characters")
 
-        self._tstop = new_tstop
+        self._line = self._line[0:70] + new_tstop.ljust(10) + self._line[80:]
+        self._tstop = new_tstop.ljust(10)
 
     @property
     def line(self):
         return self._line
-    
+
     @line.setter
     def line(self, new_line):
-        if len(new_line) != 80:
-            raise ValueError("Line must be 80 characters long")
-        
-        self._line = new_line
+        if len(new_line) > 80:
+            raise ValueError("Line can't be longer than 80 characters")
+
+        self._line = new_line.ljust(80)
 
         self._itype = new_line[0:2]
         self._name = new_line[2:8]
@@ -2494,13 +2553,12 @@ class HeidlerSource(SourceElement):
         self._tstart = new_line[60:70]
         self._tstop = new_line[70:80]
 
-
 class Output:
     def __init__(self) -> None:
         self._init_line = "/OUTPUT\n"
         line_str_len = 80
         self._line = " " * line_str_len
-        
+
         blank_str_len = 2
         self._blank = " " * blank_str_len
 
@@ -2510,24 +2568,25 @@ class Output:
 
     def write(self):
         return self._init_line + self._line + '\n' if self._line != " " * 80 else self._init_line 
-    
+
     def copy(self):
         return copy.deepcopy(self)
-        
+
     def add_vars(self, vars):
         # The user can put less than 13 vars
         # if he puts less, the rest will be filled with blanks
 
         if len(vars) > 13:
             raise ValueError("There can be at most 13 vars")
-        
+
         # I have to make sure that the vars are 6 characters long, adding blanks if necessary
 
         for i in range(len(vars)):
-            if len(vars[i]) != 6:
-                vars[i] = vars[i] + " " * (6 - len(vars[i]))
-        
-        self._line = self._blank + "".join(vars)	 
+            if len(vars[i]) > 6:
+                raise ValueError("Vars can't be longer than 6 characters")
+            vars[i] = vars[i].ljust(6)
+
+        self._line = self._blank + "".join(vars)     
 
         self._vars = vars
 
@@ -2537,7 +2596,7 @@ class Output:
 
     @line.setter
     def line(self, new_line):
-        
+
         self._line = new_line
 
         self._blank = new_line[0:2]
@@ -2546,21 +2605,21 @@ class Output:
         self.vars = [new_line[i:i+6] for i in range(2, len(new_line), 6)]
 
         # add blanks if necessary
-        self.vars = [var + " " * (6 - len(var)) for var in self.vars]
+        self.vars = [var.ljust(6) for var in self.vars]
 
     @property
     def vars(self):
         return self._vars
-    
+
     @vars.setter
     def vars(self, new_vars):
-        
+
         self._vars = self.add_vars(new_vars)
 
     def from_file(self, filename):
         with open(filename, "r") as f:
             lines = f.readlines()
-        
+
         first_line_index = -1
         last_line_index = -1
 
@@ -2568,15 +2627,15 @@ class Output:
             if line.startswith("/OUTPUT"):
                 first_line_index = index + 1
                 break
-        
+
         for index, line in enumerate(lines[first_line_index:]):
             if line.startswith("BLANK"):
                 last_line_index = index + first_line_index
                 break
 
         lines = [line for line in lines[first_line_index:last_line_index] if not line.startswith("C")]
-        
-        
+
+
         if len(lines) > 0: 
             self._line = lines[0][:-1]
         else :
@@ -2586,4 +2645,3 @@ class Output:
 class Plot:
     def __init__(self) -> None:
         pass
-
