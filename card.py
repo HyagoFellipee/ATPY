@@ -138,7 +138,9 @@ class ATPCard:
 
         if no_temp_file:
             files = [f for f in files if not f.endswith("tmp")]
-            
+
+        if not os.path.exists(output_path):
+            os.mkdir(output_path)
 
         for file in files:
             # if file exists in the output folder, delete it and put the new one
@@ -1226,6 +1228,16 @@ class RlcElementBasic(RlcElement):
     
     @resistance.setter
     def resistance(self, new_resistance):
+
+        try:
+            float(new_resistance)
+        except ValueError:
+            raise ValueError("Resistance must be a numeric value")
+
+        new_resistance = numeric_to_valid_str(new_resistance)
+
+
+
         if len(new_resistance) > 6:
             raise ValueError("Resistance cannot be longer than 6 characters")
         
@@ -1239,6 +1251,14 @@ class RlcElementBasic(RlcElement):
     
     @inductance.setter
     def inductance(self, new_inductance):
+
+        try:
+            float(new_inductance)
+        except ValueError:
+            raise ValueError("Inductance must be a numeric value")
+        
+        new_inductance = numeric_to_valid_str(new_inductance, is_inductance=True)
+
         if len(new_inductance) > 6:
             raise ValueError("Inductance cannot be longer than 6 characters")
         
@@ -1252,6 +1272,14 @@ class RlcElementBasic(RlcElement):
     
     @capacitance.setter
     def capacitance(self, new_capacitance):
+
+        try:
+            float(new_capacitance)
+        except ValueError:
+            raise ValueError("Capacitance must be a numeric value")
+        
+        new_capacitance = numeric_to_valid_str(new_capacitance, is_capacitance=True)
+
         if len(new_capacitance) > 6:
             raise ValueError("Capacitance cannot be longer than 6 characters")
         
@@ -2645,3 +2673,43 @@ class Output:
 class Plot:
     def __init__(self) -> None:
         pass
+
+
+def read_atp(atp_path):
+    card = ATPCard()
+    card.from_file(atp_path)
+
+    return card
+
+def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False):
+
+
+     
+
+    if isinstance(numeric, float) or isinstance(numeric, int):
+
+        if is_inductance:
+            numeric = numeric / 1e-3
+
+        if is_capacitance:
+            numeric = numeric / 1e-6
+        
+        numeric = f"{numeric:.6E}"
+        
+        if ('+' in numeric): 
+            numeric = numeric.replace('+', '')
+
+        e_index = numeric.index('E')
+
+        # take unececessary zeros
+        while numeric[e_index + 1] == '0':
+            numeric = numeric[:e_index + 1] + numeric[e_index + 2:]
+
+        #taking numbers before E until len is 6
+        while len(numeric) > 6:
+            numeric = numeric[:e_index - 1] + numeric[e_index:]
+            e_index -= 1
+
+        return numeric
+    else:
+        return numeric
