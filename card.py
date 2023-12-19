@@ -189,6 +189,14 @@ class Miscellaneous:
     
     @delta_t.setter
     def delta_t(self, new_delta_t):
+
+        try:
+            float(new_delta_t)
+        except ValueError:
+            raise ValueError("Delta t must be a number")
+        
+        new_delta_t = numeric_to_valid_str(new_delta_t)
+
         if len(new_delta_t) > 8:
             raise ValueError("Delta t cant be longer than 8 characters long")
         
@@ -203,6 +211,15 @@ class Miscellaneous:
 
     @t_max.setter
     def t_max(self, new_t_max):
+
+        try:
+            float(new_t_max)
+        except ValueError:
+            raise ValueError("T max must be a number")
+        
+        new_t_max = numeric_to_valid_str(new_t_max)
+        
+
         if len(new_t_max) > 8:
             raise ValueError("T max cant be longer than 8 characters long")
 
@@ -2682,9 +2699,6 @@ def read_atp(atp_path):
     return card
 
 def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False):
-
-
-     
 
     if isinstance(numeric, float) or isinstance(numeric, int):
 
