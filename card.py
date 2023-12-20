@@ -218,7 +218,7 @@ class Miscellaneous:
             raise ValueError("T max must be a number")
         
         new_t_max = numeric_to_valid_str(new_t_max)
-        
+
 
         if len(new_t_max) > 8:
             raise ValueError("T max cant be longer than 8 characters long")
@@ -2718,6 +2718,10 @@ def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False)
         # take unececessary zeros
         while numeric[e_index + 1] == '0':
             numeric = numeric[:e_index + 1] + numeric[e_index + 2:]
+
+            if len(numeric) == e_index + 1:
+                numeric = numeric[:-1]
+                break
 
         #taking numbers before E until len is 6
         while len(numeric) > 6:
