@@ -1337,10 +1337,11 @@ class RlcElementBasic(RlcElement):
     @resistance.setter
     def resistance(self, new_resistance):
 
-        try:
-            float(new_resistance)
-        except ValueError:
-            raise ValueError("Resistance must be a numeric value")
+        if new_resistance != " " * 6:
+            try:
+                float(new_resistance)
+            except ValueError:
+                raise ValueError("Resistance must be a numeric value")
 
         new_resistance = numeric_to_valid_str(new_resistance)
 
@@ -1360,10 +1361,11 @@ class RlcElementBasic(RlcElement):
     @inductance.setter
     def inductance(self, new_inductance):
 
-        try:
-            float(new_inductance)
-        except ValueError:
-            raise ValueError("Inductance must be a numeric value")
+        if new_inductance != " " * 6:
+            try:
+                float(new_inductance)
+            except ValueError:
+                raise ValueError("Inductance must be a numeric value")
         
         new_inductance = numeric_to_valid_str(
             new_inductance, 
@@ -1384,11 +1386,12 @@ class RlcElementBasic(RlcElement):
     @capacitance.setter
     def capacitance(self, new_capacitance):
 
-        try:
-            float(new_capacitance)
-        except ValueError:
-            raise ValueError("Capacitance must be a numeric value")
-        
+        if new_capacitance != " " * 6:
+            try:
+                float(new_capacitance)
+            except ValueError:
+                raise ValueError("Capacitance must be a numeric value")
+            
         new_capacitance = numeric_to_valid_str(new_capacitance, is_capacitance=True)
 
         if len(new_capacitance) > 6:
