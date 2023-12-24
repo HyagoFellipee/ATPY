@@ -233,6 +233,11 @@ class Miscellaneous:
 
     @x_opt.setter
     def x_opt(self, new_x_opt):
+
+        if type(new_x_opt) != str:
+            bool_to_valid_str(bool(new_x_opt))
+            new_x_opt = new_x_opt.ljust(8)
+
         if len(new_x_opt) > 8:
             raise ValueError("X opt cant be longer than 8 characters long")
 
@@ -246,6 +251,11 @@ class Miscellaneous:
 
     @c_opt.setter
     def c_opt(self, new_c_opt):
+
+        if type(new_c_opt) != str:
+            bool_to_valid_str(bool(new_c_opt))
+            new_c_opt = new_c_opt.ljust(8)
+
         if len(new_c_opt) > 8:
             raise ValueError("C opt cant be longer than 8 characters long")
 
@@ -259,6 +269,12 @@ class Miscellaneous:
 
     @epslin.setter
     def epslin(self, new_epslin):
+
+        if type(new_epslin) != str:
+            bool_to_valid_str(bool(new_epslin))
+            new_epslin = new_epslin.ljust(8)
+
+
         if len(new_epslin) > 8:
             raise ValueError("Epslin cant be longer than 8 characters long")
 
@@ -272,6 +288,12 @@ class Miscellaneous:
 
     @tolmat.setter
     def tolmat(self, new_tolmat):
+
+        if type(new_tolmat) != str:
+            bool_to_valid_str(bool(new_tolmat))
+            new_tolmat = new_tolmat.ljust(8)
+
+
         if len(new_tolmat) > 8:
             raise ValueError("Tolmat cant be longer than 8 characters long")
 
@@ -285,6 +307,16 @@ class Miscellaneous:
 
     @tstart.setter
     def tstart(self, new_tstart):
+
+
+        if (new_tstart != " " * 8):
+            try:
+                float(new_tstart)
+            except ValueError:
+                raise ValueError("T start must be a number")
+            
+        new_tstart = numeric_to_valid_str(new_tstart)
+
         if len(new_tstart) > 8:
             raise ValueError("Tstart cant be longer than 8 characters long")
 
@@ -298,6 +330,14 @@ class Miscellaneous:
 
     @iout.setter
     def iout(self, new_iout):
+
+        try:
+            int(new_iout)
+        except ValueError:
+            raise ValueError("Iout must be a number")
+        
+        new_iout = numeric_to_valid_str(new_iout)
+
         if len(new_iout) > 8:
             raise ValueError("Iout cant be longer than 8 characters long")
 
@@ -311,6 +351,14 @@ class Miscellaneous:
 
     @iplot.setter
     def iplot(self, new_iplot):
+
+        try:
+            int(new_iplot)
+        except ValueError:
+            raise ValueError("Iplot must be a number")
+        
+        new_iplot = numeric_to_valid_str(new_iplot)
+
         if len(new_iplot) > 8:
             raise ValueError("Iplot cant be longer than 8 characters long")
 
@@ -324,6 +372,12 @@ class Miscellaneous:
 
     @idoubl.setter
     def idoubl(self, new_idoubl):
+
+        if type(new_idoubl) != str:
+            bool_to_valid_str(bool(new_idoubl))
+            new_idoubl = new_idoubl.ljust(8)
+
+
         if len(new_idoubl) > 8:
             raise ValueError("Idoubl cant be longer than 8 characters long")
 
@@ -337,6 +391,12 @@ class Miscellaneous:
 
     @kout.setter
     def kout(self, new_kout):
+
+        if type(new_kout) != str:
+            bool_to_valid_str(bool(new_kout))
+            new_kout = new_kout.ljust(8)
+        
+
         if len(new_kout) > 8:
             raise ValueError("Kout cant be longer than 8 characters long")
 
@@ -350,6 +410,12 @@ class Miscellaneous:
 
     @maxout.setter
     def maxout(self, new_maxout):
+
+        if type(new_maxout) != str:
+            bool_to_valid_str(bool(new_maxout))
+            new_maxout = new_maxout.ljust(8)
+        
+
         if len(new_maxout) > 8:
             raise ValueError("Maxout cant be longer than 8 characters long")
 
@@ -363,6 +429,11 @@ class Miscellaneous:
 
     @ipun.setter
     def ipun(self, new_ipun):
+
+        if type(new_ipun) != str:
+            bool_to_valid_str(bool(new_ipun))
+            new_ipun = new_ipun.ljust(8)
+
         if len(new_ipun) > 8:
             raise ValueError("Ipun cant be longer than 8 characters long")
 
@@ -376,6 +447,11 @@ class Miscellaneous:
 
     @memsav.setter
     def memsav(self, new_memsav):
+
+        if type(new_memsav) != str:
+            bool_to_valid_str(bool(new_memsav))
+            new_memsav = new_memsav.ljust(8)
+
         if len(new_memsav) > 8:
             raise ValueError("Memsav cant be longer than 8 characters long")
 
@@ -389,6 +465,11 @@ class Miscellaneous:
 
     @icat.setter
     def icat(self, new_icat):
+
+        if type(new_icat) != str:
+            bool_to_valid_str(bool(new_icat))
+            new_icat = new_icat.ljust(8)
+
         if len(new_icat) > 8:
             raise ValueError("Icat cant be longer than 8 characters long")
 
@@ -402,6 +483,11 @@ class Miscellaneous:
 
     @nenerg.setter
     def nenerg(self, new_nenerg):
+
+        if type(new_nenerg) != str:
+            bool_to_valid_str(bool(new_nenerg))
+            new_nenerg = new_nenerg.ljust(8)
+
         if len(new_nenerg) > 8:
             raise ValueError("Nenerg cant be longer than 8 characters long")
 
@@ -415,6 +501,11 @@ class Miscellaneous:
 
     @iprsup.setter
     def iprsup(self, new_iprsup):
+
+        if type(new_iprsup) != str:
+            bool_to_valid_str(bool(new_iprsup))
+            new_iprsup = new_iprsup.ljust(8)
+
         if len(new_iprsup) > 8:
             raise ValueError("Iprsup cant be longer than 8 characters long")
 
@@ -1274,7 +1365,10 @@ class RlcElementBasic(RlcElement):
         except ValueError:
             raise ValueError("Inductance must be a numeric value")
         
-        new_inductance = numeric_to_valid_str(new_inductance, is_inductance=True)
+        new_inductance = numeric_to_valid_str(
+            new_inductance, 
+            is_inductance=(not is_str_true(self.miscellaneous.x_opt))
+        )
 
         if len(new_inductance) > 6:
             raise ValueError("Inductance cannot be longer than 6 characters")
@@ -2691,7 +2785,6 @@ class Plot:
     def __init__(self) -> None:
         pass
 
-
 def read_atp(atp_path):
     card = ATPCard()
     card.from_file(atp_path)
@@ -2708,8 +2801,6 @@ def run_atp(
     card = ATPCard()
     card.from_file(atp_path)
     card.run_atp(atp_path, output_path, atp_file_name, no_temp_file)
-
-
 
 def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False):
 
@@ -2744,3 +2835,13 @@ def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False)
         return numeric
     else:
         return numeric
+    
+def bool_to_valid_str(bool):
+    if bool:
+        return "1"
+    else:
+        return "0"
+    
+def is_str_true(str, len):
+    return str != " " * len and float(str) > 0
+        
