@@ -2698,6 +2698,19 @@ def read_atp(atp_path):
 
     return card
 
+def run_atp(
+        atp_path="C:/ATP/atpmingw/tpbig.exe", 
+        output_path=os.getcwd(),
+        atp_file_name="atp_input.atp",
+        no_temp_file=True
+    ):
+
+    card = ATPCard()
+    card.from_file(atp_path)
+    card.run_atp(atp_path, output_path, atp_file_name, no_temp_file)
+
+
+
 def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False):
 
     if isinstance(numeric, float) or isinstance(numeric, int):
