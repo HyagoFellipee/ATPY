@@ -176,7 +176,3 @@ def run_atp(
     card.from_file(atp_path)
     card.run_atp(atp_path, output_path, atp_file_name, no_temp_file)
 
-    
-if __name__ == "__main__":
-    card = ATPCard()
-    card.run_atp()
