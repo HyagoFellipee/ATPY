@@ -48,8 +48,11 @@ def bool_to_valid_str(bool):
 def is_str_true(str, len):
     return str != " " * len and float(str) > 0
 
-
 def scientific_to_decimal(scientific_str):
+
     decimal_str = "{:.20f}".format(float(scientific_str))
     decimal_str = decimal_str.rstrip('0').rstrip('.')
     return decimal_str
+
+def cant_be_longer_message(name, max_len):
+    return f"{name} can't be longer than {max_len} characters"
