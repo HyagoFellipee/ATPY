@@ -406,11 +406,13 @@ class Miscellaneous:
 
         spot_len = 8
 
-        if len(new_first_line) > 56:
-            raise ValueError(cant_be_longer_message('new_first_line', 56))
+        line_len = 56
+
+        if len(new_first_line) > line_len:
+            raise ValueError(cant_be_longer_message('new_first_line', line_len))
         
         #Adding blanks if necessary
-        new_first_line = new_first_line.ljust(56)
+        new_first_line = new_first_line.ljust(line_len)
         
         self._delta_t = new_first_line[0:spot_len]
         self._t_max = new_first_line[spot_len:spot_len*2]
@@ -432,11 +434,13 @@ class Miscellaneous:
 
         spot_len = 8
 
-        if len(new_second_line) > 80:
-            raise ValueError(cant_be_longer_message('new_second_line', 80))
+        line_len = 80
+
+        if len(new_second_line) > line_len:
+            raise ValueError(cant_be_longer_message('new_second_line', line_len))
 
         #Adding blanks if necessary
-        new_second_line = new_second_line.ljust(80)
+        new_second_line = new_second_line.ljust(line_len)
         
         self._iout = new_second_line[0:spot_len]
         self._iplot = new_second_line[spot_len:spot_len*2]
