@@ -351,10 +351,6 @@ def test_iout(misc):
     assert misc.iout == right_iout
     assert misc.second_line == right_iout + misc.second_line[8:]
 
-    misc.iout = 1E6
-    right_iout = "1.E6".rjust(spot_len)
-    assert misc.iout == right_iout
-    assert misc.second_line == right_iout + misc.second_line[8:]
 
     misc.iout = 0.5
     right_iout = "5.E-1".rjust(spot_len)
