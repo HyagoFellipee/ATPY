@@ -1,5 +1,5 @@
 import copy 
-from utils import numeric_to_valid_str, is_str_true, cant_be_longer_message
+from utils import numeric_to_valid_str, is_str_true, cant_be_longer_message, valid_iout
 
 class Branch:
     def __init__(self):
@@ -189,18 +189,18 @@ class RlcElementBasic(RlcElement):
     @resistance.setter
     def resistance(self, new_resistance):
 
+        spot_len = 6
+        init_index = 26
+        end_index = 32
+
         if new_resistance != " " * 6:
             try:
                 float(new_resistance)
             except ValueError:
                 raise ValueError("Resistance must be a numeric value")
 
-        new_resistance = numeric_to_valid_str(new_resistance)
-        
-        spot_len = 6
-        init_index = 26
-        end_index = 32
-        
+        new_resistance = numeric_to_valid_str(new_resistance, spot_len)
+    
         if len(new_resistance) > spot_len:
             raise ValueError(cant_be_longer_message('new_resistance', spot_len))
         
@@ -227,6 +227,7 @@ class RlcElementBasic(RlcElement):
         
         new_inductance = numeric_to_valid_str(
             new_inductance, 
+            spot_len, 
             is_inductance=(not is_str_true(self.miscellaneous.x_opt)) # if x_opt is true, then inductance unit is ohm, as in impedance
         ) 
 
@@ -254,7 +255,7 @@ class RlcElementBasic(RlcElement):
             except ValueError:
                 raise ValueError("Capacitance must be a numeric value")
             
-        new_capacitance = numeric_to_valid_str(new_capacitance, is_capacitance=True)
+        new_capacitance = numeric_to_valid_str(new_capacitance, spot_len, is_capacitance=True)
         
         if len(new_capacitance) > spot_len:
             raise ValueError(cant_be_longer_message('new_capacitance', spot_len))
@@ -272,6 +273,9 @@ class RlcElementBasic(RlcElement):
 
         spot_len = 1
         init_index = 79
+
+        new_iout = valid_iout(new_iout, spot_len)
+        new_iout = numeric_to_valid_str(new_iout, spot_len) if new_iout != 0 else " " * spot_len
 
         if len(new_iout) > spot_len:
             raise ValueError(cant_be_longer_message("new_iout", spot_len))
@@ -559,6 +563,9 @@ class RlcElementDistParams(RlcElement):
 
         spot_len = 1 
         init_index = 79
+
+        new_iout = valid_iout(new_iout, spot_len)
+        new_iout = numeric_to_valid_str(new_iout, spot_len) if new_iout != 0 else " " * spot_len
 
         if len(new_iout) > 1:
             raise ValueError(cant_be_longer_message("new_iout", spot_len)) 
