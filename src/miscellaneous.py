@@ -1,5 +1,5 @@
 import copy 
-from utils import bool_to_valid_str, numeric_to_valid_str, cant_be_longer_message
+from utils import bool_to_valid_str, numeric_to_valid_str, cant_be_longer_message, valid_iout
 
 class Miscellaneous:
     def __init__(self) -> None:
@@ -47,7 +47,7 @@ class Miscellaneous:
         except ValueError:
             raise ValueError("Delta t must be a number")
         
-        new_delta_t = numeric_to_valid_str(new_delta_t, spot_len=8) 
+        new_delta_t = numeric_to_valid_str(new_delta_t, spot_len) 
 
         if len(new_delta_t) > spot_len:
             raise ValueError(cant_be_longer_message("new_delta_t", spot_len))
@@ -71,7 +71,7 @@ class Miscellaneous:
         except ValueError:
             raise ValueError("T max must be a number")
         
-        new_t_max = numeric_to_valid_str(new_t_max, spot_len=8)
+        new_t_max = numeric_to_valid_str(new_t_max, spot_len)
 
 
         if len(new_t_max) > spot_len:
@@ -179,7 +179,7 @@ class Miscellaneous:
             except ValueError:
                 raise ValueError("T start must be a number")
             
-        new_tstart = numeric_to_valid_str(new_tstart, spot_len=8)
+        new_tstart = numeric_to_valid_str(new_tstart, spot_len)
 
         if len(new_tstart) > spot_len:
             raise ValueError(cant_be_longer_message("new_tstart", spot_len))
@@ -197,12 +197,7 @@ class Miscellaneous:
 
         spot_len = 8
 
-        try:
-            int(new_iout)
-        except ValueError:
-            raise ValueError("Iout must be a number")
-        
-        new_iout = numeric_to_valid_str(new_iout, spot_len=8)
+        new_iout = numeric_to_valid_str(new_iout, spot_len)
 
         if len(new_iout) > spot_len:
             raise ValueError(cant_be_longer_message("new_iout", spot_len))
@@ -225,7 +220,7 @@ class Miscellaneous:
         except ValueError:
             raise ValueError("Iplot must be a number")
         
-        new_iplot = numeric_to_valid_str(new_iplot, spot_len=8)
+        new_iplot = numeric_to_valid_str(new_iplot, spot_len)
 
         if len(new_iplot) > spot_len:
             raise ValueError(cant_be_longer_message("new_iplot", spot_len))
