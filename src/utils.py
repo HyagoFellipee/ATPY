@@ -1,4 +1,4 @@
-def numeric_to_valid_str(numeric, is_inductance = False, is_capacitance = False, spot_len = 6):
+def numeric_to_valid_str(numeric, spot_len, is_inductance = False, is_capacitance = False, ):
 
     if isinstance(numeric, float) or isinstance(numeric, int):
 
@@ -56,3 +56,21 @@ def scientific_to_decimal(scientific_str):
 
 def cant_be_longer_message(name, max_len):
     return f"{name} can't be longer than {max_len} characters"
+
+def valid_iout(iout, len):
+
+    if iout == " " * len:
+        return 0
+
+    try:
+        num_iout = float(iout)
+    except ValueError:
+        raise ValueError("Iout must be a number")
+    
+    valid_iout = [0, 1, 2, 3]
+
+    if num_iout not in valid_iout:
+        raise ValueError(f"Iout must be one of {valid_iout}")
+    
+    return num_iout
+    
