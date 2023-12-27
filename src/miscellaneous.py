@@ -52,10 +52,10 @@ class Miscellaneous:
         if len(new_delta_t) > spot_len:
             raise ValueError(cant_be_longer_message("new_delta_t", spot_len))
         
-        self.first_line = new_delta_t.ljust(spot_len) + self.first_line[spot_len:]
+        self.first_line = new_delta_t.rjust(spot_len) + self.first_line[spot_len:]
         
 
-        self._delta_t = new_delta_t.ljust(spot_len)
+        self._delta_t = new_delta_t.rjust(spot_len)
 
     @property
     def t_max(self):
@@ -77,9 +77,9 @@ class Miscellaneous:
         if len(new_t_max) > spot_len:
             raise ValueError(cant_be_longer_message("new_t_max", spot_len))
 
-        self.first_line = self.first_line[0:spot_len] + new_t_max.ljust(spot_len) + self.first_line[spot_len*2:]
+        self.first_line = self.first_line[0:spot_len] + new_t_max.rjust(spot_len) + self.first_line[spot_len*2:]
 
-        self._t_max = new_t_max.ljust(spot_len)
+        self._t_max = new_t_max.rjust(spot_len)
 
     @property
     def x_opt(self):
@@ -92,14 +92,14 @@ class Miscellaneous:
 
         if type(new_x_opt) != str:
             new_x_opt = bool_to_valid_str(bool(new_x_opt))
-            new_x_opt = new_x_opt.ljust(spot_len)
+            new_x_opt = new_x_opt.rjust(spot_len)
 
         if len(new_x_opt) > spot_len:
             raise ValueError(cant_be_longer_message("new_x_opt", spot_len))
 
-        self.first_line = self.first_line[0:spot_len*2] + new_x_opt.ljust(spot_len) + self.first_line[spot_len*3:]
+        self.first_line = self.first_line[0:spot_len*2] + new_x_opt.rjust(spot_len) + self.first_line[spot_len*3:]
 
-        self._x_opt = new_x_opt.ljust(spot_len)
+        self._x_opt = new_x_opt.rjust(spot_len)
 
     @property
     def c_opt(self):
@@ -112,14 +112,14 @@ class Miscellaneous:
 
         if type(new_c_opt) != str:
             new_c_opt = bool_to_valid_str(bool(new_c_opt))
-            new_c_opt = new_c_opt.ljust(spot_len)
+            new_c_opt = new_c_opt.rjust(spot_len)
 
         if len(new_c_opt) > spot_len:
             raise ValueError(cant_be_longer_message("new_c_opt", spot_len))
 
-        self.first_line = self.first_line[0:spot_len*3] + new_c_opt.ljust(spot_len) + self.first_line[spot_len*4:]
+        self.first_line = self.first_line[0:spot_len*3] + new_c_opt.rjust(spot_len) + self.first_line[spot_len*4:]
 
-        self._c_opt = new_c_opt.ljust(spot_len)
+        self._c_opt = new_c_opt.rjust(spot_len)
 
     @property
     def epslin(self):
@@ -132,15 +132,15 @@ class Miscellaneous:
 
         if type(new_epslin) != str:
             new_epslin = bool_to_valid_str(bool(new_epslin))
-            new_epslin = new_epslin.ljust(spot_len)
+            new_epslin = new_epslin.rjust(spot_len)
 
 
         if len(new_epslin) > spot_len:
             raise ValueError(cant_be_longer_message("new_epslin", spot_len))
 
-        self.first_line = self.first_line[0:spot_len*4] + new_epslin.ljust(spot_len) + self.first_line[spot_len*5:]
+        self.first_line = self.first_line[0:spot_len*4] + new_epslin.rjust(spot_len) + self.first_line[spot_len*5:]
 
-        self._epslin = new_epslin.ljust(spot_len)
+        self._epslin = new_epslin.rjust(spot_len)
 
     @property
     def tolmat(self):
@@ -153,15 +153,15 @@ class Miscellaneous:
 
         if type(new_tolmat) != str:
             new_tolmat = bool_to_valid_str(bool(new_tolmat))
-            new_tolmat = new_tolmat.ljust(spot_len)
+            new_tolmat = new_tolmat.rjust(spot_len)
 
 
         if len(new_tolmat) > spot_len:
             raise ValueError(cant_be_longer_message("new_tolmat", spot_len))
 
-        self.first_line = self.first_line[0:spot_len*5] + new_tolmat.ljust(spot_len) + self.first_line[spot_len*6:]
+        self.first_line = self.first_line[0:spot_len*5] + new_tolmat.rjust(spot_len) + self.first_line[spot_len*6:]
 
-        self._tolmat = new_tolmat.ljust(spot_len)
+        self._tolmat = new_tolmat.rjust(spot_len)
 
     @property
     def tstart(self):
@@ -184,9 +184,9 @@ class Miscellaneous:
         if len(new_tstart) > spot_len:
             raise ValueError(cant_be_longer_message("new_tstart", spot_len))
 
-        self.first_line = self.first_line[0:spot_len*6] + new_tstart.ljust(spot_len)
+        self.first_line = self.first_line[0:spot_len*6] + new_tstart.rjust(spot_len)
 
-        self._tstart = new_tstart.ljust(spot_len)
+        self._tstart = new_tstart.rjust(spot_len)
 
     @property
     def iout(self):
@@ -207,9 +207,9 @@ class Miscellaneous:
         if len(new_iout) > spot_len:
             raise ValueError(cant_be_longer_message("new_iout", spot_len))
 
-        self.second_line = new_iout.ljust(spot_len) + self.second_line[spot_len:]
+        self.second_line = new_iout.rjust(spot_len) + self.second_line[spot_len:]
 
-        self._iout = new_iout.ljust(spot_len)
+        self._iout = new_iout.rjust(spot_len)
 
     @property
     def iplot(self):
@@ -230,9 +230,9 @@ class Miscellaneous:
         if len(new_iplot) > spot_len:
             raise ValueError(cant_be_longer_message("new_iplot", spot_len))
 
-        self.second_line = self.second_line[0:spot_len] + new_iplot.ljust(spot_len) + self.second_line[spot_len*2:]
+        self.second_line = self.second_line[0:spot_len] + new_iplot.rjust(spot_len) + self.second_line[spot_len*2:]
 
-        self._iplot = new_iplot.ljust(spot_len)
+        self._iplot = new_iplot.rjust(spot_len)
 
     @property
     def idoubl(self):
@@ -245,15 +245,15 @@ class Miscellaneous:
 
         if type(new_idoubl) != str:
             new_idoubl = bool_to_valid_str(bool(new_idoubl))
-            new_idoubl = new_idoubl.ljust(spot_len)
+            new_idoubl = new_idoubl.rjust(spot_len)
 
 
         if len(new_idoubl) > spot_len:
             raise ValueError(cant_be_longer_message("new_idoubl", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*2] + new_idoubl.ljust(spot_len) + self.second_line[spot_len*3:]
+        self.second_line = self.second_line[0:spot_len*2] + new_idoubl.rjust(spot_len) + self.second_line[spot_len*3:]
 
-        self._idoubl = new_idoubl.ljust(spot_len)
+        self._idoubl = new_idoubl.rjust(spot_len)
 
     @property
     def kout(self):
@@ -266,15 +266,15 @@ class Miscellaneous:
 
         if type(new_kout) != str:
             new_kout = bool_to_valid_str(bool(new_kout))
-            new_kout = new_kout.ljust(spot_len)
+            new_kout = new_kout.rjust(spot_len)
         
 
         if len(new_kout) > spot_len:
             raise ValueError(cant_be_longer_message("new_kout", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*3] + new_kout.ljust(spot_len) + self.second_line[spot_len*4:]
+        self.second_line = self.second_line[0:spot_len*3] + new_kout.rjust(spot_len) + self.second_line[spot_len*4:]
 
-        self._kout = new_kout.ljust(spot_len)
+        self._kout = new_kout.rjust(spot_len)
 
     @property
     def maxout(self):
@@ -287,15 +287,15 @@ class Miscellaneous:
 
         if type(new_maxout) != str:
             new_maxout = bool_to_valid_str(bool(new_maxout))
-            new_maxout = new_maxout.ljust(spot_len)
+            new_maxout = new_maxout.rjust(spot_len)
         
 
         if len(new_maxout) > spot_len:
             raise ValueError(cant_be_longer_message("new_maxout", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*4] + new_maxout.ljust(spot_len) + self.second_line[spot_len*5:]
+        self.second_line = self.second_line[0:spot_len*4] + new_maxout.rjust(spot_len) + self.second_line[spot_len*5:]
 
-        self._maxout = new_maxout.ljust(spot_len)
+        self._maxout = new_maxout.rjust(spot_len)
 
     @property
     def ipun(self):
@@ -308,14 +308,14 @@ class Miscellaneous:
 
         if type(new_ipun) != str:
             new_ipun = bool_to_valid_str(bool(new_ipun))
-            new_ipun = new_ipun.ljust(spot_len)
+            new_ipun = new_ipun.rjust(spot_len)
 
         if len(new_ipun) > spot_len:
             raise ValueError(cant_be_longer_message("new_ipun", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*5] + new_ipun.ljust(spot_len) + self.second_line[spot_len*6:]
+        self.second_line = self.second_line[0:spot_len*5] + new_ipun.rjust(spot_len) + self.second_line[spot_len*6:]
 
-        self._ipun = new_ipun.ljust(spot_len)
+        self._ipun = new_ipun.rjust(spot_len)
 
     @property
     def memsav(self):
@@ -328,14 +328,14 @@ class Miscellaneous:
 
         if type(new_memsav) != str:
             new_memsav = bool_to_valid_str(bool(new_memsav))
-            new_memsav = new_memsav.ljust(spot_len)
+            new_memsav = new_memsav.rjust(spot_len)
 
         if len(new_memsav) > spot_len:
             raise ValueError(cant_be_longer_message("new_memsav", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*6] + new_memsav.ljust(spot_len) + self.second_line[spot_len*7:]
+        self.second_line = self.second_line[0:spot_len*6] + new_memsav.rjust(spot_len) + self.second_line[spot_len*7:]
 
-        self._memsav = new_memsav.ljust(spot_len)
+        self._memsav = new_memsav.rjust(spot_len)
 
     @property
     def icat(self):
@@ -348,14 +348,14 @@ class Miscellaneous:
 
         if type(new_icat) != str:
             new_icat = bool_to_valid_str(bool(new_icat))
-            new_icat = new_icat.ljust(spot_len)
+            new_icat = new_icat.rjust(spot_len)
 
         if len(new_icat) > spot_len:
             raise ValueError(cant_be_longer_message("new_icat", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*7] + new_icat.ljust(spot_len) + self.second_line[spot_len*8:]
+        self.second_line = self.second_line[0:spot_len*7] + new_icat.rjust(spot_len) + self.second_line[spot_len*8:]
 
-        self._icat = new_icat.ljust(spot_len)
+        self._icat = new_icat.rjust(spot_len)
 
     @property
     def nenerg(self):
@@ -368,14 +368,14 @@ class Miscellaneous:
 
         if type(new_nenerg) != str:
             new_nenerg = bool_to_valid_str(bool(new_nenerg))
-            new_nenerg = new_nenerg.ljust(spot_len)
+            new_nenerg = new_nenerg.rjust(spot_len)
 
         if len(new_nenerg) > spot_len:
             raise ValueError(cant_be_longer_message("new_nenerg", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*8] + new_nenerg.ljust(spot_len) + self.second_line[spot_len*9:]
+        self.second_line = self.second_line[0:spot_len*8] + new_nenerg.rjust(spot_len) + self.second_line[spot_len*9:]
 
-        self._nenerg = new_nenerg.ljust(spot_len)
+        self._nenerg = new_nenerg.rjust(spot_len)
 
     @property
     def iprsup(self):
@@ -388,14 +388,14 @@ class Miscellaneous:
 
         if type(new_iprsup) != str:
             new_iprsup = bool_to_valid_str(bool(new_iprsup))
-            new_iprsup = new_iprsup.ljust(spot_len)
+            new_iprsup = new_iprsup.rjust(spot_len)
 
         if len(new_iprsup) > spot_len:
             raise ValueError(cant_be_longer_message("new_iprsup", spot_len))
 
-        self.second_line = self.second_line[0:spot_len*9] + new_iprsup.ljust(spot_len)
+        self.second_line = self.second_line[0:spot_len*9] + new_iprsup.rjust(spot_len)
 
-        self._iprsup = new_iprsup.ljust(spot_len)
+        self._iprsup = new_iprsup.rjust(spot_len)
     
     @property
     def first_line(self):
