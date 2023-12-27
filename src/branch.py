@@ -231,7 +231,7 @@ class RlcElementBasic(RlcElement):
         ) 
 
         if len(new_inductance) > spot_len:
-            raise ValueError(cant_be_longer_message('new_inductance', 6))
+            raise ValueError(cant_be_longer_message('new_inductance', spot_len))
         
         self._line = self._line[0:init_index] + new_inductance.ljust(spot_len) + self._line[end_index:]
 
@@ -257,7 +257,7 @@ class RlcElementBasic(RlcElement):
         new_capacitance = numeric_to_valid_str(new_capacitance, is_capacitance=True)
         
         if len(new_capacitance) > spot_len:
-            raise ValueError(cant_be_longer_message('new_capacitance', 6))
+            raise ValueError(cant_be_longer_message('new_capacitance', spot_len))
         
         self._line = self._line[0:init_index] + new_capacitance.ljust(spot_len) + self._line[end_index:]
         
