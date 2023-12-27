@@ -40,6 +40,8 @@ class Miscellaneous:
     @delta_t.setter
     def delta_t(self, new_delta_t):
 
+        spot_len = 8
+
         try:
             float(new_delta_t)
         except ValueError:
@@ -47,13 +49,13 @@ class Miscellaneous:
         
         new_delta_t = numeric_to_valid_str(new_delta_t, spot_len=8) 
 
-        if len(new_delta_t) > 8:
+        if len(new_delta_t) > spot_len:
             raise ValueError("Delta t cant be longer than 8 characters long")
         
-        self.first_line = new_delta_t.ljust(8) + self.first_line[8:]
+        self.first_line = new_delta_t.ljust(spot_len) + self.first_line[spot_len:]
         
 
-        self._delta_t = new_delta_t.ljust(8)
+        self._delta_t = new_delta_t.ljust(spot_len)
 
     @property
     def t_max(self):
@@ -61,6 +63,8 @@ class Miscellaneous:
 
     @t_max.setter
     def t_max(self, new_t_max):
+
+        spot_len = 8
 
         try:
             float(new_t_max)
@@ -70,12 +74,12 @@ class Miscellaneous:
         new_t_max = numeric_to_valid_str(new_t_max, spot_len=8)
 
 
-        if len(new_t_max) > 8:
+        if len(new_t_max) > spot_len:
             raise ValueError("T max cant be longer than 8 characters long")
 
-        self.first_line = self.first_line[0:8] + new_t_max.ljust(8) + self.first_line[16:]
+        self.first_line = self.first_line[0:spot_len] + new_t_max.ljust(spot_len) + self.first_line[spot_len*2:]
 
-        self._t_max = new_t_max.ljust(8)
+        self._t_max = new_t_max.ljust(spot_len)
 
     @property
     def x_opt(self):
@@ -84,16 +88,18 @@ class Miscellaneous:
     @x_opt.setter
     def x_opt(self, new_x_opt):
 
+        spot_len = 8
+
         if type(new_x_opt) != str:
             new_x_opt = bool_to_valid_str(bool(new_x_opt))
-            new_x_opt = new_x_opt.ljust(8)
+            new_x_opt = new_x_opt.ljust(spot_len)
 
-        if len(new_x_opt) > 8:
+        if len(new_x_opt) > spot_len:
             raise ValueError("X opt cant be longer than 8 characters long")
 
-        self.first_line = self.first_line[0:16] + new_x_opt.ljust(8) + self.first_line[24:]
+        self.first_line = self.first_line[0:spot_len*2] + new_x_opt.ljust(spot_len) + self.first_line[spot_len*3:]
 
-        self._x_opt = new_x_opt.ljust(8)
+        self._x_opt = new_x_opt.ljust(spot_len)
 
     @property
     def c_opt(self):
@@ -102,16 +108,18 @@ class Miscellaneous:
     @c_opt.setter
     def c_opt(self, new_c_opt):
 
+        spot_len = 8
+
         if type(new_c_opt) != str:
             new_c_opt = bool_to_valid_str(bool(new_c_opt))
-            new_c_opt = new_c_opt.ljust(8)
+            new_c_opt = new_c_opt.ljust(spot_len)
 
-        if len(new_c_opt) > 8:
+        if len(new_c_opt) > spot_len:
             raise ValueError("C opt cant be longer than 8 characters long")
 
-        self.first_line = self.first_line[0:24] + new_c_opt.ljust(8) + self.first_line[32:]
+        self.first_line = self.first_line[0:spot_len*3] + new_c_opt.ljust(spot_len) + self.first_line[spot_len*4:]
 
-        self._c_opt = new_c_opt.ljust(8)
+        self._c_opt = new_c_opt.ljust(spot_len)
 
     @property
     def epslin(self):
@@ -120,17 +128,19 @@ class Miscellaneous:
     @epslin.setter
     def epslin(self, new_epslin):
 
+        spot_len = 8
+
         if type(new_epslin) != str:
             new_epslin = bool_to_valid_str(bool(new_epslin))
-            new_epslin = new_epslin.ljust(8)
+            new_epslin = new_epslin.ljust(spot_len)
 
 
-        if len(new_epslin) > 8:
+        if len(new_epslin) > spot_len:
             raise ValueError("Epslin cant be longer than 8 characters long")
 
-        self.first_line = self.first_line[0:32] + new_epslin.ljust(8) + self.first_line[40:]
+        self.first_line = self.first_line[0:spot_len*4] + new_epslin.ljust(spot_len) + self.first_line[spot_len*5:]
 
-        self._epslin = new_epslin.ljust(8)
+        self._epslin = new_epslin.ljust(spot_len)
 
     @property
     def tolmat(self):
@@ -139,17 +149,19 @@ class Miscellaneous:
     @tolmat.setter
     def tolmat(self, new_tolmat):
 
+        spot_len = 8
+
         if type(new_tolmat) != str:
             new_tolmat = bool_to_valid_str(bool(new_tolmat))
-            new_tolmat = new_tolmat.ljust(8)
+            new_tolmat = new_tolmat.ljust(spot_len)
 
 
-        if len(new_tolmat) > 8:
+        if len(new_tolmat) > spot_len:
             raise ValueError("Tolmat cant be longer than 8 characters long")
 
-        self.first_line = self.first_line[0:40] + new_tolmat.ljust(8) + self.first_line[48:]
+        self.first_line = self.first_line[0:spot_len*5] + new_tolmat.ljust(spot_len) + self.first_line[spot_len*6:]
 
-        self._tolmat = new_tolmat.ljust(8)
+        self._tolmat = new_tolmat.ljust(spot_len)
 
     @property
     def tstart(self):
@@ -157,6 +169,8 @@ class Miscellaneous:
 
     @tstart.setter
     def tstart(self, new_tstart):
+
+        spot_len = 8
 
 
         if (new_tstart != " " * 8):
@@ -167,12 +181,12 @@ class Miscellaneous:
             
         new_tstart = numeric_to_valid_str(new_tstart, spot_len=8)
 
-        if len(new_tstart) > 8:
+        if len(new_tstart) > spot_len:
             raise ValueError("Tstart cant be longer than 8 characters long")
 
-        self.first_line = self.first_line[0:48] + new_tstart.ljust(8)
+        self.first_line = self.first_line[0:spot_len*6] + new_tstart.ljust(spot_len)
 
-        self._tstart = new_tstart.ljust(8)
+        self._tstart = new_tstart.ljust(spot_len)
 
     @property
     def iout(self):
@@ -181,6 +195,8 @@ class Miscellaneous:
     @iout.setter
     def iout(self, new_iout):
 
+        spot_len = 8
+
         try:
             int(new_iout)
         except ValueError:
@@ -188,12 +204,12 @@ class Miscellaneous:
         
         new_iout = numeric_to_valid_str(new_iout, spot_len=8)
 
-        if len(new_iout) > 8:
+        if len(new_iout) > spot_len:
             raise ValueError("Iout cant be longer than 8 characters long")
 
-        self.second_line = new_iout.ljust(8) + self.second_line[8:]
+        self.second_line = new_iout.ljust(spot_len) + self.second_line[spot_len:]
 
-        self._iout = new_iout.ljust(8)
+        self._iout = new_iout.ljust(spot_len)
 
     @property
     def iplot(self):
@@ -202,6 +218,8 @@ class Miscellaneous:
     @iplot.setter
     def iplot(self, new_iplot):
 
+        spot_len = 8
+
         try:
             int(new_iplot)
         except ValueError:
@@ -209,12 +227,12 @@ class Miscellaneous:
         
         new_iplot = numeric_to_valid_str(new_iplot, spot_len=8)
 
-        if len(new_iplot) > 8:
+        if len(new_iplot) > spot_len:
             raise ValueError("Iplot cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:8] + new_iplot.ljust(8) + self.second_line[16:]
+        self.second_line = self.second_line[0:spot_len] + new_iplot.ljust(spot_len) + self.second_line[spot_len*2:]
 
-        self._iplot = new_iplot.ljust(8)
+        self._iplot = new_iplot.ljust(spot_len)
 
     @property
     def idoubl(self):
@@ -223,17 +241,19 @@ class Miscellaneous:
     @idoubl.setter
     def idoubl(self, new_idoubl):
 
+        spot_len = 8
+
         if type(new_idoubl) != str:
             new_idoubl = bool_to_valid_str(bool(new_idoubl))
-            new_idoubl = new_idoubl.ljust(8)
+            new_idoubl = new_idoubl.ljust(spot_len)
 
 
-        if len(new_idoubl) > 8:
+        if len(new_idoubl) > spot_len:
             raise ValueError("Idoubl cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:16] + new_idoubl.ljust(8) + self.second_line[24:]
+        self.second_line = self.second_line[0:spot_len*2] + new_idoubl.ljust(spot_len) + self.second_line[spot_len*3:]
 
-        self._idoubl = new_idoubl.ljust(8)
+        self._idoubl = new_idoubl.ljust(spot_len)
 
     @property
     def kout(self):
@@ -242,17 +262,19 @@ class Miscellaneous:
     @kout.setter
     def kout(self, new_kout):
 
+        spot_len = 8
+
         if type(new_kout) != str:
             new_kout = bool_to_valid_str(bool(new_kout))
-            new_kout = new_kout.ljust(8)
+            new_kout = new_kout.ljust(spot_len)
         
 
-        if len(new_kout) > 8:
+        if len(new_kout) > spot_len:
             raise ValueError("Kout cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:24] + new_kout.ljust(8) + self.second_line[32:]
+        self.second_line = self.second_line[0:spot_len*3] + new_kout.ljust(spot_len) + self.second_line[spot_len*4:]
 
-        self._kout = new_kout.ljust(8)
+        self._kout = new_kout.ljust(spot_len)
 
     @property
     def maxout(self):
@@ -261,17 +283,19 @@ class Miscellaneous:
     @maxout.setter
     def maxout(self, new_maxout):
 
+        spot_len = 8
+
         if type(new_maxout) != str:
             new_maxout = bool_to_valid_str(bool(new_maxout))
-            new_maxout = new_maxout.ljust(8)
+            new_maxout = new_maxout.ljust(spot_len)
         
 
-        if len(new_maxout) > 8:
+        if len(new_maxout) > spot_len:
             raise ValueError("Maxout cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:32] + new_maxout.ljust(8) + self.second_line[40:]
+        self.second_line = self.second_line[0:spot_len*4] + new_maxout.ljust(spot_len) + self.second_line[spot_len*5:]
 
-        self._maxout = new_maxout.ljust(8)
+        self._maxout = new_maxout.ljust(spot_len)
 
     @property
     def ipun(self):
@@ -280,16 +304,18 @@ class Miscellaneous:
     @ipun.setter
     def ipun(self, new_ipun):
 
+        spot_len = 8
+
         if type(new_ipun) != str:
             new_ipun = bool_to_valid_str(bool(new_ipun))
-            new_ipun = new_ipun.ljust(8)
+            new_ipun = new_ipun.ljust(spot_len)
 
-        if len(new_ipun) > 8:
+        if len(new_ipun) > spot_len:
             raise ValueError("Ipun cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:40] + new_ipun.ljust(8) + self.second_line[48:]
+        self.second_line = self.second_line[0:spot_len*5] + new_ipun.ljust(spot_len) + self.second_line[spot_len*6:]
 
-        self._ipun = new_ipun.ljust(8)
+        self._ipun = new_ipun.ljust(spot_len)
 
     @property
     def memsav(self):
@@ -298,16 +324,18 @@ class Miscellaneous:
     @memsav.setter
     def memsav(self, new_memsav):
 
+        spot_len = 8
+
         if type(new_memsav) != str:
             new_memsav = bool_to_valid_str(bool(new_memsav))
-            new_memsav = new_memsav.ljust(8)
+            new_memsav = new_memsav.ljust(spot_len)
 
-        if len(new_memsav) > 8:
+        if len(new_memsav) > spot_len:
             raise ValueError("Memsav cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:48] + new_memsav.ljust(8) + self.second_line[56:]
+        self.second_line = self.second_line[0:spot_len*6] + new_memsav.ljust(spot_len) + self.second_line[spot_len*7:]
 
-        self._memsav = new_memsav.ljust(8)
+        self._memsav = new_memsav.ljust(spot_len)
 
     @property
     def icat(self):
@@ -316,16 +344,18 @@ class Miscellaneous:
     @icat.setter
     def icat(self, new_icat):
 
+        spot_len = 8
+
         if type(new_icat) != str:
             new_icat = bool_to_valid_str(bool(new_icat))
-            new_icat = new_icat.ljust(8)
+            new_icat = new_icat.ljust(spot_len)
 
-        if len(new_icat) > 8:
+        if len(new_icat) > spot_len:
             raise ValueError("Icat cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:56] + new_icat.ljust(8) + self.second_line[64:]
+        self.second_line = self.second_line[0:spot_len*7] + new_icat.ljust(spot_len) + self.second_line[spot_len*8:]
 
-        self._icat = new_icat.ljust(8)
+        self._icat = new_icat.ljust(spot_len)
 
     @property
     def nenerg(self):
@@ -334,16 +364,18 @@ class Miscellaneous:
     @nenerg.setter
     def nenerg(self, new_nenerg):
 
+        spot_len = 8
+
         if type(new_nenerg) != str:
             new_nenerg = bool_to_valid_str(bool(new_nenerg))
-            new_nenerg = new_nenerg.ljust(8)
+            new_nenerg = new_nenerg.ljust(spot_len)
 
-        if len(new_nenerg) > 8:
+        if len(new_nenerg) > spot_len:
             raise ValueError("Nenerg cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:64] + new_nenerg.ljust(8) + self.second_line[72:]
+        self.second_line = self.second_line[0:spot_len*8] + new_nenerg.ljust(spot_len) + self.second_line[spot_len*9:]
 
-        self._nenerg = new_nenerg.ljust(8)
+        self._nenerg = new_nenerg.ljust(spot_len)
 
     @property
     def iprsup(self):
@@ -352,16 +384,18 @@ class Miscellaneous:
     @iprsup.setter
     def iprsup(self, new_iprsup):
 
+        spot_len = 8
+
         if type(new_iprsup) != str:
             new_iprsup = bool_to_valid_str(bool(new_iprsup))
-            new_iprsup = new_iprsup.ljust(8)
+            new_iprsup = new_iprsup.ljust(spot_len)
 
-        if len(new_iprsup) > 8:
+        if len(new_iprsup) > spot_len:
             raise ValueError("Iprsup cant be longer than 8 characters long")
 
-        self.second_line = self.second_line[0:72] + new_iprsup.ljust(8)
+        self.second_line = self.second_line[0:spot_len*9] + new_iprsup.ljust(spot_len)
 
-        self._iprsup = new_iprsup.ljust(8)
+        self._iprsup = new_iprsup.ljust(spot_len)
     
     @property
     def first_line(self):
@@ -369,19 +403,22 @@ class Miscellaneous:
     
     @first_line.setter
     def first_line(self, new_first_line):
+
+        spot_len = 8
+
         if len(new_first_line) > 56:
             raise ValueError("First line cant be longer than 56 characters long")
         
         #Adding blanks if necessary
         new_first_line = new_first_line.ljust(56)
         
-        self._delta_t = new_first_line[0:8]
-        self._t_max = new_first_line[8:16]
-        self._x_opt = new_first_line[16:24]
-        self._c_opt = new_first_line[24:32]
-        self._epslin = new_first_line[32:40]
-        self._tolmat = new_first_line[40:48]
-        self._tstart = new_first_line[48:56]
+        self._delta_t = new_first_line[0:spot_len]
+        self._t_max = new_first_line[spot_len:spot_len*2]
+        self._x_opt = new_first_line[spot_len*2:spot_len*3]
+        self._c_opt = new_first_line[spot_len*3:spot_len*4]
+        self._epslin = new_first_line[spot_len*4:spot_len*5]
+        self._tolmat = new_first_line[spot_len*5:spot_len*6]
+        self._tstart = new_first_line[spot_len*6:spot_len*7]
 
         self._first_line = new_first_line
 
@@ -392,22 +429,25 @@ class Miscellaneous:
     
     @second_line.setter
     def second_line(self, new_second_line):
+
+        spot_len = 8
+
         if len(new_second_line) > 80:
             raise ValueError("Second line cant be longer than 80 characters long")
 
         #Adding blanks if necessary
         new_second_line = new_second_line.ljust(80)
         
-        self._iout = new_second_line[0:8]
-        self._iplot = new_second_line[8:16]
-        self._idoubl = new_second_line[16:24]
-        self._kout = new_second_line[24:32]
-        self._maxout = new_second_line[32:40]
-        self._ipun = new_second_line[40:48]
-        self._memsav = new_second_line[48:56]
-        self._icat = new_second_line[56:64]
-        self._nenerg = new_second_line[64:72]
-        self._iprsup = new_second_line[72:80]
+        self._iout = new_second_line[0:spot_len]
+        self._iplot = new_second_line[spot_len:spot_len*2]
+        self._idoubl = new_second_line[spot_len*2:spot_len*3]
+        self._kout = new_second_line[spot_len*3:spot_len*4]
+        self._maxout = new_second_line[spot_len*4:spot_len*5]
+        self._ipun = new_second_line[spot_len*5:spot_len*6]
+        self._memsav = new_second_line[spot_len*6:spot_len*7]
+        self._icat = new_second_line[spot_len*7:spot_len*8]
+        self._nenerg = new_second_line[spot_len*8:spot_len*9]
+        self._iprsup = new_second_line[spot_len*9:spot_len*10]
 
         self._second_line = new_second_line
 
