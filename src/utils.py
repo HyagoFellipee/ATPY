@@ -45,8 +45,12 @@ def bool_to_valid_str(bool):
     else:
         return "0"
     
-def is_str_true(str, len):
-    return str != " " * len and float(str) > 0
+def is_str_true(str):
+    if str.strip() == "0" or str.strip() == "":
+        return False
+    else:
+        return True
+
 
 def scientific_to_decimal(scientific_str):
 
@@ -57,15 +61,15 @@ def scientific_to_decimal(scientific_str):
 def cant_be_longer_message(name, max_len):
     return f"{name} can't be longer than {max_len} characters"
 
-def valid_iout(iout, len):
+def valid_iout(iout):
 
-    if iout == " " * len:
+    if iout.strip() == "":
         return 0
 
     try:
-        num_iout = float(iout)
+        num_iout = int(iout)
     except ValueError:
-        raise ValueError("Iout must be a number")
+        raise ValueError("Iout must be an integer")
     
     valid_iout = [0, 1, 2, 3]
 
@@ -73,4 +77,46 @@ def valid_iout(iout, len):
         raise ValueError(f"Iout must be one of {valid_iout}")
     
     return num_iout
+
+def valid_itype(itype):
+
+    if itype.strip() == "":
+        return 0
+
+    try:
+        num_itype = int(itype)
+    except ValueError:
+        raise ValueError("Itype must be an integer")
     
+
+    return num_itype
+
+def valid_iline(iline):
+
+    if iline.strip() == "":
+        return 0
+
+    try:
+        num_iline = int(iline)
+    except ValueError:
+        raise ValueError("Iline must be an integer")
+    
+    valid_iline = [0, 1, 2]
+
+    if num_iline not in valid_iline:
+        raise ValueError(f"Iline must be one of {valid_iline}")
+    
+    return num_iline
+
+def valid_ipose(ipose):
+
+    if ipose.strip() == "":
+        return 0
+
+    try:
+        num_ipose = int(ipose)
+    except ValueError:
+        raise ValueError("ipose must be an integer")
+    
+
+    return num_ipose 
