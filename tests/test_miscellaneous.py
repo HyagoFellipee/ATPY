@@ -161,6 +161,12 @@ def test_x_opt(misc):
     assert misc.x_opt == right_x_opt
     assert misc.first_line == misc.first_line[0:16] + right_x_opt + misc.first_line[24:]
 
+    misc.x_opt = "  "
+    right_x_opt = " ".rjust(spot_len)
+    assert misc.x_opt == right_x_opt
+    assert misc.first_line == misc.first_line[0:16] + right_x_opt + misc.first_line[24:]
+
+
 def test_c_opt(misc):
     misc.c_opt = True
     right_c_opt = "1".rjust(spot_len)
@@ -202,6 +208,12 @@ def test_c_opt(misc):
     assert misc.c_opt == right_c_opt
     assert misc.first_line == misc.first_line[0:24] + right_c_opt + misc.first_line[32:]
 
+    misc.c_opt = "  "
+    right_c_opt = " ".rjust(spot_len)
+    assert misc.c_opt == right_c_opt
+    assert misc.first_line == misc.first_line[0:24] + right_c_opt + misc.first_line[32:]
+
+
 def test_epslin(misc):
     misc.epslin = True
     right_epslin = "1".rjust(spot_len)
@@ -242,7 +254,13 @@ def test_epslin(misc):
     right_epslin = "1".rjust(spot_len)
     assert misc.epslin == right_epslin
     assert misc.first_line == misc.first_line[0:32] + right_epslin + misc.first_line[40:]
-    
+
+    misc.epslin = "  "
+    right_epslin = " ".rjust(spot_len)
+    assert misc.epslin == right_epslin
+    assert misc.first_line == misc.first_line[0:32] + right_epslin + misc.first_line[40:]
+
+
 def test_tolmat(misc):
     misc.tolmat = True
     right_tolmat = "1".rjust(spot_len)
@@ -283,6 +301,12 @@ def test_tolmat(misc):
     right_tolmat = "1".rjust(spot_len)
     assert misc.tolmat == right_tolmat
     assert misc.first_line == misc.first_line[0:40] + right_tolmat + misc.first_line[48:]
+
+    misc.tolmat = "  "
+    right_tolmat = " ".rjust(spot_len)
+    assert misc.tolmat == right_tolmat
+    assert misc.first_line == misc.first_line[0:40] + right_tolmat + misc.first_line[48:]
+
 
 def test_tstart(misc):
     misc.tstart = 0.000001
@@ -490,6 +514,12 @@ def test_idoubl(misc):
     assert misc.idoubl == right_idoubl
     assert misc.second_line == misc.second_line[0:16] + right_idoubl + misc.second_line[24:]
 
+    misc.idoubl = "  "
+    right_idoubl = " ".rjust(spot_len)
+    assert misc.idoubl == right_idoubl
+    assert misc.second_line == misc.second_line[0:16] + right_idoubl + misc.second_line[24:]
+
+
 def test_kout(misc):
     misc.kout = True
     right_kout = "1".rjust(spot_len)
@@ -531,6 +561,12 @@ def test_kout(misc):
     assert misc.kout == right_kout
     assert misc.second_line == misc.second_line[0:24] + right_kout + misc.second_line[32:]
 
+    misc.kout = "  "
+    right_kout = " ".rjust(spot_len)
+    assert misc.kout == right_kout
+    assert misc.second_line == misc.second_line[0:24] + right_kout + misc.second_line[32:]
+
+
 def test_maxout(misc):
     misc.maxout = True
     right_maxout = "1".rjust(spot_len)
@@ -571,7 +607,13 @@ def test_maxout(misc):
     right_maxout = "1".rjust(spot_len)
     assert misc.maxout == right_maxout
     assert misc.second_line == misc.second_line[0:32] + right_maxout + misc.second_line[40:]
-   
+    
+    misc.maxout = "  "
+    right_maxout = " ".rjust(spot_len)
+    assert misc.maxout == right_maxout
+    assert misc.second_line == misc.second_line[0:32] + right_maxout + misc.second_line[40:]
+
+
 def test_ipun(misc):
     misc.ipun = True
     right_ipun = "1".rjust(spot_len)
@@ -612,6 +654,12 @@ def test_ipun(misc):
     right_ipun = "1".rjust(spot_len)
     assert misc.ipun == right_ipun
     assert misc.second_line == misc.second_line[0:40] + right_ipun + misc.second_line[48:]
+
+    misc.ipun = "  "
+    right_ipun = " ".rjust(spot_len)
+    assert misc.ipun == right_ipun
+    assert misc.second_line == misc.second_line[0:40] + right_ipun + misc.second_line[48:]
+
 
 def test_memsav(misc):
     misc.memsav = True
@@ -654,6 +702,12 @@ def test_memsav(misc):
     assert misc.memsav == right_memsav
     assert misc.second_line == misc.second_line[0:48] + right_memsav + misc.second_line[56:]
 
+    misc.memsav = "  "
+    right_memsav = " ".rjust(spot_len)
+    assert misc.memsav == right_memsav
+    assert misc.second_line == misc.second_line[0:48] + right_memsav + misc.second_line[56:]
+
+
 def test_icat(misc):
     misc.icat = True
     right_icat = "1".rjust(spot_len)
@@ -694,6 +748,12 @@ def test_icat(misc):
     right_icat = "1".rjust(spot_len)
     assert misc.icat == right_icat
     assert misc.second_line == misc.second_line[0:56] + right_icat + misc.second_line[64:]
+
+    misc.icat = "  "
+    right_icat = " ".rjust(spot_len)
+    assert misc.icat == right_icat
+    assert misc.second_line == misc.second_line[0:56] + right_icat + misc.second_line[64:]
+
 
 def test_nenerg(misc):
     misc.nenerg = True 
@@ -736,6 +796,12 @@ def test_nenerg(misc):
     assert misc.nenerg == right_nenerg
     assert misc.second_line == misc.second_line[0:64] + right_nenerg + misc.second_line[72:]
 
+    misc.nenerg = "  "
+    right_nenerg = " ".rjust(spot_len)
+    assert misc.nenerg == right_nenerg
+    assert misc.second_line == misc.second_line[0:64] + right_nenerg + misc.second_line[72:]
+
+
 def test_iprsup(misc):
     misc.iprsup = True
     right_iprsup = "1".rjust(spot_len)
@@ -776,6 +842,12 @@ def test_iprsup(misc):
     right_iprsup = "1".rjust(spot_len)
     assert misc.iprsup == right_iprsup
     assert misc.second_line == misc.second_line[0:72] + right_iprsup + misc.second_line[80:]
+
+    misc.iprsup = "  "
+    right_iprsup = " ".rjust(spot_len)
+    assert misc.iprsup == right_iprsup
+    assert misc.second_line == misc.second_line[0:72] + right_iprsup + misc.second_line[80:]
+
 
 def test_first_line(misc): 
 
