@@ -1,5 +1,13 @@
 import copy 
-from utils import numeric_to_valid_str, is_str_true, cant_be_longer_message, valid_iout
+from utils import (
+    numeric_to_valid_str,
+    cant_be_longer_message,
+    valid_iout,
+    valid_itype,
+    valid_iline,
+    bool_to_valid_str,
+    valid_ipose
+)
 
 class Branch:
     def __init__(self):
@@ -103,6 +111,10 @@ class RlcElementBasic(RlcElement):
     def itype(self, new_itype):
 
         spot_len = 2
+
+        new_itype = valid_itype(new_itype) 
+        new_itype = numeric_to_valid_str(new_itype) if new_itype != 0 else " " * spot_len
+
 
         if len(new_itype) > spot_len:
             raise ValueError(cant_be_longer_message('new_itype', spot_len))
@@ -228,7 +240,9 @@ class RlcElementBasic(RlcElement):
         new_inductance = numeric_to_valid_str(
             new_inductance, 
             spot_len, 
-            is_inductance=(not is_str_true(self.miscellaneous.x_opt)) # if x_opt is true, then inductance unit is ohm, as in impedance
+            #is_inductance=(not is_str_true(self.miscellaneous.x_opt)) 
+            #TODO
+            # this is_inductance depends on the value of x_opt, which is in the miscellaneous section
         ) 
 
         if len(new_inductance) > spot_len:
@@ -353,6 +367,9 @@ class RlcElementDistParams(RlcElement):
 
         spot_len = 2
 
+        new_itype = valid_itype(new_itype) 
+        new_itype = numeric_to_valid_str(new_itype) if new_itype != 0 else " " * spot_len
+
 
         if len(new_itype) > spot_len:
             raise ValueError(cant_be_longer_message("new_itype", spot_len))
@@ -443,6 +460,14 @@ class RlcElementDistParams(RlcElement):
         spot_len = 6
         init_index = 26
         end_index = 32
+
+        if new_resistance != " " * 6:
+            try:
+                float(new_resistance)
+            except ValueError:
+                raise ValueError("Resistance must be a numeric value")
+
+        new_resistance = numeric_to_valid_str(new_resistance, spot_len)
         
         if len(new_resistance) > spot_len:
             raise ValueError(cant_be_longer_message(new_resistance, spot_len))
@@ -462,6 +487,21 @@ class RlcElementDistParams(RlcElement):
         init_index = 32
         end_index = 38
 
+        if self.iline == "0" * 2 or self.iline == " " * 2:
+            new_distribution_param_a = numeric_to_valid_str(
+                new_distribution_param_a, 
+                spot_len,
+                # is_inductance=(not is_str_true(self.miscellaneous.x_opt))
+                #TODO
+                # this is_inductance depends on the value of x_opt, which is in the miscellaneous section
+                )
+        else: 
+            new_distribution_param_a = numeric_to_valid_str(
+                new_distribution_param_a, 
+                spot_len
+            )
+
+
         if len(new_distribution_param_a) > spot_len:
             raise ValueError(cant_be_longer_message(new_distribution_param_a, spot_len))
         
@@ -478,6 +518,21 @@ class RlcElementDistParams(RlcElement):
         spot_len = 6
         init_index = 38
         end_index = 44
+
+        if self.iline == "0" * 2 or self.iline == " " * 2:
+            new_distribution_param_b = numeric_to_valid_str(
+                new_distribution_param_b, 
+                spot_len,
+                # is_capacitance=(not is_str_true(self.miscellaneous.c_opt))
+                #TODO
+                # this is_inductance depends on the value of c_opt, which is in the miscellaneous section
+                )
+
+        else:
+            new_distribution_param_b = numeric_to_valid_str(
+                new_distribution_param_b, 
+                spot_len
+            )
         
         if len(new_distribution_param_b) > spot_len:
             raise ValueError(cant_be_longer_message(new_distribution_param_b, spot_len))
@@ -496,6 +551,8 @@ class RlcElementDistParams(RlcElement):
         spot_len = 6
         init_index = 44
         end_index = 50
+
+        new_length = numeric_to_valid_str(new_length, spot_len)
         
         if len(new_length) > spot_len:
             raise ValueError(cant_be_longer_message(new_length, spot_len))
@@ -515,6 +572,9 @@ class RlcElementDistParams(RlcElement):
         init_index = 50
         end_index = 52
 
+        new_iline = valid_iline(new_iline)
+        new_iline = numeric_to_valid_str(new_iline, spot_len) 
+
         if len(new_iline) > spot_len:
             raise ValueError(cant_be_longer_message("new_iline", spot_len))
         
@@ -532,6 +592,10 @@ class RlcElementDistParams(RlcElement):
         init_index = 52
         end_index = 54
 
+        if type(new_ipunch) != str:
+            new_ipunch = bool_to_valid_str(new_ipunch)
+            new_ipunch = new_ipunch.ljust(spot_len)
+
         if len(new_ipunch) > spot_len:
             raise ValueError(cant_be_longer_message(new_ipunch, spot_len))
         
@@ -548,6 +612,10 @@ class RlcElementDistParams(RlcElement):
         spot_len = 2    
         init_index = 54
         end_index = 56
+
+        new_ipose = valid_ipose(new_ipose)
+        new_ipose = numeric_to_valid_str(new_ipose, spot_len) if new_ipose != 0 else " " * spot_len
+
 
         if len(new_ipose) > spot_len:
             raise ValueError(cant_be_longer_message("new_ipose", spot_len))
